@@ -28,11 +28,16 @@ export function dealPhase() {
 	const tl = gsap.timeline({
 		onComplete: () => {
 			if (seq !== S.seq) return; // 这一局已被换掉，别碰新局的桌面
-			retireDeckPile();
 			S.busy = false;
 			revealPhase();
 		},
 	});
+
+	// 末张离手，余堆便散场——中央的主题牌要落在腾空后的桌面上
+	const retireAt = (n - 1) * 0.16 + D(0.12);
+	tl.call(() => {
+		if (seq === S.seq) retireDeckPile();
+	}, null, retireAt);
 
 	for (let k = 0; k < n; k++) {
 		const pos = k + 1;
@@ -47,12 +52,13 @@ export function dealPhase() {
 		const tilt = pos === 13 ? 0 : gsap.utils.random(-3.5, 3.5);
 		const jx = gsap.utils.random(-drift, drift);
 		const jy = gsap.utils.random(-drift, drift);
-		// 起飞点是此刻堆顶那张的姿态，飞行时压过牌堆（z 高于 .deck），落位后交还给 CSS
+		// 起飞点是此刻堆顶那张的姿态，飞行时压过牌堆（z 高于 .deck），落位后交还给 CSS；
+		// 中央那张与堆同位，须等堆散尽才交还，否则落位一瞬会被堆盖住
 		const pose = topLayerPose(left + (n - k));
 		gsap.set(c, { opacity: 0, x: pose.x, y: pose.y, rotation: pose.rotation, xPercent: -50, yPercent: -50, zIndex: 6 });
 		tl.to(c, { opacity: 1, duration: D(0.12) }, k * 0.16)
 			.to(c, { left: x + jx + '%', top: y + jy + '%', x: 0, y: 0, rotation: tilt, duration: D(0.55), ease: 'power2.out' }, k * 0.16)
-			.set(c, { clearProps: 'zIndex' }, k * 0.16 + D(0.55))
+			.set(c, { clearProps: 'zIndex' }, pos === 13 ? retireAt + D(0.6) : k * 0.16 + D(0.55))
 			.call(() => syncDeckThickness(left + (n - 1 - k)), null, k * 0.16);
 	}
 	tl.timeScale(REDUCED ? 100 : 1);

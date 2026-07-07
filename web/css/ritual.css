@@ -1,0 +1,136 @@
+/* ═══════════════════════════════════════════════════════════════
+   Ritual screen — header / stage column / reading panel layout.
+   The screen and the stage column own all block spacing via gap.
+   ═══════════════════════════════════════════════════════════════ */
+
+.screen--ritual {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-block);
+}
+
+/* the panel column is always in the template, collapsed to zero, so its
+   arrival is a track transition rather than a reflow jump */
+.ritual-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0fr);
+  column-gap: 0;
+  row-gap: var(--gap-block);
+  align-items: start;
+  transition: grid-template-columns 0.9s cubic-bezier(0.25, 0.8, 0.3, 1),
+              column-gap 0.9s cubic-bezier(0.25, 0.8, 0.3, 1);
+}
+.ritual-body.has-panel {
+  grid-template-columns: minmax(0, 1.35fr) minmax(330px, 1fr);
+  column-gap: clamp(14px, 2vw, 28px);
+}
+@media (max-width: 980px) {
+  .ritual-body, .ritual-body.has-panel { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* the stage column: setup / question / wheel / rite line / actions */
+.stage-wrap {
+  /* the room the wheel may take: the viewport minus the sitting's chrome
+     (header, rite line, actions, share line, page padding) — so the whole
+     stage fits one screen instead of trailing a blank scroll below */
+  --wheel-room: calc(94dvh - 300px);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-item);
+  padding-inline: clamp(20px, 4vw, 60px);
+}
+/* the horary question above the wheel takes its own slice of the room */
+.stage-wrap:has(> .question-line:not([hidden])) { --wheel-room: calc(94dvh - 350px); }
+/* while the horary setup is the only thing on stage, drop it clear
+   of the header; the padding eases away with the setup instead of snapping */
+.stage-wrap { transition: padding-block-start 0.6s cubic-bezier(0.25, 0.8, 0.3, 1); }
+.stage-wrap:has(> .setup:not([hidden])) { padding-block-start: clamp(8px, 4vh, 40px); }
+
+/* the horary question, inscribed above the wheel for the whole sitting */
+.question-line {
+  text-align: center;
+  margin-inline: auto;
+  max-width: 60ch;
+  font-style: italic;
+  font-size: clamp(14px, 1.9vw, 17px);
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+/* the single quiet instruction line — beneath the wheel, an aside */
+.rite-line {
+  text-align: center;
+  min-height: 3.6em; /* room for the zh line plus its spaced en small, so the stage never bobs */
+  margin-inline: auto;
+  max-width: 72ch;
+  color: oklch(78% 0.12 85 / 0.85);
+  font-size: clamp(13px, 1.6vw, 15px);
+  letter-spacing: 0.06em;
+  text-wrap: balance;
+}
+.rite-line small { display: block; margin-top: 0.75em; color: var(--ink-dim); letter-spacing: 0.03em; font-size: 0.82em; }
+
+/* ── stage actions (the one primary act of each phase) ────────── */
+
+.stage-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  min-height: 46px;
+}
+
+.act-btn {
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  border-radius: 999px;
+  padding: 9px 30px;
+  font-size: 15px;
+  letter-spacing: 0.22em;
+  text-indent: 0.22em;
+  transition: background 0.35s, color 0.35s, box-shadow 0.35s;
+}
+.act-btn:hover, .act-btn:focus-visible {
+  background: var(--gold);
+  color: var(--night);
+  box-shadow: 0 0 30px oklch(78% 0.12 85 / 0.35);
+}
+.act-btn--quiet {
+  border-color: var(--gold-line);
+  color: var(--ink-dim);
+  letter-spacing: 0.12em;
+  text-indent: 0.12em;
+  font-size: 13.5px;
+}
+.act-btn--quiet:hover { background: none; color: var(--gold); border-color: var(--gold); box-shadow: none; }
+
+/* a secondary act as a quiet text link, on its own line below the button */
+.act-link {
+  flex-basis: 100%;
+  order: 9;
+  align-self: center;
+  color: oklch(72% 0.02 85 / 0.45);
+  font-size: 12.5px;
+  letter-spacing: 0.12em;
+  text-indent: 0.12em;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: oklch(78% 0.12 85 / 0.16);
+  transition: color 0.35s, text-decoration-color 0.35s;
+}
+.act-link:hover, .act-link:focus-visible { color: var(--gold); text-decoration-color: currentcolor; }
+
+/* the share line rests at the very foot of the sitting, asking no attention;
+   its height is held even before the button shows, so it never grows the page */
+.share-line { display: flex; justify-content: center; min-height: 28px; }
+.share-btn {
+  font-size: 12px;
+  color: oklch(72% 0.02 85 / 0.38);
+  letter-spacing: 0.14em;
+  text-indent: 0.14em;
+  padding: 4px 10px;
+  transition: color 0.35s;
+}
+.share-btn:hover, .share-btn:focus-visible { color: var(--gold); }

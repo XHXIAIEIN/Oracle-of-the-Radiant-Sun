@@ -1,0 +1,112 @@
+/* ═══════════════════════════════════════════════════════════════
+   Horary setup — question, quick picks, house chips.
+   The setup grid owns its internal spacing; the stage column places it.
+   ═══════════════════════════════════════════════════════════════ */
+
+.setup {
+  width: 100%;
+  max-width: 640px;
+  margin-inline: auto;
+  display: grid;
+  gap: 16px;
+}
+
+/* step header: 壹 · 贰 */
+.setup__step {
+  display: grid;
+  justify-items: center;
+  gap: 5px;
+  text-align: center;
+}
+.setup__step-num {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--gold-line);
+  border-radius: 50%;
+  color: var(--gold);
+  font-size: 15px;
+}
+.setup__step h3 {
+  font-weight: 400;
+  font-size: 19px;
+  letter-spacing: 0.24em;
+  text-indent: 0.24em;
+  color: var(--gold);
+  margin-top: 4px;
+}
+.setup__step p {
+  font-size: 13px;
+  color: var(--ink-dim);
+  max-width: 46ch;
+  text-wrap: balance;
+}
+
+/* the question echoed back while houses are chosen */
+.setup__echo {
+  text-align: center;
+  font-style: italic;
+  font-size: 15.5px;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+}
+.setup__q {
+  width: 100%;
+  background: oklch(20% 0.03 275 / 0.5);
+  border: 1px solid var(--gold-line);
+  border-radius: 4px;
+  color: var(--ink);
+  font: inherit;
+  font-size: 16px;
+  padding: 12px 14px;
+  text-align: center;
+  transition: border-color 0.3s;
+}
+.setup__q:focus { outline: none; border-color: var(--gold); }
+.setup__q::placeholder { color: oklch(60% 0.02 85 / 0.5); }
+
+.setup__hint { font-size: 12.5px; color: var(--ink-dim); text-align: center; }
+
+.houses-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 1fr; /* every cell the same height */
+  gap: 8px;
+}
+@media (max-width: 640px) { .houses-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 440px) { .houses-grid { grid-template-columns: repeat(2, 1fr); } }
+
+.house-chip {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-content: start;
+  row-gap: 4px;
+  min-height: 66px;
+  border: 1px solid var(--gold-line);
+  border-radius: 4px;
+  padding: 9px 11px;
+  text-align: left;
+  transition: border-color 0.3s, background 0.3s;
+}
+.house-chip .n { color: var(--gold); font-size: 14px; line-height: 1.2; }
+.house-chip .kw {
+  grid-column: 1 / -1;
+  font-size: 12px;
+  line-height: 1.5;
+  color: oklch(62% 0.02 85 / 0.75);
+  transition: color 0.3s;
+}
+.house-chip[aria-pressed="true"] {
+  border-color: var(--gold);
+  background: oklch(78% 0.12 85 / 0.08);
+}
+.house-chip[aria-pressed="true"] .kw { color: var(--ink); }
+.house-chip .info {
+  color: var(--gold-dim);
+  font-size: 13px;
+  line-height: 1.2;
+  padding: 0 3px;
+  cursor: help;
+}
+.house-chip .info:hover { color: var(--gold); }

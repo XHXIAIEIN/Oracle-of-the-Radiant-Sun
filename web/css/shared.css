@@ -1,0 +1,48 @@
+/* ═══════════════════════════════════════════════════════════════
+   Shared components — used by more than one screen.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* screen header: back link · title · badge (ritual + library) */
+.ritual-head {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  border-bottom: 1px solid var(--gold-line);
+  padding-bottom: 12px;
+}
+.ritual-head__title {
+  font-weight: 400;
+  font-size: clamp(17px, 2.2vw, 22px);
+  letter-spacing: 0.08em;
+}
+
+.deck-badge {
+  margin-left: auto;
+  font-size: 12.5px;
+  color: var(--ink-dim);
+  border: 1px solid var(--gold-line);
+  border-radius: 999px;
+  padding: 3px 12px;
+}
+.deck-badge b { color: var(--gold); font-weight: 400; }
+
+.ghost-btn {
+  font-size: 13px;
+  color: var(--ink-dim);
+  letter-spacing: 0.08em;
+  padding: 4px 2px;
+  transition: color 0.3s;
+}
+.ghost-btn:hover { color: var(--gold); }
+
+/* pill chips, single or multi select (horary setup + library filters) */
+.qpicks { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.qpick {
+  font-size: 12.5px;
+  color: var(--ink-dim);
+  border: 1px solid var(--gold-line);
+  border-radius: 999px;
+  padding: 4px 14px;
+  transition: color 0.3s, border-color 0.3s;
+}
+.qpick:hover, .qpick[aria-pressed="true"] { color: var(--gold); border-color: var(--gold); }

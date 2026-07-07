@@ -1,0 +1,69 @@
+/* ═══════════════════════════════════════════════════════════════
+   Cards on the wheel — flip faces, stacking, the golden call.
+   ═══════════════════════════════════════════════════════════════ */
+
+.card {
+  position: absolute;
+  /* centring is done with gsap xPercent/yPercent so its transforms never clash */
+  aspect-ratio: var(--card-ratio);
+  padding: 0;
+  perspective: 900px;
+  border-radius: 6px;
+  outline-offset: 3px;
+  z-index: 1;
+}
+.card:focus-visible { outline: 1px solid var(--gold); }
+
+/* stacking: cards awaiting the hand rise above their idle neighbours */
+.card.is-up   { z-index: 2; }
+.card.is-next { z-index: 3; }
+
+.card__inner {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  border-radius: 6px;
+}
+
+.card__face {
+  position: absolute;
+  display: block;
+  inset: 0;
+  border-radius: 5px;
+  backface-visibility: hidden;
+  overflow: hidden;
+  box-shadow: 0 6px 22px oklch(0% 0 0 / 0.45);
+}
+.card__front { transform: rotateY(180deg); background: var(--parchment); }
+.card__front img { width: 100%; height: 100%; display: block; }
+.card__back svg { width: 100%; height: 100%; display: block; }
+
+/* golden call: “this one is next” */
+.card.is-next .card__inner::after {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border-radius: 8px;
+  border: 1px solid var(--gold);
+  opacity: calc(0.25 + var(--pulse) * 0.75);
+  box-shadow: 0 0 calc(6px + var(--pulse) * 16px) oklch(78% 0.12 85 / 0.5);
+  animation: card-call 2.2s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes card-call {
+  0%, 100% { --pulse: 0; }
+  50% { --pulse: 1; }
+}
+
+.card.is-up { cursor: zoom-in; }
+.card[disabled] { cursor: default; }
+
+/* houses outside this reading stay face down — fade them back */
+.card.is-idle { cursor: not-allowed; }
+.card.is-idle .card__inner {
+  filter: brightness(0.45) saturate(0.5);
+  transition: filter 0.8s ease;
+}
+.slot-label.is-idle { opacity: 0.45; transition: opacity 0.8s ease; }

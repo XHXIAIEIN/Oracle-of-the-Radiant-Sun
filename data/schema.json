@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Oracle of the Radiant Sun - Card",
+  "type": "object",
+  "required": ["number", "name", "planet", "sign", "suit_name", "sign_keyword", "image_description", "personal", "reading"],
+  "properties": {
+    "number": {
+      "type": "integer",
+      "description": "Card number within its suit (1-12)"
+    },
+    "name": {
+      "type": "string",
+      "description": "Card keyword/title, e.g. 'Assertion'"
+    },
+    "planet": {
+      "type": "string",
+      "enum": ["Sun", "Moon", "Mercury", "Venus", "Mars", "Jupiter", "Saturn"]
+    },
+    "sign": {
+      "type": "string",
+      "enum": ["Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"]
+    },
+    "suit_name": {
+      "type": "string",
+      "description": "Planet's suit theme, e.g. 'Fortune', 'Security'"
+    },
+    "sign_keyword": {
+      "type": "string",
+      "description": "Sign's keyword, e.g. 'Self-Will', 'Material Values'"
+    },
+    "image_description": {
+      "type": "string",
+      "description": "The 'Image' paragraph describing the card illustration"
+    },
+    "personal": {
+      "type": "string",
+      "description": "The 'Personal' section - personality traits of this planet/sign combo"
+    },
+    "reading": {
+      "type": "string",
+      "description": "The reading/divination interpretation when card appears"
+    },
+    "events": {
+      "type": "string",
+      "description": "The 'Events' section if present"
+    }
+  }
+}

@@ -1,0 +1,37 @@
+/* ═══════════════════════════════════════════════════════════════
+   Design tokens — colour, type, and the spacing scale.
+
+   Spacing contract: containers own the space between their children
+   (padding + gap); children fill their track and never carry
+   margin-block of their own. Three semantic steps:
+     --gap-section  between sibling page sections (板块与板块)
+     --gap-block    between groups inside a section
+     --gap-item     between adjacent small elements
+   ═══════════════════════════════════════════════════════════════ */
+
+@property --pulse {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+
+:root {
+  --night:   oklch(16% 0.03 275);
+  --night-2: oklch(20% 0.035 275);
+  --ink:     oklch(90% 0.02 85);
+  --ink-dim: oklch(72% 0.02 85 / 0.85);
+  --gold:    oklch(78% 0.12 85);
+  --gold-dim:oklch(78% 0.12 85 / 0.4);
+  --gold-line: oklch(78% 0.12 85 / 0.28);
+  --parchment: #f4ecd8;
+  --serif: Georgia, "Times New Roman", "Source Han Serif SC",
+           "Noto Serif CJK SC", "SimSun", serif;
+  --card-ratio: 300 / 446;
+
+  /* spacing scale */
+  --page-pad-inline: clamp(16px, 3vw, 40px);
+  --page-pad-block:  clamp(28px, 5vh, 60px);
+  --gap-section: clamp(26px, 4vh, 48px);
+  --gap-block:   clamp(16px, 2.4vh, 28px);
+  --gap-item:    clamp(8px, 1.4vh, 14px);
+}

@@ -1,0 +1,774 @@
+{
+  "description": "Oracle of the Radiant Sun — 84 张卡牌到扫描页图片的映射。每个花色占书中 14 页(2 页扉页 + 12 张牌),牌页 = 花色起始页 + 1 + 牌序号。所有条目经逐图视觉核对(可见标题/行星·星座副标题/页码/插画与卡牌数据一致)。",
+  "total_cards": 84,
+  "confirmed": 84,
+  "review": [],
+  "unmatched_files": [
+    {
+      "file": "page_026_02.jpg",
+      "note": "Sun 扉页(p26)的重拍/备份,非卡牌页"
+    },
+    {
+      "file": "0_img_20260620_172113.heic",
+      "note": "杂散手机照片,非书页扫描"
+    }
+  ],
+  "cards": [
+    {
+      "planet": "Sun",
+      "sign": "Aries",
+      "number": 1,
+      "name": "Assertion",
+      "page": 28,
+      "image": "page_028.webp",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Sun",
+      "sign": "Taurus",
+      "number": 2,
+      "name": "Acquisition",
+      "page": 29,
+      "image": "page_029.webp",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Sun",
+      "sign": "Gemini",
+      "number": 3,
+      "name": "Versatility",
+      "page": 30,
+      "image": "page_030.webp",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Sun",
+      "sign": "Cancer",
+      "number": 4,
+      "name": "Resourcefulness",
+      "page": 31,
+      "image": "page_031.webp",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Sun",
+      "sign": "Leo",
+      "number": 5,
+      "name": "Fortune",
+      "page": 32,
+      "image": "page_032.webp",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Sun",
+      "sign": "Virgo",
+      "number": 6,
+      "name": "Health",
+      "page": 33,
+      "image": "page_033.webp",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Sun",
+      "sign": "Libra",
+      "number": 7,
+      "name": "Harmony",
+      "page": 34,
+      "image": "page_034.webp",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Sun",
+      "sign": "Scorpio",
+      "number": 8,
+      "name": "Endurance",
+      "page": 35,
+      "image": "page_035.webp",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Sun",
+      "sign": "Sagittarius",
+      "number": 9,
+      "name": "Enthusiasm",
+      "page": 36,
+      "image": "page_036.webp",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Sun",
+      "sign": "Capricorn",
+      "number": 10,
+      "name": "Achievement",
+      "page": 37,
+      "image": "page_037.webp",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Sun",
+      "sign": "Aquarius",
+      "number": 11,
+      "name": "Idealism",
+      "page": 38,
+      "image": "page_038.webp",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Sun",
+      "sign": "Pisces",
+      "number": 12,
+      "name": "Vision",
+      "page": 39,
+      "image": "page_039.webp",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Moon",
+      "sign": "Aries",
+      "number": 1,
+      "name": "Protection",
+      "page": 42,
+      "image": "page_042.webp",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Moon",
+      "sign": "Taurus",
+      "number": 2,
+      "name": "Exaltation",
+      "page": 43,
+      "image": "page_043.webp",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Moon",
+      "sign": "Gemini",
+      "number": 3,
+      "name": "Adaptability",
+      "page": 44,
+      "image": "page_044.webp",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Moon",
+      "sign": "Cancer",
+      "number": 4,
+      "name": "Friendship",
+      "page": 45,
+      "image": "page_045.webp",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Moon",
+      "sign": "Leo",
+      "number": 5,
+      "name": "Appreciation",
+      "page": 46,
+      "image": "page_046.webp",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Moon",
+      "sign": "Virgo",
+      "number": 6,
+      "name": "Order",
+      "page": 47,
+      "image": "page_047.webp",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Moon",
+      "sign": "Libra",
+      "number": 7,
+      "name": "Companionship",
+      "page": 48,
+      "image": "page_048.webp",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Moon",
+      "sign": "Scorpio",
+      "number": 8,
+      "name": "Power",
+      "page": 49,
+      "image": "page_049.webp",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Moon",
+      "sign": "Sagittarius",
+      "number": 9,
+      "name": "Optimism",
+      "page": 50,
+      "image": "page_050.webp",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Moon",
+      "sign": "Capricorn",
+      "number": 10,
+      "name": "Practicality",
+      "page": 51,
+      "image": "page_051.webp",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Moon",
+      "sign": "Aquarius",
+      "number": 11,
+      "name": "Independence",
+      "page": 52,
+      "image": "page_052.webp",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Moon",
+      "sign": "Pisces",
+      "number": 12,
+      "name": "Empathy",
+      "page": 53,
+      "image": "page_053.webp",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Mercury",
+      "sign": "Aries",
+      "number": 1,
+      "name": "Restlessness",
+      "page": 56,
+      "image": "page_056.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Mercury",
+      "sign": "Taurus",
+      "number": 2,
+      "name": "Resistance",
+      "page": 57,
+      "image": "page_057.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Mercury",
+      "sign": "Gemini",
+      "number": 3,
+      "name": "Excitement",
+      "page": 58,
+      "image": "page_058.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Mercury",
+      "sign": "Cancer",
+      "number": 4,
+      "name": "Intuition",
+      "page": 59,
+      "image": "page_059.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Mercury",
+      "sign": "Leo",
+      "number": 5,
+      "name": "Drama",
+      "page": 60,
+      "image": "page_060.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Mercury",
+      "sign": "Virgo",
+      "number": 6,
+      "name": "Caution",
+      "page": 61,
+      "image": "page_061.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Mercury",
+      "sign": "Libra",
+      "number": 7,
+      "name": "Influence",
+      "page": 62,
+      "image": "page_062.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Mercury",
+      "sign": "Scorpio",
+      "number": 8,
+      "name": "Extremism",
+      "page": 63,
+      "image": "page_063.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Mercury",
+      "sign": "Sagittarius",
+      "number": 9,
+      "name": "Discovery",
+      "page": 64,
+      "image": "page_064.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Mercury",
+      "sign": "Capricorn",
+      "number": 10,
+      "name": "Organization",
+      "page": 65,
+      "image": "page_065.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Mercury",
+      "sign": "Aquarius",
+      "number": 11,
+      "name": "Originality",
+      "page": 66,
+      "image": "page_066.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Mercury",
+      "sign": "Pisces",
+      "number": 12,
+      "name": "Inspiration",
+      "page": 67,
+      "image": "page_067.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Venus",
+      "sign": "Aries",
+      "number": 1,
+      "name": "Lust",
+      "page": 70,
+      "image": "page_070.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Venus",
+      "sign": "Taurus",
+      "number": 2,
+      "name": "Romance",
+      "page": 71,
+      "image": "page_071.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Venus",
+      "sign": "Gemini",
+      "number": 3,
+      "name": "Flattery",
+      "page": 72,
+      "image": "page_072.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Venus",
+      "sign": "Cancer",
+      "number": 4,
+      "name": "Birth",
+      "page": 73,
+      "image": "page_073.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Venus",
+      "sign": "Leo",
+      "number": 5,
+      "name": "Affair",
+      "page": 74,
+      "image": "page_074.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Venus",
+      "sign": "Virgo",
+      "number": 6,
+      "name": "Discrimination",
+      "page": 75,
+      "image": "page_075.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Venus",
+      "sign": "Libra",
+      "number": 7,
+      "name": "Indecision",
+      "page": 76,
+      "image": "page_076.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Venus",
+      "sign": "Scorpio",
+      "number": 8,
+      "name": "Secrets",
+      "page": 77,
+      "image": "page_077.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Venus",
+      "sign": "Sagittarius",
+      "number": 9,
+      "name": "Flirtation",
+      "page": 78,
+      "image": "page_078.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Venus",
+      "sign": "Capricorn",
+      "number": 10,
+      "name": "Convention",
+      "page": 79,
+      "image": "page_079.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Venus",
+      "sign": "Aquarius",
+      "number": 11,
+      "name": "Detachment",
+      "page": 80,
+      "image": "page_080.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Venus",
+      "sign": "Pisces",
+      "number": 12,
+      "name": "Submission",
+      "page": 81,
+      "image": "page_081.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Mars",
+      "sign": "Aries",
+      "number": 1,
+      "name": "Impulsiveness",
+      "page": 84,
+      "image": "page_084.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Mars",
+      "sign": "Taurus",
+      "number": 2,
+      "name": "Defense",
+      "page": 85,
+      "image": "page_085.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Mars",
+      "sign": "Gemini",
+      "number": 3,
+      "name": "Decision",
+      "page": 86,
+      "image": "page_086.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Mars",
+      "sign": "Cancer",
+      "number": 4,
+      "name": "Quarrel",
+      "page": 87,
+      "image": "page_087.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Mars",
+      "sign": "Leo",
+      "number": 5,
+      "name": "Egotism",
+      "page": 88,
+      "image": "page_088.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Mars",
+      "sign": "Virgo",
+      "number": 6,
+      "name": "Criticism",
+      "page": 89,
+      "image": "page_089.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Mars",
+      "sign": "Libra",
+      "number": 7,
+      "name": "Choice",
+      "page": 90,
+      "image": "page_090.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Mars",
+      "sign": "Scorpio",
+      "number": 8,
+      "name": "Revenge",
+      "page": 91,
+      "image": "page_091.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Mars",
+      "sign": "Sagittarius",
+      "number": 9,
+      "name": "Domination",
+      "page": 92,
+      "image": "page_092.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Mars",
+      "sign": "Capricorn",
+      "number": 10,
+      "name": "Authority",
+      "page": 93,
+      "image": "page_093.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Mars",
+      "sign": "Aquarius",
+      "number": 11,
+      "name": "Rebellion",
+      "page": 94,
+      "image": "page_094.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Mars",
+      "sign": "Pisces",
+      "number": 12,
+      "name": "Escape",
+      "page": 95,
+      "image": "page_095.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Jupiter",
+      "sign": "Aries",
+      "number": 1,
+      "name": "Enterprise",
+      "page": 98,
+      "image": "page_098.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Jupiter",
+      "sign": "Taurus",
+      "number": 2,
+      "name": "Status",
+      "page": 99,
+      "image": "page_099.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Jupiter",
+      "sign": "Gemini",
+      "number": 3,
+      "name": "Bluff",
+      "page": 100,
+      "image": "page_100.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Jupiter",
+      "sign": "Cancer",
+      "number": 4,
+      "name": "Speculation",
+      "page": 101,
+      "image": "page_101.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Jupiter",
+      "sign": "Leo",
+      "number": 5,
+      "name": "Publicity",
+      "page": 102,
+      "image": "page_102.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Jupiter",
+      "sign": "Virgo",
+      "number": 6,
+      "name": "Patience",
+      "page": 103,
+      "image": "page_103.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Jupiter",
+      "sign": "Libra",
+      "number": 7,
+      "name": "Negotiation",
+      "page": 104,
+      "image": "page_104.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Jupiter",
+      "sign": "Scorpio",
+      "number": 8,
+      "name": "Manipulation",
+      "page": 105,
+      "image": "page_105.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Jupiter",
+      "sign": "Sagittarius",
+      "number": 9,
+      "name": "Principle",
+      "page": 106,
+      "image": "page_106.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Jupiter",
+      "sign": "Capricorn",
+      "number": 10,
+      "name": "Control",
+      "page": 107,
+      "image": "page_107.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Jupiter",
+      "sign": "Aquarius",
+      "number": 11,
+      "name": "Innovation",
+      "page": 108,
+      "image": "page_108.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Jupiter",
+      "sign": "Pisces",
+      "number": 12,
+      "name": "Seduction",
+      "page": 109,
+      "image": "page_109.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Saturn",
+      "sign": "Aries",
+      "number": 1,
+      "name": "Risk",
+      "page": 112,
+      "image": "page_112.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Saturn",
+      "sign": "Taurus",
+      "number": 2,
+      "name": "Ostentation",
+      "page": 113,
+      "image": "page_113.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Saturn",
+      "sign": "Gemini",
+      "number": 3,
+      "name": "Concentration",
+      "page": 114,
+      "image": "page_114.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Saturn",
+      "sign": "Cancer",
+      "number": 4,
+      "name": "Charity",
+      "page": 115,
+      "image": "page_115.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Saturn",
+      "sign": "Leo",
+      "number": 5,
+      "name": "Generosity",
+      "page": 116,
+      "image": "page_116.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Saturn",
+      "sign": "Virgo",
+      "number": 6,
+      "name": "Isolation",
+      "page": 117,
+      "image": "page_117.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Saturn",
+      "sign": "Libra",
+      "number": 7,
+      "name": "Devotion",
+      "page": 118,
+      "image": "page_118.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Saturn",
+      "sign": "Scorpio",
+      "number": 8,
+      "name": "Inheritance",
+      "page": 119,
+      "image": "page_119.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Saturn",
+      "sign": "Sagittarius",
+      "number": 9,
+      "name": "Fulfillment",
+      "page": 120,
+      "image": "page_120.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Saturn",
+      "sign": "Capricorn",
+      "number": 10,
+      "name": "Riches",
+      "page": 121,
+      "image": "page_121.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Saturn",
+      "sign": "Aquarius",
+      "number": 11,
+      "name": "Eccentricity",
+      "page": 122,
+      "image": "page_122.jpg",
+      "status": "confirmed"
+    },
+    {
+      "planet": "Saturn",
+      "sign": "Pisces",
+      "number": 12,
+      "name": "Loss",
+      "page": 123,
+      "image": "page_123.jpg",
+      "status": "confirmed"
+    }
+  ]
+}

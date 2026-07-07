@@ -1,0 +1,77 @@
+/* ═══════════════════════════════════════════════════════════════
+   Base — reset, page canvas, ambient background, screen shell.
+   ═══════════════════════════════════════════════════════════════ */
+
+* { box-sizing: border-box; margin: 0; }
+
+[hidden] { display: none !important; }
+
+html, body { height: 100%; }
+
+/* the page is the one scroller; the stable gutter keeps the scrollbar's
+   coming and going from nudging the whole page sideways */
+html {
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+}
+/* a modal on top owns the scroll — the gutter above makes the lock shift-free */
+html:has(:modal) { overflow: hidden; }
+
+/* themed scrollbars, everywhere: a thin gold thread on a bare track
+   (standard properties first; the -webkit- rules cover Safari) */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold-dim) transparent;
+}
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--gold-dim);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+::-webkit-scrollbar-corner { background: transparent; }
+
+body {
+  font-family: var(--serif);
+  color: var(--ink);
+  background:
+    radial-gradient(120vmax 120vmax at 50% -20%, var(--night-2), transparent 55%),
+    var(--night);
+  line-height: 1.65;
+}
+
+#bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+#bg canvas { display: block; }
+
+/* every screen is a full-height page; block padding gives the top and
+   bottom sections room to breathe */
+.screen {
+  position: relative;
+  z-index: 1;
+  min-height: 100dvh;
+  padding: var(--page-pad-block) var(--page-pad-inline);
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+::selection { background: var(--gold-dim); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001s !important;
+    transition-duration: 0.001s !important;
+  }
+}

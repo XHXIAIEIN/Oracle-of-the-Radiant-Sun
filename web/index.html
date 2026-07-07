@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="color-scheme" content="dark" />
+		<title>Oracle of the Radiant Sun</title>
+		<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ctext y='13' font-size='13'%3E☀%3C/text%3E%3C/svg%3E" />
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<!-- p5 ambient sky: stars + slow radiant halo -->
+		<div id="bg" aria-hidden="true"></div>
+
+		<!-- ══════════════ Screen: home / choose a reading ══════════════ -->
+		<section class="screen screen--home" id="screen-home">
+			<header class="masthead">
+				<div class="masthead__sun" aria-hidden="true">☉</div>
+				<h1 class="masthead__title">Oracle of the Radiant Sun</h1>
+				<p class="masthead__sub">曜日神谕 · 以太阳之环起卦</p>
+			</header>
+
+			<p class="home-intro">
+				书中给出四种以太阳圆环为基础的占法。太阳年（Sun Year）逐月描绘来年十二个月； 时占（Horary）针对一个可以用"是 / 否"回答的具体问题； 大三合（Grand Trine）与本位十字（Cardinal Cross）则用于更简短的综合占问。
+				亦可只抽单张回应当下一问，或往卡片库浏览全副八十四张牌。
+			</p>
+
+			<nav class="methods" aria-label="选择占法">
+				<button class="method" data-method="single">
+					<span class="method__fig" aria-hidden="true"></span>
+					<span class="method__text">
+						<span class="method__name">单张指引</span>
+						<span class="method__en">The Single Card · 一张</span>
+						<span class="method__use">适合<b>一日一牌</b> & <b>当下指引</b></span>
+						<span class="method__desc">不构轮盘，洗牌后只取牌堆顶的一张，作当下处境或一日一牌的简短指引；意犹未尽可再抽。</span>
+					</span>
+				</button>
+				<button class="method" data-method="horary">
+					<span class="method__fig" aria-hidden="true"></span>
+					<span class="method__text">
+						<span class="method__name">时占牌阵</span>
+						<span class="method__en">The Horary · 十二张</span>
+						<span class="method__use">主要用于<b>问事</b> & <b>是否判断</b></span>
+						<span class="method__desc">默想一个具体问题，发十二张牌，只翻开与问题相关宫位上的牌，从中得出是与否。</span>
+					</span>
+				</button>
+				<button class="method" data-method="trine">
+					<span class="method__fig" aria-hidden="true"></span>
+					<span class="method__text">
+						<span class="method__name">大三合牌阵</span>
+						<span class="method__en">The Grand Trine · 三张</span>
+						<span class="method__use">适合<b>观照自我</b> & <b>创造与拓展</b></span>
+						<span class="method__desc">相距 120° 的第一、五、九宫：你自己、你的创造力、你将如何拓展人生。</span>
+					</span>
+				</button>
+				<button class="method" data-method="cross">
+					<span class="method__fig" aria-hidden="true"></span>
+					<span class="method__text">
+						<span class="method__name">本位十字牌阵</span>
+						<span class="method__en">The Cardinal Cross · 四张</span>
+						<span class="method__use">适合<b>综合速读</b> & <b>人生四轴</b></span>
+						<span class="method__desc">相距 90° 的四个轴角宫：人格、家庭、婚姻伴侣、事业成就。宜作简短占读。</span>
+					</span>
+				</button>
+				<button class="method" data-method="sunyear">
+					<span class="method__fig" aria-hidden="true"></span>
+					<span class="method__text">
+						<span class="method__name">太阳年牌阵</span>
+						<span class="method__en">The Sun Year · 十三张</span>
+						<span class="method__use">适合<b>年度展望</b> & <b>逐月细读</b></span>
+						<span class="method__desc">逐月展读来年十二个月，中央一张为全年主题。可再深入任一月、周、日，乃至某一钟点。</span>
+					</span>
+				</button>
+			</nav>
+
+			<button class="lib-open" id="btn-library" type="button">卡片库 · 浏览全部八十四张牌</button>
+
+			<footer class="home-foot">Astrology Cards to Illuminate Your Life</footer>
+		</section>
+
+		<!-- ══════════════ Screen: ritual ══════════════ -->
+		<section class="screen screen--ritual" id="screen-ritual" hidden>
+			<header class="ritual-head">
+				<button class="ghost-btn" id="btn-home" type="button">← 回到起始页</button>
+				<h2 class="ritual-head__title" id="ritual-title"></h2>
+				<span class="deck-badge" id="deck-badge" hidden>
+					牌堆余
+					<b id="deck-count">71</b>
+				</span>
+			</header>
+
+			<div class="ritual-body" id="ritual-body">
+				<div class="stage-wrap">
+					<!-- horary setup panel lives above the wheel until shuffling begins -->
+					<div class="setup" id="setup" hidden></div>
+					<!-- the horary question, inscribed above the wheel for the whole sitting -->
+					<p class="question-line" id="question-line" hidden></p>
+					<div class="wheel" id="wheel"></div>
+					<!-- one quiet instruction line at a time, beneath the wheel -->
+					<p class="rite-line" id="rite-line" aria-live="polite"></p>
+					<div class="stage-actions" id="stage-actions"></div>
+				</div>
+				<aside class="panel" id="panel" hidden>
+					<div class="panel__head">
+						<h3 class="panel__title" id="panel-title"></h3>
+						<button class="panel__sort" id="panel-sort" type="button">改为先翻在上</button>
+					</div>
+					<div class="panel__list" id="panel-list"></div>
+					<button class="panel__jump" id="panel-jump" type="button" hidden>
+						<span class="arrow">↓</span>
+						回到最新
+					</button>
+				</aside>
+			</div>
+
+			<!-- quiet share link at the very foot of the sitting -->
+			<footer class="share-line">
+				<button class="share-btn" id="btn-share" type="button" hidden>⎘ 分享此局 · 复制链接</button>
+			</footer>
+		</section>
+
+		<!-- ══════════════ Screen: card library ══════════════ -->
+		<section class="screen screen--library" id="screen-library" hidden>
+			<header class="ritual-head">
+				<button class="ghost-btn" id="btn-lib-home" type="button">← 回到起始页</button>
+				<h2 class="ritual-head__title">卡片库 · The Complete Deck</h2>
+				<span class="deck-badge" id="lib-count">
+					<b>84</b>
+					/ 84 张
+				</span>
+			</header>
+			<div class="lib-filters" id="lib-filters"></div>
+			<div class="lib-secs" id="lib-secs"></div>
+		</section>
+
+		<!-- ══════════════ Card detail dialog ══════════════ -->
+		<dialog class="card-dialog" id="card-dialog">
+			<button class="card-dialog__close" id="dialog-close" type="button" aria-label="关闭">✕</button>
+			<!-- leaf through a row of cards (a week's days …) without leaving the dialog -->
+			<button class="card-dialog__nav card-dialog__nav--prev" id="dialog-prev" type="button" aria-label="上一张" hidden>‹</button>
+			<button class="card-dialog__nav card-dialog__nav--next" id="dialog-next" type="button" aria-label="下一张" hidden>›</button>
+			<div class="card-dialog__grid" id="dialog-body"></div>
+		</dialog>
+
+		<!-- full-size card art, opened by tapping the art in the detail dialog -->
+		<dialog class="zoom-dialog" id="zoom-dialog">
+			<img id="zoom-img" alt="" />
+		</dialog>
+
+		<script src="vendor/p5.min.js"></script>
+		<script src="vendor/gsap.min.js"></script>
+		<script src="sketch.js"></script>
+		<script type="module" src="js/main.js"></script>
+	</body>
+</html>

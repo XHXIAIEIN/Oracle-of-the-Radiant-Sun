@@ -5,6 +5,10 @@ export const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 export const D = x => (REDUCED ? 0.001 : x); // duration helper
 export const sleep = ms => new Promise(r => setTimeout(r, REDUCED ? 0 : ms));
 
+/* the phone layout breakpoint — one truth shared by CSS (700px media
+   queries) and the JS that arranges the table differently on a phone */
+export const MOBILE = matchMedia('(max-width: 700px)');
+
 export const el = (tag, cls, html) => {
 	const n = document.createElement(tag);
 	if (cls) n.className = cls;

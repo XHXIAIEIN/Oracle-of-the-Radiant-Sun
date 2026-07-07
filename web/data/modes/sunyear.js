@@ -25,7 +25,7 @@ export default {
 		const m = MONTHS[S.startPos - 1];
 		return [`自当前月份（${m.zh} · ${m.en}）开始，逐月翻开，环行一年；最后翻开中央的主题之牌。`, 'Look first at the card that represents the current month, proceeding month by month around the circle.'];
 	},
-	doneLine: '圆环已满，中央之牌是全年的主题。点击任意一张牌细读，或在右侧深入某个月份、某一周、某一天。',
+	doneLine: '圆环已满，中央之牌是全年的主题。点击任意一张牌细读，或在解读一栏深入某个月份、某一周、某一天。',
 
 	themeWhere: '主题 · THEME OF THE YEAR',
 	themeCtx: `${TITLE}<br><b>中央 · 全年主题 The Emphasis or Theme</b>`,

@@ -23,6 +23,7 @@
   border: 1px solid var(--gold-line);
   border-radius: 999px;
   padding: 3px 12px;
+  white-space: nowrap;
 }
 .deck-badge b { color: var(--gold); font-weight: 400; }
 
@@ -31,9 +32,11 @@
   color: var(--ink-dim);
   letter-spacing: 0.08em;
   padding: 4px 2px;
+  white-space: nowrap;
   transition: color 0.3s;
 }
-.ghost-btn:hover { color: var(--gold); }
+/* the long back label reads well on a desk; on a phone the word 返回 is enough */
+.ghost-btn .label-short { display: none; }
 
 /* pill chips, single or multi select (horary setup + library filters) */
 .qpicks { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
@@ -45,4 +48,65 @@
   padding: 4px 14px;
   transition: color 0.3s, border-color 0.3s;
 }
-.qpick:hover, .qpick[aria-pressed="true"] { color: var(--gold); border-color: var(--gold); }
+.qpick[aria-pressed="true"] { color: var(--gold); border-color: var(--gold); }
+
+/* pointer affordances live behind a hover guard, so a finger's tap
+   never leaves a chip looking half-selected */
+@media (hover: hover) {
+  .ghost-btn:hover { color: var(--gold); }
+  .qpick:hover { color: var(--gold); border-color: var(--gold); }
+}
+.ghost-btn:active { color: var(--gold); }
+.qpick:active { border-color: var(--gold); }
+
+/* ── the phone app bar ──────────────────────────────────────────
+   One line pinned to the top: back · title (ellipsised) · badge.
+   It bleeds to the screen edges and pads itself back, so the blur
+   sheet runs the full width under the notch. */
+@media (max-width: 700px) {
+  .ritual-head {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    align-items: center;
+    gap: 10px;
+    margin-inline: calc(var(--page-pad-inline) * -1);
+    padding: max(10px, var(--safe-top)) var(--page-pad-inline) 10px;
+    background: color-mix(in oklab, var(--night) 88%, transparent);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+  }
+
+  .ritual-head__title {
+    flex: 1;
+    min-width: 0;
+    text-align: center;
+    font-size: 17px;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  /* the title's English half yields; the Chinese name stays */
+  .ritual-head__title .t-en, .ritual-head__title .t-dot { display: none; }
+
+  .ghost-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    min-height: var(--tap);
+    padding: 4px 8px 4px 0;
+  }
+  .ghost-btn .label-long { display: none; }
+  .ghost-btn .label-short { display: inline; }
+
+  .deck-badge { font-size: 12px; padding: 4px 10px; }
+
+  .qpick {
+    min-height: 38px;
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 16px;
+    font-size: 13px;
+  }
+}

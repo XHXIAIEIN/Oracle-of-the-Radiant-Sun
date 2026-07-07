@@ -58,7 +58,7 @@
   border-radius: 4px;
   color: var(--ink);
   font: inherit;
-  font-size: 16px;
+  font-size: 16px; /* not smaller — iOS zooms into any field below 16px */
   padding: 12px 14px;
   text-align: center;
   transition: border-color 0.3s;
@@ -109,4 +109,51 @@
   padding: 0 3px;
   cursor: help;
 }
-.house-chip .info:hover { color: var(--gold); }
+@media (hover: hover) {
+  .house-chip .info:hover { color: var(--gold); }
+}
+
+/* ── the phone setup ────────────────────────────────────────────
+   The example questions run as two swipeable shelf rows instead of a
+   screen-long stack, and the step's own act stays pinned in thumb
+   reach while the list scrolls behind it. */
+@media (max-width: 700px) {
+  .setup .qpicks {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(2, auto);
+    grid-auto-columns: max-content;
+    justify-content: flex-start;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    /* bleed to the screen edge so the shelf visibly runs off it */
+    margin-inline: -26px;
+    padding-inline: 26px;
+    padding-block: 2px;
+  }
+  .setup .qpicks::-webkit-scrollbar { display: none; }
+
+  .house-chip { padding: 10px 12px; }
+  .house-chip .info {
+    font-size: 15px;
+    padding: 4px 8px;
+    margin: -4px -8px; /* a finger-sized target without moving the glyph */
+  }
+
+  /* while a setup step is on stage, its actions ride the viewport foot */
+  .stage-wrap:has(> .setup:not([hidden])) .stage-actions {
+    position: sticky;
+    bottom: max(12px, var(--safe-bottom));
+    z-index: 10;
+  }
+  .stage-wrap:has(> .setup:not([hidden])) .stage-actions .act-btn {
+    background: color-mix(in oklab, var(--night) 82%, var(--gold));
+    box-shadow: 0 8px 26px oklch(0% 0 0 / 0.5);
+  }
+  .stage-wrap:has(> .setup:not([hidden])) .stage-actions .act-btn:active {
+    background: var(--gold);
+    color: var(--night);
+  }
+}

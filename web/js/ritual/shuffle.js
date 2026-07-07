@@ -1,6 +1,6 @@
 /* 洗牌阶段：绘环、题问上壁、点击牌堆洗牌，心定后开始发牌 */
 
-import { $, el, D, cryptoShuffle } from '../dom.js';
+import { $, el, D, cryptoShuffle, MOBILE } from '../dom.js';
 import { wheel, setRite, setActions } from '../stage.js';
 import { S, mode, applyPreset } from '../state.js';
 import { drawRing } from '../wheel.js';
@@ -43,10 +43,12 @@ export function shufflePhase() {
 	wheel.append(hint);
 	gsap.fromTo(hint, { opacity: 0 }, { opacity: 1, duration: D(0.9), delay: D(0.4) });
 
-	const bDeal = el('button', 'act-btn act-btn--wheel', S.method === 'single' ? STR.deck.drawOne : STR.deck.deal);
+	/* 桌面端这一钮悬在轮盘下部；手机上那里既挤着提示行，又离拇指远，
+	   便让它列在仪轨行下的操作区 */
+	const bDeal = el('button', 'act-btn' + (MOBILE.matches ? '' : ' act-btn--wheel'), S.method === 'single' ? STR.deck.drawOne : STR.deck.deal);
 	bDeal.type = 'button';
 	bDeal.hidden = true;
-	wheel.append(bDeal);
+	if (!MOBILE.matches) wheel.append(bDeal);
 
 	deckPile.onclick = async () => {
 		if (S.busy) return;
@@ -59,7 +61,8 @@ export function shufflePhase() {
 		if (S.shuffles === 1) {
 			hint.innerHTML = bi(STR.deck.hintAgain);
 			bDeal.hidden = false;
-			gsap.fromTo(bDeal, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: D(0.6), ease: 'power2.out' });
+			if (MOBILE.matches) setActions([bDeal]);
+			else gsap.fromTo(bDeal, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: D(0.6), ease: 'power2.out' });
 		}
 	};
 

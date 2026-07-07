@@ -32,6 +32,7 @@ export function horarySetup() {
 		setRite(...C.step1.rite);
 
 		const q = el('input', 'setup__q');
+		q.name = 'question';
 		q.placeholder = C.step1.placeholder;
 		q.maxLength = 120;
 		q.value = S.question;

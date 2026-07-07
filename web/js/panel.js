@@ -3,14 +3,17 @@
 import { $, D, REDUCED } from './dom.js';
 import { panel, panelList } from './stage.js';
 import { STR } from '../data/i18n.js';
+import { drawerOnOpen, drawerOnEntry } from './drawer.js';
 
 /* the reading panel arrives as a grid-track transition (see .ritual-body),
-   the wheel easing aside rather than snapping to its smaller column */
+   the wheel easing aside rather than snapping to its smaller column;
+   on a phone it rises instead as the bottom drawer (js/drawer.js) */
 export function openPanel() {
 	if (!panel.hidden) return;
 	panel.hidden = false;
 	void panel.offsetWidth; // commit the collapsed track, so the class change transitions
 	$('#ritual-body').classList.add('has-panel');
+	drawerOnOpen();
 }
 
 /* the reading log: newest entry on top by default.
@@ -19,6 +22,7 @@ export function openPanel() {
 let panelDesc = true;
 
 export function placeEntry(entry) {
+	drawerOnEntry(); // 首笔解读落下时，收着的抽屉升到半屏
 	panelDesc ? panelList.prepend(entry) : panelList.append(entry);
 	gsap.set(entry, { overflow: 'clip' });
 	gsap.timeline({
@@ -55,11 +59,19 @@ function pillArrow() {
 }
 
 /* scroll the panel alone — scrollIntoView would drag every scrollable
-   ancestor along and yank the page itself */
+   ancestor along and yank the page itself. The drawer's grip and head
+   ride sticky over the log, so they count into the top margin. */
+const stickyChrome = () => {
+	let h = 0;
+	for (const n of panel.querySelectorAll('.panel__grip, .panel__head')) {
+		if (getComputedStyle(n).position === 'sticky') h += n.offsetHeight;
+	}
+	return h;
+};
 function scrollPanelTo(node) {
 	const p = panel.getBoundingClientRect(),
 		r = node.getBoundingClientRect(),
-		m = 10;
+		m = 10 + stickyChrome();
 	const topDelta = r.top - (p.top + m);
 	let delta = 0;
 	if (r.top < p.top + m) delta = topDelta;

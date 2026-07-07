@@ -1,4 +1,4 @@
-# Oracle of the Radiant Sun · 曜日神谕
+# Oracle of the Radiant Sun
 
 《The Oracle of the Radiant Sun》（Caroline Smith & John Astrop）的数字化项目：将原书 84 张占星神谕卡与书中占法做成可以在浏览器里直接使用的网页应用。
 

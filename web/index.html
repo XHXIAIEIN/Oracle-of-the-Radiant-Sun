@@ -2,11 +2,13 @@
 <html lang="zh-CN">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 		<meta name="color-scheme" content="dark" />
+		<meta name="theme-color" content="#12131f" />
+		<meta name="format-detection" content="telephone=no,email=no,address=no" />
 		<title>Oracle of the Radiant Sun</title>
 		<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ctext y='13' font-size='13'%3E☀%3C/text%3E%3C/svg%3E" />
-		<link rel="stylesheet" href="style.css" />
+		<link rel="stylesheet" href="css/style.css" />
 	</head>
 	<body>
 		<!-- p5 ambient sky: stars + slow radiant halo -->
@@ -81,7 +83,7 @@
 		<!-- ══════════════ Screen: ritual ══════════════ -->
 		<section class="screen screen--ritual" id="screen-ritual" hidden>
 			<header class="ritual-head">
-				<button class="ghost-btn" id="btn-home" type="button">← 回到起始页</button>
+				<button class="ghost-btn" id="btn-home" type="button">←<span class="label-long"> 回到起始页</span><span class="label-short"> 返回</span></button>
 				<h2 class="ritual-head__title" id="ritual-title"></h2>
 				<span class="deck-badge" id="deck-badge" hidden>
 					牌堆余
@@ -101,6 +103,8 @@
 					<div class="stage-actions" id="stage-actions"></div>
 				</div>
 				<aside class="panel" id="panel" hidden>
+					<!-- the drawer's grip: drag between peek / half / full, tap to toggle -->
+					<button class="panel__grip" id="panel-grip" type="button" aria-label="拖动或点按，收起 / 展开解读"></button>
 					<div class="panel__head">
 						<h3 class="panel__title" id="panel-title"></h3>
 						<button class="panel__sort" id="panel-sort" type="button">改为先翻在上</button>
@@ -122,8 +126,8 @@
 		<!-- ══════════════ Screen: card library ══════════════ -->
 		<section class="screen screen--library" id="screen-library" hidden>
 			<header class="ritual-head">
-				<button class="ghost-btn" id="btn-lib-home" type="button">← 回到起始页</button>
-				<h2 class="ritual-head__title">卡片库 · The Complete Deck</h2>
+				<button class="ghost-btn" id="btn-lib-home" type="button">←<span class="label-long"> 回到起始页</span><span class="label-short"> 返回</span></button>
+				<h2 class="ritual-head__title"><span class="t-zh">卡片库</span><span class="t-dot"> · </span><span class="t-en">The Complete Deck</span></h2>
 				<span class="deck-badge" id="lib-count">
 					<b>84</b>
 					/ 84 张
@@ -135,6 +139,8 @@
 
 		<!-- ══════════════ Card detail dialog ══════════════ -->
 		<dialog class="card-dialog" id="card-dialog">
+			<!-- bottom-sheet grabber: drag down to dismiss (phones only) -->
+			<div class="card-dialog__grab" id="dialog-grab" aria-hidden="true"></div>
 			<button class="card-dialog__close" id="dialog-close" type="button" aria-label="关闭">✕</button>
 			<!-- leaf through a row of cards (a week's days …) without leaving the dialog -->
 			<button class="card-dialog__nav card-dialog__nav--prev" id="dialog-prev" type="button" aria-label="上一张" hidden>‹</button>
@@ -149,7 +155,7 @@
 
 		<script src="vendor/p5.min.js"></script>
 		<script src="vendor/gsap.min.js"></script>
-		<script src="sketch.js"></script>
+		<script src="js/sketch.js"></script>
 		<script type="module" src="js/main.js"></script>
 	</body>
 </html>

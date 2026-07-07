@@ -77,8 +77,54 @@ dialog.addEventListener('keydown', e => {
 	else if (e.key === 'ArrowRight') step(1);
 });
 
+/* 横扫翻到同行的邻牌——竖着卷动照旧交给正文的滚动 */
+let swipe = null;
+dialog.addEventListener('touchstart', e => (swipe = { x: e.touches[0].clientX, y: e.touches[0].clientY }), { passive: true });
+dialog.addEventListener(
+	'touchend',
+	e => {
+		if (!swipe || !nav) return;
+		const dx = e.changedTouches[0].clientX - swipe.x;
+		const dy = e.changedTouches[0].clientY - swipe.y;
+		swipe = null;
+		if (Math.abs(dx) > 56 && Math.abs(dx) > Math.abs(dy) * 1.8) step(dx < 0 ? 1 : -1);
+	},
+	{ passive: true }
+);
+
+/* 底部半屏的抓手：随指下拉，拉过门槛即散场，不及则弹回 */
+const grab = $('#dialog-grab');
+let grabY = null;
+grab.addEventListener('pointerdown', e => {
+	grabY = e.clientY;
+	try {
+		grab.setPointerCapture(e.pointerId);
+	} catch {} // 指针已然离场（或合成事件）时，捕获不到也无妨
+});
+grab.addEventListener('pointermove', e => {
+	if (grabY == null) return;
+	gsap.set(dialog, { y: Math.max(0, e.clientY - grabY) });
+});
+const grabEnd = e => {
+	if (grabY == null) return;
+	const dy = e.clientY - grabY;
+	grabY = null;
+	if (dy > 110) {
+		gsap.to(dialog, { y: dialog.getBoundingClientRect().height, duration: D(0.28), ease: 'power2.in', onComplete: () => dialog.close() });
+	} else {
+		gsap.to(dialog, { y: 0, duration: D(0.3), ease: 'power2.out' });
+	}
+};
+grab.addEventListener('pointerup', grabEnd);
+grab.addEventListener('pointercancel', grabEnd);
+dialog.addEventListener('close', () => gsap.set(dialog, { y: 0 }));
+
+/* 点在幕布上才散场——点到弹层自己的留白不算 */
 dialog.addEventListener('click', e => {
-	if (e.target === dialog) dialog.close();
+	if (e.target !== dialog) return;
+	const r = dialog.getBoundingClientRect();
+	const inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+	if (!inside) dialog.close();
 });
 $('#dialog-close').onclick = () => dialog.close();
 

@@ -8,11 +8,22 @@
   width: min(100%, max(320px, var(--wheel-room)));
   aspect-ratio: 1;
   margin-inline: auto;
+  /* the bottom slot labels hang below the wheel's square — this margin
+     is their room, keeping the rite line at arm's length */
+  margin-bottom: clamp(14px, 2.6vh, 30px);
 }
 /* the single-card sitting needs no zodiac ring — a smaller table */
 .wheel--single { width: min(100%, max(280px, var(--wheel-room) * 0.74)); }
+/* on a phone the single table takes the full width, so the pile and
+   the drawn card are both a comfortable thumb's target; without a ring
+   the square would be mostly dark, so the table is flattened to just
+   the room the pile and the drawn card need */
+@media (max-width: 700px) {
+  .wheel--single { width: 100%; aspect-ratio: 100 / 62; }
+  .wheel--single .deck-hint { top: 76%; }
+}
 /* before anything is laid out (horary setup) the wheel takes no room */
-.wheel:empty { aspect-ratio: auto; }
+.wheel:empty { aspect-ratio: auto; margin-bottom: 0; }
 
 /* faint zodiac ring + spokes, drawn by JS as inline svg */
 .wheel__ring { position: absolute; inset: 0; opacity: 0.5; }
@@ -34,8 +45,21 @@
 .slot-label.is-active { color: var(--gold); }
 .slot-label--r { translate: 0 -50%; justify-items: start; text-align: left; }
 .slot-label--l { translate: -100% -50%; justify-items: end; text-align: right; }
-@media (max-width: 560px) {
-  .slot-label { font-size: 8.5px; letter-spacing: 0.06em; }
+
+/* each label carries a long and a short wording (wheel.js); the phone
+   keeps only the short one, so the side labels stay on screen */
+.slot-label .lab-short { display: none; }
+@media (max-width: 700px) {
+  .slot-label { font-size: 10px; letter-spacing: 0.06em; }
+  .slot-label .lab-full { display: none; }
+  .slot-label .lab-short { display: block; }
+  /* above and below the ring the cards leave no headroom — those labels
+     run glyph and word in one line and stay clear of the cards */
+  .slot-label:not(.slot-label--l):not(.slot-label--r) {
+    grid-auto-flow: column;
+    align-items: center;
+    gap: 4px;
+  }
 }
 
 /* a house label that opens a popover (horary reference) */
@@ -124,6 +148,9 @@
   translate: -50% 0;
   z-index: 5;
 }
+/* the single table is a smaller square — the same percentages would
+   land the button on the hint's english line, so it sits lower */
+.wheel--single .act-btn--wheel { top: 84%; }
 
 /* the single sitting: “draw again” hugs the pile's foot, the
    return-and-reshuffle link the flipped card's — left/top set by JS,

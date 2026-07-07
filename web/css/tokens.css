@@ -34,4 +34,21 @@
   --gap-section: clamp(26px, 4vh, 48px);
   --gap-block:   clamp(16px, 2.4vh, 28px);
   --gap-item:    clamp(8px, 1.4vh, 14px);
+
+  /* touch: minimum comfortable target (Apple HIG 44pt / WeChat 88rpx) */
+  --tap: 44px;
+
+  /* notch and home-indicator insets (viewport-fit=cover) */
+  --safe-top:    env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* the phone layer tightens the page rhythm — small screens read in
+   shorter breaths than a desktop window */
+@media (max-width: 700px) {
+  :root {
+    --page-pad-block: 20px;
+    --gap-section: 22px;
+    --gap-block: 14px;
+  }
 }

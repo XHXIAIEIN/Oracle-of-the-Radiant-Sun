@@ -1,7 +1,8 @@
-/* 单张：牌堆留在桌上作源头，点堆（或堆下按钮）即再抽一张，
-   放回重洗的链接就挂在翻开那张牌的下方 */
+/* 单张：牌堆留在桌上作源头，点堆（或"再抽一张"按钮）即再抽一张。
+   桌面端两枚小按钮贴在牌堆与翻开那张牌的下缘；手机上桌面太挤，
+   它们改列在仪轨行下的操作区，指下即是 */
 
-import { $, el, D, cryptoShuffle } from '../dom.js';
+import { $, el, D, cryptoShuffle, MOBILE } from '../dom.js';
 import { wheel, setRite, setActions, updateBadge } from '../stage.js';
 import { S, takeCards, drawCount } from '../state.js';
 import { DECK } from '../../data/card/deck.js';
@@ -9,23 +10,21 @@ import { MODES } from '../../data/modes/index.js';
 import { STR } from '../../data/i18n.js';
 import { psSuitLine } from '../../data/card/glyphs.js';
 import { cardShell, flipCard } from '../cards.js';
-import { openPanel, placeEntry } from '../panel.js';
+import { openPanel, placeEntry, scrollPanelTo } from '../panel.js';
 import { openDialog } from '../dialog.js';
 import { deckPile, animateShuffle, syncDeckThickness, topLayerPose } from './deck-pile.js';
 import { showShare } from '../share.js';
 
 const M = () => MODES.single;
 
-/* 桌面几何（% of wheel）：牌堆与大牌的落点、宽，以及牌面宽高比 */
+/* 桌面几何（% of wheel）：牌堆与大牌的落点、宽。手机的轮盘即全宽，
+   堆与牌都放大到指得住的尺寸 */
 const RATIO = 300 / 446; // 与 --card-ratio 一致
-const PILE_X = 31;
-const PILE_W = 12.8;
-const CARD_X = 63;
-const CARD_W = 24;
+const GEO = () => (MOBILE.matches ? { PILE_X: 26, PILE_W: 16, CARD_X: 64, CARD_W: 30 } : { PILE_X: 31, PILE_W: 12.8, CARD_X: 63, CARD_W: 24 });
 /* 中心在 topPct、宽 w 的牌，其下缘再留一点呼吸的位置 */
 const underY = (topPct, w) => topPct + w / RATIO / 2 + 2.2 + '%';
 
-let again = null; // 牌堆下的“再抽一张”
+let again = null; // “再抽一张”——桌面贴堆下，手机入操作区
 let live = null; // 桌上已翻开的那张：{ card, link }
 
 export function singleDeal() {
@@ -33,25 +32,34 @@ export function singleDeal() {
 	$('#panel-title').innerHTML = M().panelTitle;
 	setActions([]);
 	live = null;
+	const G = GEO();
 
-	gsap.to(deckPile, { left: PILE_X + '%', duration: D(0.7), ease: 'power2.inOut' });
+	deckPile.style.width = G.PILE_W + '%';
+	gsap.to(deckPile, { left: G.PILE_X + '%', duration: D(0.7), ease: 'power2.inOut' });
 
-	// 牌堆自身就是“再抽一张”，堆下缘再贴一枚同义按钮
-	again = el('button', 'act-btn act-btn--quiet act-btn--deck', M().again);
+	// 牌堆自身就是“再抽一张”；按钮是它的同义词
+	again = el('button', 'act-btn act-btn--quiet' + (MOBILE.matches ? '' : ' act-btn--deck'), M().again);
 	again.type = 'button';
 	again.hidden = true;
 	again.onclick = drawAgain;
-	Object.assign(again.style, { left: PILE_X + '%', top: underY(50, PILE_W) });
-	wheel.append(again);
+	if (!MOBILE.matches) {
+		Object.assign(again.style, { left: G.PILE_X + '%', top: underY(50, G.PILE_W) });
+		wheel.append(again);
+	}
 	deckPile.disabled = true;
 	deckPile.onclick = drawAgain;
 
 	singleDrawNext();
 }
 
-/* 桌上有翻开的牌时，牌堆与堆下按钮才应邀请再抽 */
+/* 桌上有翻开的牌时，牌堆与“再抽/放回”才应邀请 */
 function setDrawable(on) {
 	deckPile.disabled = !on;
+	if (MOBILE.matches) {
+		again.hidden = false;
+		setActions(on && live ? [again, live.link] : []);
+		return;
+	}
 	again.hidden = !on;
 	if (on) gsap.fromTo(again, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: D(0.5), ease: 'power2.out' });
 }
@@ -64,7 +72,7 @@ function drawAgain() {
 	// 编排：旧牌先被“拿起”再向右放走，新牌错开半拍从堆顶抽出，
 	// 新牌逼近落点时旧牌已基本让开，桌面不显挤
 	card.disabled = true;
-	gsap.to(link, { opacity: 0, duration: D(0.25), ease: 'power1.in', onComplete: () => link.remove() });
+	if (link.isConnected) gsap.to(link, { opacity: 0, duration: D(0.25), ease: 'power1.in', onComplete: () => link.remove() });
 	gsap.timeline()
 		.to(card, { scale: 1.05, y: '-=6', duration: D(0.16), ease: 'power1.out' })
 		.to(card, {
@@ -84,9 +92,11 @@ function singleDrawNext(delay = 0) {
 	if (!idxs) {
 		setRite(STR.deck.empty);
 		again?.remove();
+		setActions([]);
 		deckPile.disabled = true;
 		return;
 	}
+	const G = GEO();
 	const di = idxs[0];
 	const n = ++S.drawn;
 	S.placed.set(n, di);
@@ -97,14 +107,14 @@ function singleDrawNext(delay = 0) {
 
 	const card = el('button', 'card', cardShell(di));
 	card.type = 'button';
-	card.style.width = CARD_W + '%';
-	card.style.left = PILE_X + '%';
+	card.style.width = G.CARD_W + '%';
+	card.style.left = G.PILE_X + '%';
 	card.style.top = '50%';
 	card.setAttribute('aria-label', M().nthAria(n));
 	wheel.append(card);
-	// 起飞点是堆顶那张的姿态（0.53 ≈ 12.8/24，恰是牌堆与大牌的宽度比），飞行时压过牌堆
+	// 起飞点是堆顶那张的姿态（缩到堆与牌的宽度比），飞行时压过牌堆
 	const pose = topLayerPose(drawCount() + 1);
-	gsap.set(card, { xPercent: -50, yPercent: -50, opacity: 0, x: pose.x, y: pose.y, scale: 0.53, rotation: pose.rotation, zIndex: 6 });
+	gsap.set(card, { xPercent: -50, yPercent: -50, opacity: 0, x: pose.x, y: pose.y, scale: G.PILE_W / G.CARD_W, rotation: pose.rotation, zIndex: 6 });
 	S.busy = true;
 	gsap.delayedCall(delay, syncDeckThickness); // 牌堆在起飞那一刻才收薄
 	const landTop = 50 + gsap.utils.random(-1.2, 1.2); // 落点带一点错位，放回链接照它贴
@@ -112,7 +122,7 @@ function singleDrawNext(delay = 0) {
 		opacity: 1,
 		scale: 1,
 		rotation: gsap.utils.random(-2.5, 2.5),
-		left: CARD_X + '%',
+		left: G.CARD_X + '%',
 		top: landTop + '%',
 		x: 0,
 		y: 0,
@@ -144,12 +154,14 @@ function singleDrawNext(delay = 0) {
 			const entry = appendSingleEntry(di, n);
 			setRite(...M().afterFlip);
 
-			const link = el('button', 'act-link act-link--card', M().putBack);
+			const link = el('button', 'act-link' + (MOBILE.matches ? '' : ' act-link--card'), M().putBack);
 			link.type = 'button';
 			link.onclick = () => returnToDeck(card, link, entry, n);
-			Object.assign(link.style, { left: CARD_X + '%', top: underY(landTop, CARD_W) });
-			wheel.append(link);
-			gsap.fromTo(link, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: D(0.5), ease: 'power2.out' });
+			if (!MOBILE.matches) {
+				Object.assign(link.style, { left: G.CARD_X + '%', top: underY(landTop, G.CARD_W) });
+				wheel.append(link);
+				gsap.fromTo(link, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: D(0.5), ease: 'power2.out' });
+			}
 
 			live = { card, link };
 			setDrawable(true);
@@ -162,7 +174,7 @@ function returnToDeck(card, link, entry, n) {
 	S.busy = true;
 	live = null;
 	setDrawable(false);
-	gsap.to(link, { opacity: 0, duration: D(0.25), ease: 'power1.in', onComplete: () => link.remove() });
+	if (link.isConnected) gsap.to(link, { opacity: 0, duration: D(0.25), ease: 'power1.in', onComplete: () => link.remove() });
 	/* the returned card no longer counts as drawn */
 	S.placed.delete(n);
 	S.drawn--;
@@ -176,8 +188,8 @@ function returnToDeck(card, link, entry, n) {
 	gsap.set(card, { zIndex: 6 });
 	gsap.to(card, {
 		opacity: 0,
-		scale: 0.53,
-		left: PILE_X + '%',
+		scale: GEO().PILE_W / GEO().CARD_W,
+		left: GEO().PILE_X + '%',
 		top: '50%',
 		x: back.x,
 		y: back.y,
@@ -211,6 +223,7 @@ function appendSingleEntry(di, n) {
     <p class="entry__reading">${c.reading}</p>
     <p class="entry__events">Events — ${c.events}</p>`;
 	entry.querySelector('.entry__name').onclick = () => openDialog(di, ctx);
+	entry.querySelector('.entry__where').onclick = () => scrollPanelTo(entry, true);
 	placeEntry(entry);
 	return entry;
 }

@@ -3,14 +3,17 @@
 import { $, D, REDUCED } from './dom.js';
 import { panel, panelList } from './stage.js';
 import { STR } from '../data/i18n.js';
+import { drawerOnOpen, drawerOnEntry } from './drawer.js';
 
 /* the reading panel arrives as a grid-track transition (see .ritual-body),
-   the wheel easing aside rather than snapping to its smaller column */
+   the wheel easing aside rather than snapping to its smaller column;
+   on a phone it rises instead as the bottom drawer (js/drawer.js) */
 export function openPanel() {
 	if (!panel.hidden) return;
 	panel.hidden = false;
 	void panel.offsetWidth; // commit the collapsed track, so the class change transitions
 	$('#ritual-body').classList.add('has-panel');
+	drawerOnOpen();
 }
 
 /* the reading log: newest entry on top by default.
@@ -19,6 +22,7 @@ export function openPanel() {
 let panelDesc = true;
 
 export function placeEntry(entry) {
+	drawerOnEntry(); // 首笔解读落下时，收着的抽屉升到半屏
 	panelDesc ? panelList.prepend(entry) : panelList.append(entry);
 	gsap.set(entry, { overflow: 'clip' });
 	gsap.timeline({
@@ -55,14 +59,34 @@ function pillArrow() {
 }
 
 /* scroll the panel alone — scrollIntoView would drag every scrollable
-   ancestor along and yank the page itself */
-function scrollPanelTo(node) {
+   ancestor along and yank the page itself. The drawer's grip and head
+   ride sticky over the log, so they count into the top margin. */
+const stickyChrome = () => {
+	let h = 0;
+	for (const n of panel.querySelectorAll('.panel__grip, .panel__head')) {
+		if (getComputedStyle(n).position === 'sticky') h += n.offsetHeight;
+	}
+	return h;
+};
+
+/* each entry's month/house line rides sticky beneath the drawer chrome —
+   its top offset follows the grip and head's real height */
+const syncChrome = () => panel.style.setProperty('--chrome-h', stickyChrome() + 'px');
+const chromeWatch = new ResizeObserver(syncChrome);
+chromeWatch.observe($('#panel-grip'));
+chromeWatch.observe(panel.querySelector('.panel__head'));
+export function scrollPanelTo(node, alignTop = false) {
 	const p = panel.getBoundingClientRect(),
 		r = node.getBoundingClientRect(),
-		m = 10;
+		m = 10 + stickyChrome();
 	const topDelta = r.top - (p.top + m);
 	let delta = 0;
-	if (r.top < p.top + m) delta = topDelta;
+	if (alignTop) {
+		/* 条目的月份行也粘在上沿——深察块置顶时再让出它的高度，
+		   块首的标题行才不会躲进它身后 */
+		const where = node.closest('.entry')?.querySelector('.entry__where');
+		delta = topDelta - (where && !node.contains(where) ? where.offsetHeight : 0);
+	} else if (r.top < p.top + m) delta = topDelta;
 	else if (r.bottom > p.bottom - m) delta = Math.min(r.bottom - (p.bottom - m), topDelta);
 	if (!delta) return;
 	autoScrollUntil = performance.now() + (REDUCED ? 50 : 1200);
@@ -82,8 +106,9 @@ function setPill(show) {
 }
 
 /* force 用于读者亲手唤出的内容（如深察一周七日）：无论跟卷锁
-   是否在读者手上，都把新内容送到眼前 */
-export function autoScrollTo(node, force = false) {
+   是否在读者手上，都把新内容送到眼前。top 让它对齐视区上沿——
+   深察的新牌置顶，其下的后续（七日按钮、时盘）一并入目 */
+export function autoScrollTo(node, force = false, top = false) {
 	lastAutoTarget = node;
 	if (!panelFollow && !force) {
 		/* something new arrived while the reader is elsewhere — nudge the capsule */
@@ -92,7 +117,7 @@ export function autoScrollTo(node, force = false) {
 		gsap.fromTo(jumpPill, { scale: 1.1 }, { scale: 1, duration: D(0.4), ease: 'back.out(2.5)' });
 		return;
 	}
-	scrollPanelTo(node);
+	scrollPanelTo(node, top);
 }
 
 export function resetFollow() {

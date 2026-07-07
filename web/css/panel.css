@@ -75,7 +75,18 @@
   padding: 16px 0 18px;
   border-bottom: 1px solid oklch(78% 0.12 85 / 0.14);
 }
+/* the entry's month/house line rides sticky while its reading scrolls —
+   deep amplification (weeks, days, hours) never loses its month.
+   --chrome-h (js/panel.js) keeps it beneath the drawer's grip and head. */
 .entry__where {
+  position: sticky;
+  top: calc(var(--chrome-h, 0px) - 1px);
+  z-index: 4;
+  padding-block: 7px 6px;
+  margin-block-start: -7px;
+  background: color-mix(in oklab, var(--night) 78%, transparent);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   font-size: 11.5px;
   letter-spacing: 0.24em;
   color: var(--gold);
@@ -155,21 +166,82 @@
   .mini:hover .mini__name { color: var(--gold); }
 }
 
-/* the face-down hour cards sit as one overlapped pile, not a wall */
-.hour-stack { display: flex; }
+/* a mini dealt face down, awaiting its turn-up (the hour card) */
+.mini--flip { perspective: 600px; }
+.mini__inner {
+  position: relative;
+  width: 74px;
+  aspect-ratio: var(--card-ratio);
+  transform-style: preserve-3d;
+}
+.mini__face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: 0 3px 10px oklch(0% 0 0 / 0.4);
+}
+.mini__front { transform: rotateY(180deg); background: var(--parchment); }
+.mini--flip img, .mini--flip svg { width: 100%; height: 100%; box-shadow: none; border-radius: 0; }
+/* the name keeps to itself until the card is turned */
+.mini--flip .mini__tag, .mini--flip .mini__name { opacity: 0; transition: opacity 0.5s; }
+.mini--flip.is-up .mini__tag, .mini--flip.is-up .mini__name { opacity: 1; }
+.mini--flip[disabled] { cursor: default; }
+.mini--flip.is-up { cursor: zoom-in; }
+
+/* the face-down hour cards fan within one fixed span — a few cards lap
+   lightly, many pack tight, so every hour block keeps the same shape
+   (--hour-overlap is set per deal in js/ritual/amplify.js) */
+.hour-stack { display: flex; width: var(--hour-span, 150px); flex: none; }
+.mini-col--stack { width: var(--hour-span, 150px); flex: none; }
 .mini--hourback { width: 34px; flex: none; aspect-ratio: var(--card-ratio); }
 .mini--hourback svg { width: 100%; height: 100%; display: block; border-radius: 3px; box-shadow: 0 3px 10px oklch(0% 0 0 / 0.4); }
-.mini--hourback + .mini--hourback { margin-left: -22px; }
+.mini--hourback + .mini--hourback { margin-left: var(--hour-overlap, -22px); }
 
-.hour-form { display: flex; align-items: center; gap: 10px; font-size: 12.5px; color: var(--ink-dim); }
-.hour-form select {
-  font: inherit;
-  background: var(--night-2);
-  color: var(--ink);
-  border: 1px solid var(--gold-line);
-  border-radius: 4px;
-  padding: 3px 8px;
+/* ── the hour dial: pick one of the twenty-four, dealt to on cue ── */
+.hour-form { display: grid; gap: 10px; justify-items: start; }
+.hour-lead { font-size: 12.5px; color: var(--ink-dim); line-height: 1.6; }
+.hour-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 6px;
+  width: min(100%, 330px);
 }
+.hour-cell {
+  position: relative;
+  min-height: 32px;
+  display: grid;
+  place-items: center;
+  border: 1px solid oklch(78% 0.12 85 / 0.18);
+  border-radius: 4px;
+  font-size: 12.5px;
+  color: var(--ink-dim);
+  transition: color 0.3s, border-color 0.3s, background 0.3s, opacity 0.3s;
+}
+@media (hover: hover) {
+  .hour-cell:hover:not([disabled]) { border-color: var(--gold-dim); color: var(--ink); }
+}
+.hour-cell[aria-checked="true"] {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: oklch(78% 0.12 85 / 0.09);
+}
+/* a small gold point marks the hour we are living in */
+.hour-cell--now::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--gold);
+  opacity: 0.8;
+}
+.hour-cell[disabled] { opacity: 0.35; cursor: default; }
+.hour-act { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 14px; }
+.hour-note { font-size: 12.5px; letter-spacing: 0.08em; color: var(--gold); }
 
 .deck-empty-note { font-size: 12px; color: var(--ink-dim); font-style: italic; }
 
@@ -250,6 +322,7 @@
   .entry__acts { gap: 10px; }
   .sub-btn { min-height: 38px; display: inline-flex; align-items: center; padding: 4px 16px; font-size: 12.5px; }
 
-  .hour-form select { min-height: 40px; font-size: 16px; }
+  .hour-grid { width: 100%; }
+  .hour-cell { min-height: 40px; font-size: 14px; }
   .panel__jump { min-height: 40px; bottom: 4px; }
 }

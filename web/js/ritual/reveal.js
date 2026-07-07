@@ -75,8 +75,11 @@ export function onCardClick(pos, node) {
 function flipAt(pos, node) {
 	S.revealQueue = S.revealQueue.filter(p => p !== pos);
 	node.classList.remove('is-next');
-	return flipCard(node).then(() => {
+	/* 中央主题是全年的收束——翻得更高，翻开时一圈金环自牌沿散开 */
+	const isTheme = S.method === 'sunyear' && pos === 13;
+	return flipCard(node, isTheme ? 1.28 : 1.16).then(() => {
 		node.classList.add('is-up');
+		if (isTheme) node.classList.add('halo-burst');
 		node.setAttribute('aria-label', DECK[S.placed.get(pos)].name);
 		appendEntry(pos);
 		if (!S.revealQueue.length) allRevealed();

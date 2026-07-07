@@ -33,5 +33,14 @@ export function swapScreen(fn) {
 }
 
 export function popIn(nodes) {
-	gsap.fromTo(nodes, { opacity: 0, y: 10, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: D(0.45), stagger: 0.09, ease: 'back.out(1.6)' });
+	gsap.fromTo(nodes, { opacity: 0, y: 10, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: D(0.45), stagger: REDUCED ? 0 : 0.09, ease: 'back.out(1.6)' });
+}
+
+/* 发牌式入场：自上方逐张落下，带一点手发的歪斜，落定即正 */
+export function dealIn(nodes) {
+	gsap.fromTo(
+		nodes,
+		{ opacity: 0, y: -16, rotation: () => gsap.utils.random(-6, 6) },
+		{ opacity: 1, y: 0, rotation: 0, duration: D(0.42), stagger: REDUCED ? 0 : 0.1, ease: 'power2.out' }
+	);
 }

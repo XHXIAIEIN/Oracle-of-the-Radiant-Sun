@@ -68,6 +68,13 @@ const stickyChrome = () => {
 	}
 	return h;
 };
+
+/* each entry's month/house line rides sticky beneath the drawer chrome —
+   its top offset follows the grip and head's real height */
+const syncChrome = () => panel.style.setProperty('--chrome-h', stickyChrome() + 'px');
+const chromeWatch = new ResizeObserver(syncChrome);
+chromeWatch.observe($('#panel-grip'));
+chromeWatch.observe(panel.querySelector('.panel__head'));
 function scrollPanelTo(node) {
 	const p = panel.getBoundingClientRect(),
 		r = node.getBoundingClientRect(),

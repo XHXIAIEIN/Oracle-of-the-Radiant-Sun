@@ -51,3 +51,38 @@ export function miniCard(deckIdx, tag, ctx, nav) {
 	m.onclick = () => openDialog(deckIdx, ctx, nav && { list: nav.list, at: nav.at });
 	return m;
 }
+
+/* mini that arrives face down and waits for revealMini — the hour card
+   is dealt like the rest of its pile, then turned up */
+export function miniFlipCard(deckIdx, tag, ctx, nav) {
+	const c = DECK[deckIdx];
+	const m = el(
+		'button',
+		'mini mini--flip',
+		`<span class="mini__inner">
+       <span class="mini__face mini__back">${BACK_SVG}</span>
+       <span class="mini__face mini__front"><img src="${c.img}" alt="${c.name}"></span>
+     </span>
+     <span class="mini__tag">${tag}</span><span class="mini__name">${c.name}</span>`
+	);
+	m.type = 'button';
+	m.disabled = true; // 未翻开的牌先不应答
+	m.onclick = () => openDialog(deckIdx, ctx, nav && { list: nav.list, at: nav.at });
+	return m;
+}
+
+/* the mini's turn-up, kin to flipCard; returns the timeline so the caller
+   can seat it inside a dealing sequence */
+export function revealMini(m) {
+	const inner = m.querySelector('.mini__inner');
+	return gsap
+		.timeline({
+			onComplete: () => {
+				m.classList.add('is-up');
+				m.disabled = false;
+			},
+		})
+		.to(m, { scale: 1.16, duration: D(0.24), ease: 'power2.out' })
+		.to(inner, { rotationY: 180, duration: D(0.5), ease: 'power2.inOut' }, '<0.05')
+		.to(m, { scale: 1, duration: D(0.3), ease: 'power2.in' }, '>-0.08');
+}

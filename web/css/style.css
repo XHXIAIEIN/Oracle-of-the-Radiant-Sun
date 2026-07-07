@@ -2,19 +2,19 @@
    Oracle of the Radiant Sun — night sky, gold hairlines, parchment
    cards. Less is more: one accent colour, generous space, serif.
 
-   Entry point only — styles live in css/, one file per component.
-   Spacing contract (see css/tokens.css): containers own the space
+   Entry point only — one file per component, imported in order.
+   Spacing contract (see tokens.css): containers own the space
    between their children; children fill their track.
    ═══════════════════════════════════════════════════════════════ */
 
-@import "css/tokens.css";
-@import "css/base.css";
-@import "css/shared.css";
-@import "css/home.css";
-@import "css/ritual.css";
-@import "css/wheel.css";
-@import "css/cards.css";
-@import "css/setup.css";
-@import "css/panel.css";
-@import "css/library.css";
-@import "css/dialog.css";
+@import "tokens.css";
+@import "base.css";
+@import "shared.css";
+@import "home.css";
+@import "ritual.css";
+@import "wheel.css";
+@import "cards.css";
+@import "setup.css";
+@import "panel.css";
+@import "library.css";
+@import "dialog.css";

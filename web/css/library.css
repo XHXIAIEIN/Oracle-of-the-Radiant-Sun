@@ -35,8 +35,24 @@
   padding-top: 7px;
 }
 .lib-frow .qpicks { justify-content: flex-start; }
-@media (max-width: 560px) {
-  .lib-frow { grid-template-columns: 1fr; gap: 5px; }
+
+/* the phone: label above, and the chips as one swipeable shelf row
+   instead of a wall — the four rows together stay under a screen's
+   quarter, and the cards begin where the thumb already is */
+@media (max-width: 700px) {
+  .lib-frow { grid-template-columns: 1fr; gap: 2px; }
+  .lib-frow__label { padding-top: 0; }
+  .lib-frow .qpicks {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    margin-inline: calc(var(--page-pad-inline) * -1);
+    padding-inline: var(--page-pad-inline);
+    padding-block: 4px;
+  }
+  .lib-frow .qpicks::-webkit-scrollbar { display: none; }
+  .lib-frow .qpick { flex: none; }
 }
 
 /* the extra groupings (season / month / week / hours) fold under this
@@ -47,9 +63,13 @@
   letter-spacing: 0.28em;
   color: var(--gold-dim);
   padding: 2px 0;
+  min-height: 38px;
   transition: color 0.3s;
 }
-.lib-more:hover, .lib-more[aria-expanded="true"] { color: var(--gold); }
+@media (hover: hover) {
+  .lib-more:hover { color: var(--gold); }
+}
+.lib-more[aria-expanded="true"] { color: var(--gold); }
 .lib-more__panel { overflow: hidden; }
 
 .lib-secs {
@@ -76,6 +96,10 @@
   grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
   gap: 22px 14px;
 }
+/* three cards to a phone row — the browsing gait of a small screen */
+@media (max-width: 700px) {
+  .lib-grid { grid-template-columns: repeat(3, 1fr); gap: 18px 10px; }
+}
 
 .lib-card {
   display: grid;
@@ -92,12 +116,15 @@
   box-shadow: 0 5px 16px oklch(0% 0 0 / 0.45);
   transition: translate 0.3s, box-shadow 0.3s;
 }
-.lib-card:hover img, .lib-card:focus-visible img {
-  translate: 0 -4px;
-  box-shadow: 0 10px 26px oklch(0% 0 0 / 0.55), 0 0 18px oklch(78% 0.12 85 / 0.25);
+@media (hover: hover) {
+  .lib-card:hover img, .lib-card:focus-visible img {
+    translate: 0 -4px;
+    box-shadow: 0 10px 26px oklch(0% 0 0 / 0.55), 0 0 18px oklch(78% 0.12 85 / 0.25);
+  }
+  .lib-card:hover .lib-card__name { color: var(--gold); }
 }
+.lib-card:active img { box-shadow: 0 4px 12px oklch(0% 0 0 / 0.5), 0 0 18px oklch(78% 0.12 85 / 0.25); }
 .lib-card__name { font-size: 12.5px; line-height: 1.3; transition: color 0.3s; }
-.lib-card:hover .lib-card__name { color: var(--gold); }
 .lib-card__ps { font-size: 10.5px; color: var(--ink-dim); letter-spacing: 0.04em; }
 
 /* stand-ins for filtered-out pieces while they fade (see applyLibFilter) */

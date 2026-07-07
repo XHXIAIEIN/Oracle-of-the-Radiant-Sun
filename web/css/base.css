@@ -14,6 +14,7 @@ html {
   overflow-x: hidden;
   overflow-y: auto;
   scrollbar-gutter: stable;
+  -webkit-text-size-adjust: 100%; /* keep our type scale in landscape webviews */
 }
 /* a modal on top owns the scroll — the gutter above makes the lock shift-free */
 html:has(:modal) { overflow: hidden; }
@@ -40,6 +41,12 @@ body {
     radial-gradient(120vmax 120vmax at 50% -20%, var(--night-2), transparent 55%),
     var(--night);
   line-height: 1.65;
+  -webkit-tap-highlight-color: transparent; /* our own :active states answer the touch */
+}
+
+/* no double-tap zoom delay on controls; pinch on plain text stays free */
+button, a, select, input, label, dialog {
+  touch-action: manipulation;
 }
 
 #bg {
@@ -51,12 +58,15 @@ body {
 #bg canvas { display: block; }
 
 /* every screen is a full-height page; block padding gives the top and
-   bottom sections room to breathe */
+   bottom sections room to breathe — and clears the notch and the
+   home indicator on phones (viewport-fit=cover) */
 .screen {
   position: relative;
   z-index: 1;
   min-height: 100dvh;
-  padding: var(--page-pad-block) var(--page-pad-inline);
+  padding: max(var(--page-pad-block), var(--safe-top))
+           var(--page-pad-inline)
+           max(var(--page-pad-block), var(--safe-bottom));
 }
 
 button {

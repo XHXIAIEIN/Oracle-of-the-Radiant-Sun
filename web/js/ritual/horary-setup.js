@@ -1,7 +1,7 @@
 /* 时占起卦前的两步：先默想问题，再择定宫位——一次只做一件事，
    如同占卜本身的进行 */
 
-import { el, D } from '../dom.js';
+import { el, D, MOBILE } from '../dom.js';
 import { setup, wheel, setRite, setActions } from '../stage.js';
 import { S } from '../state.js';
 import { HOUSES } from '../../data/houses.js';
@@ -32,13 +32,17 @@ export function horarySetup() {
 		setRite(...C.step1.rite);
 
 		const q = el('input', 'setup__q');
-		q.placeholder = C.step1.placeholder;
+		q.name = 'question';
+		// 手机的输入框盛不下双语例句，只留中文的一半
+		q.placeholder = MOBILE.matches ? C.step1.placeholder.split(' · ')[0] : C.step1.placeholder;
 		q.maxLength = 120;
 		q.value = S.question;
 
 		const picks = el('div', 'qpicks');
 		for (const p of MODES.horary.quickpicks) {
-			const b = el('button', 'qpick', p.label);
+			// 标签的中文关键词与英文例句分开包起，手机上只显中文
+			const [zh, en] = p.label.split(' · ');
+			const b = el('button', 'qpick', `${zh}<span class="qp-en"> · ${en}</span>`);
 			b.type = 'button';
 			b.onclick = () => {
 				q.value = p.q;

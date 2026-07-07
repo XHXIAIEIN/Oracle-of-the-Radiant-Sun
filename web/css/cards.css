@@ -60,6 +60,23 @@
 .card.is-up { cursor: zoom-in; }
 .card[disabled] { cursor: default; }
 
+/* the theme card's turn-up: one ring of gold, cast off and gone */
+.card.halo-burst::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 10px;
+  border: 1px solid var(--gold);
+  box-shadow: 0 0 26px oklch(78% 0.12 85 / 0.5);
+  opacity: 0;
+  animation: halo-burst 1.1s ease-out 0.05s;
+  pointer-events: none;
+}
+@keyframes halo-burst {
+  0% { opacity: 0.95; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.65); }
+}
+
 /* houses outside this reading stay face down — fade them back */
 .card.is-idle { cursor: not-allowed; }
 .card.is-idle .card__inner {

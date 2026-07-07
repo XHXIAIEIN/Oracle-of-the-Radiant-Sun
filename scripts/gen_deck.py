@@ -4,9 +4,9 @@ tmp/gen_readings.py (the same renderer used for the reading-wheel diagrams), so
 the drawn card matches the book's real layout exactly.
 
   web/assets/cards/<planet>_<sign>.svg   one face-up card, viewBox 0 0 300 446
-  web/deck.json                          [{number,page,name,planet,sign,suit_name,
+  web/data/deck.json                     [{number,page,name,planet,sign,suit_name,
                                            sign_keyword,reading,events,img}]
-Run:  python web/gen_deck.py
+Run:  python scripts/gen_deck.py
 """
 import json
 from pathlib import Path
@@ -67,6 +67,6 @@ for f in sorted(CARDS_DIR.glob("*.json")):
             "img": f"assets/cards/{slug}.svg",
         })
 
-(WEB / "deck.json").write_text(
+(WEB / "data" / "deck.json").write_text(
     json.dumps(deck, ensure_ascii=False, indent=1), encoding="utf-8")
 print(f"wrote {len(deck)} cards + deck.json")

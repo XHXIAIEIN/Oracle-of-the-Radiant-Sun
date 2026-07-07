@@ -26,19 +26,47 @@
   backdrop-filter: blur(6px);
 }
 
+/* the sheet's grabber — only shown when the dialog is a bottom sheet */
+.card-dialog__grab {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 26px;
+  z-index: 3;
+  place-items: center;
+  touch-action: none; /* dragging the grabber must not scroll the sheet */
+  cursor: grab;
+}
+.card-dialog__grab::before {
+  content: "";
+  width: 44px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--gold-dim);
+}
+
 .card-dialog__close {
   position: absolute;
   top: 10px;
   right: 12px;
-  z-index: 2;
+  z-index: 4;
   font-size: 16px;
   color: var(--ink-dim);
-  padding: 6px 8px;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  padding: 0;
   border-radius: 50%;
   background: oklch(20% 0.035 275 / 0.85);
   transition: color 0.3s;
 }
-.card-dialog__close:hover { color: var(--gold); }
+@media (hover: hover) {
+  .card-dialog__close:hover { color: var(--gold); }
+}
+.card-dialog__close:active { color: var(--gold); }
 
 /* leaf through the row this card was drawn with (a week's days …) */
 .card-dialog__nav {
@@ -59,7 +87,10 @@
 }
 .card-dialog__nav--prev { left: 8px; }
 .card-dialog__nav--next { right: 8px; }
-.card-dialog__nav:hover:not([disabled]) { color: var(--gold); }
+@media (hover: hover) {
+  .card-dialog__nav:hover:not([disabled]) { color: var(--gold); }
+}
+.card-dialog__nav:active:not([disabled]) { color: var(--gold); }
 .card-dialog__nav[disabled] { opacity: 0.3; cursor: default; }
 
 .card-dialog__grid {
@@ -178,9 +209,10 @@
     border: 0;
     border-top: 1px solid var(--gold-line);
     border-radius: 16px 16px 0 0;
-    max-height: 94dvh;
-    padding: 18px 18px calc(16px + env(safe-area-inset-bottom));
+    max-height: calc(100dvh - var(--safe-top) - 40px);
+    padding: 26px 18px calc(16px + var(--safe-bottom));
   }
+  .card-dialog__grab { display: grid; }
 
   .card-dialog__grid {
     grid-template-areas:
@@ -196,8 +228,14 @@
 
   .card-dialog__art { position: static; }
   .card-dialog__head { align-self: center; }
-  .card-dialog__head h3 { font-size: 21px; }
+  .card-dialog__head h3 { font-size: 21px; padding-right: 40px; }
   .card-dialog__head .ps { font-size: 13px; }
+
+  /* the leafing arrows step out of the text's way, down to the sheet's
+     foot corners; a horizontal swipe on the sheet leafs as well */
+  .card-dialog__nav { width: 40px; height: 40px; top: auto; bottom: 14px; translate: none; }
+  .card-dialog__nav--prev { left: 14px; }
+  .card-dialog__nav--next { right: 14px; }
 
   /* roomier type for phone-length reading */
   .dlg-sec { margin-top: 20px; }

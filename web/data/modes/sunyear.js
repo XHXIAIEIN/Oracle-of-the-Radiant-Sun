@@ -25,7 +25,7 @@ export default {
 		const m = MONTHS[S.startPos - 1];
 		return [`自当前月份（${m.zh} · ${m.en}）开始，逐月翻开，环行一年；最后翻开中央的主题之牌。`, 'Look first at the card that represents the current month, proceeding month by month around the circle.'];
 	},
-	doneLine: '圆环已满，中央之牌是全年的主题。点击任意一张牌细读，或在右侧深入某个月份、某一周、某一天。',
+	doneLine: '圆环已满，中央之牌是全年的主题。点击任意一张牌细读，或在解读一栏深入某个月份、某一周、某一天。',
 
 	themeWhere: '主题 · THEME OF THE YEAR',
 	themeCtx: `${TITLE}<br><b>中央 · 全年主题 The Emphasis or Theme</b>`,
@@ -43,13 +43,15 @@ export default {
 		daysCap: k => `第${CN_NUM[k]}周 · 七日 <span class="en">seven days, starting with the Sun's day · 自太阳之日始</span>`,
 		dayTag: d => `周${d}`,
 		dayCtx: (m, k, d) => `${TITLE}<br><b>${m.zh} 第${CN_NUM[k]}周 · 星期${d}</b>`,
-		hourLead: '为某时刻之事占问：',
+		hourLead: '为某时刻之事占问——自堆顶发牌至该钟点之数，面朝下；末张翻开，即是那一刻。',
 		hourSelAria: '选择钟点',
-		hourOpt: h => `${String(h % 24).padStart(2, '0')}:00 — 第${h}个钟点`,
+		hourPick: (n, isNow) => `第 ${n} 个钟点 · ${String(n % 24).padStart(2, '0')}:00${isNow ? ' · 此刻' : ''}`,
 		hourGo: '起卦',
-		hourStackTag: n => `第 1–${n - 1} 张 · 面朝下`,
-		hourTag: n => `第${n}张 · ${String(n % 24).padStart(2, '0')}:00`,
+		hourAgain: '再问一个钟点',
+		hourStackTag: n => `前 ${n - 1} 张 · 面朝下`,
+		hourTag: n => `第 ${n} 张`,
 		hourCtx: (m, n) => `${TITLE}<br><b>${m.zh} · ${String(n % 24).padStart(2, '0')}:00 的钟点牌</b>`,
-		hourCap: n => `钟点牌 <span class="en">deal ${n - 1} face down — the ${n}th, turned up, is the hour</span>`,
+		hourCap: n =>
+			`${String(n % 24).padStart(2, '0')}:00 · 钟点牌 <span class="en">${n === 1 ? 'the first card, turned up, is the hour' : `deal ${n - 1} face down — the ${n}th, turned up, is the hour`}</span>`,
 	},
 };

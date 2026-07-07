@@ -1,6 +1,6 @@
 /* 桌面中央的牌堆：层数与厚度随余牌收放，供洗牌、发牌、单张取牌共用 */
 
-import { el, D } from '../dom.js';
+import { el, D, MOBILE } from '../dom.js';
 import { wheel } from '../stage.js';
 import { drawCount } from '../state.js';
 import { BACK_SVG } from '../../data/card/back.js';
@@ -33,7 +33,8 @@ export function createDeckPile() {
 	deckPile = el('button', 'deck');
 	deckPile.type = 'button';
 	deckPile.setAttribute('aria-label', STR.deck.aria);
-	Object.assign(deckPile.style, { left: '50%', top: '50%', width: '12.8%' });
+	// 手机的轮盘本就小一圈，牌堆放大些才指得住
+	Object.assign(deckPile.style, { left: '50%', top: '50%', width: MOBILE.matches ? '15%' : '12.8%' });
 	gsap.set(deckPile, { xPercent: -50, yPercent: -50 });
 	const remaining = drawCount();
 	for (let i = 0; i < LAYERS; i++) {

@@ -5,6 +5,7 @@ import { wheel, panel, panelList, setup } from '../stage.js';
 import { S, resetState, applyPreset } from '../state.js';
 import { MODES } from '../../data/modes/index.js';
 import { resetFollow } from '../panel.js';
+import { resetDrawer } from '../drawer.js';
 import { horarySetup } from './horary-setup.js';
 import { shufflePhase } from './shuffle.js';
 import { syncRoute } from '../router.js';
@@ -32,12 +33,15 @@ export function startMethod(m, opts = {}) {
 		$('#screen-home').hidden = true;
 		$('#screen-library').hidden = true;
 		$('#screen-ritual').hidden = false;
-		$('#ritual-title').textContent = MODES[m].title;
+		/* "The Sun Year · 太阳年" — the phone app bar keeps only the zh half */
+		const [en, zh] = MODES[m].title.split(' · ');
+		$('#ritual-title').innerHTML = `<span class="t-en">${en}</span><span class="t-dot"> · </span><span class="t-zh">${zh}</span>`;
 		$('#deck-badge').hidden = true;
 		hideShare();
 		panel.hidden = true;
 		panelList.replaceChildren();
 		resetFollow();
+		resetDrawer();
 		$('#ritual-body').classList.remove('has-panel');
 		wheel.replaceChildren();
 		wheel.classList.toggle('wheel--single', m === 'single');

@@ -45,7 +45,10 @@ export function drawRing() {
 		const { x, y, side } = labelXY(i);
 		const m = MONTHS[i - 1],
 			h = HOUSES[i - 1];
-		const lab = months ? `<span class="glyph">${SIGN[m.sign][0]}</span><span>${m.en.toUpperCase()} · ${m.zh}</span>` : `<span class="glyph">${i}</span><span>${h.zh}</span>`;
+		/* every label in a long and a short wording — the phone shows only
+		   the short one, so the side labels never run off the screen */
+		const [full, short] = months ? [`${m.en.toUpperCase()} · ${m.zh}`, m.zh] : [h.zh, h.zh.split(' · ')[0]];
+		const lab = `<span class="glyph">${months ? SIGN[m.sign][0] : i}</span><span class="lab-full">${full}</span><span class="lab-short">${short}</span>`;
 		const n = el('div', 'slot-label' + (side ? ` slot-label--${side}` : ''), lab);
 		n.style.left = x + '%';
 		n.style.top = y + '%';

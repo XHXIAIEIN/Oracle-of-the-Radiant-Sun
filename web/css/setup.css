@@ -58,7 +58,7 @@
   border-radius: 4px;
   color: var(--ink);
   font: inherit;
-  font-size: 16px;
+  font-size: 16px; /* not smaller — iOS zooms into any field below 16px */
   padding: 12px 14px;
   text-align: center;
   transition: border-color 0.3s;
@@ -109,4 +109,34 @@
   padding: 0 3px;
   cursor: help;
 }
-.house-chip .info:hover { color: var(--gold); }
+@media (hover: hover) {
+  .house-chip .info:hover { color: var(--gold); }
+}
+
+/* ── the phone setup ────────────────────────────────────────────
+   The example questions shed their English half (shared.css hides
+   .qp-en), so all of them fit on screen as a few wrapped rows of
+   keyword pills, and the step's own act stays pinned in thumb reach. */
+@media (max-width: 700px) {
+  .house-chip { padding: 10px 12px; }
+  .house-chip .info {
+    font-size: 15px;
+    padding: 4px 8px;
+    margin: -4px -8px; /* a finger-sized target without moving the glyph */
+  }
+
+  /* while a setup step is on stage, its actions ride the viewport foot */
+  .stage-wrap:has(> .setup:not([hidden])) .stage-actions {
+    position: sticky;
+    bottom: max(12px, var(--safe-bottom));
+    z-index: 10;
+  }
+  .stage-wrap:has(> .setup:not([hidden])) .stage-actions .act-btn {
+    background: color-mix(in oklab, var(--night) 82%, var(--gold));
+    box-shadow: 0 8px 26px oklch(0% 0 0 / 0.5);
+  }
+  .stage-wrap:has(> .setup:not([hidden])) .stage-actions .act-btn:active {
+    background: var(--gold);
+    color: var(--night);
+  }
+}

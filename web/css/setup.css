@@ -114,27 +114,10 @@
 }
 
 /* ── the phone setup ────────────────────────────────────────────
-   The example questions run as two swipeable shelf rows instead of a
-   screen-long stack, and the step's own act stays pinned in thumb
-   reach while the list scrolls behind it. */
+   The example questions shed their English half (shared.css hides
+   .qp-en), so all of them fit on screen as a few wrapped rows of
+   keyword pills, and the step's own act stays pinned in thumb reach. */
 @media (max-width: 700px) {
-  .setup .qpicks {
-    display: grid;
-    grid-auto-flow: column;
-    grid-template-rows: repeat(2, auto);
-    grid-auto-columns: max-content;
-    justify-content: flex-start;
-    gap: 8px;
-    overflow-x: auto;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-    /* bleed to the screen edge so the shelf visibly runs off it */
-    margin-inline: -26px;
-    padding-inline: 26px;
-    padding-block: 2px;
-  }
-  .setup .qpicks::-webkit-scrollbar { display: none; }
-
   .house-chip { padding: 10px 12px; }
   .house-chip .info {
     font-size: 15px;

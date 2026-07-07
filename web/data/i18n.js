@@ -26,7 +26,7 @@ export const STR = {
 		deal: '开始发牌',
 		drawOne: '取一张牌',
 		empty: '牌堆已尽——书中建议为新的问题重新洗牌起卦。',
-		shortOfHour: '牌堆余量不足此钟点数——书中建议重新洗牌起卦。',
+		shortOfHour: '牌堆余量不足此钟点数——建议重新洗牌起卦。',
 	},
 
 	reveal: {
@@ -66,8 +66,7 @@ export const STR = {
 		planetChip: (planet, suit) => `${PLANET[planet][0]} ${PLANET[planet][1]} · ${suitZh(suit)}`,
 		signChip: (sign, i) => `${i + 1} ${SIGN[sign][0]}${SIGN[sign][1]}`,
 		ctx: suit => `${LIB_HEAD}<b>The Suit of ${suit} · ${suitZh(suit)}之组</b>`,
-		/* 时间分组的节题与语境行：季节（三个月）、月份（一个星座）、
-		   星期（行星值日）、钟点（行星值时，迦勒底序） */
+		/* 时间分组的节题与语境行：季节（三个月）、月份（一个星座）、星期（行星值日）、钟点（行星值时，迦勒底序） */
 		seasonCap: (en, zh, ms) => `${ms.map(m => SIGN[m.sign][0]).join(' ')} ${en} <span class="zh">· ${zh} · ${ms[0].zh}至${ms[2].zh}</span>`,
 		seasonCtx: (en, zh, ms) => `${LIB_HEAD}<b>${en} · ${zh} · ${ms[0].zh}至${ms[2].zh}</b>`,
 		monthCap: m => `${SIGN[m.sign][0]} ${m.en} <span class="zh">· ${m.zh} · ${SIGN[m.sign][1]}之月</span>`,

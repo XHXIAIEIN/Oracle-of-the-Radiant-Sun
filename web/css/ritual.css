@@ -47,10 +47,12 @@
 .stage-wrap { transition: padding-block-start 0.6s cubic-bezier(0.25, 0.8, 0.3, 1); }
 .stage-wrap:has(> .setup:not([hidden])) { padding-block-start: clamp(8px, 4vh, 40px); }
 
-/* the horary question, inscribed above the wheel for the whole sitting */
+/* the horary question, inscribed above the wheel for the whole sitting;
+   the extra bottom margin keeps it clear of the wheel's top house labels */
 .question-line {
   text-align: center;
   margin-inline: auto;
+  margin-bottom: clamp(8px, 2vh, 20px);
   max-width: 60ch;
   font-style: italic;
   font-size: clamp(14px, 1.9vw, 17px);
@@ -169,6 +171,8 @@
     --wheel-room: calc(100dvh - 330px);
     padding-inline: 10px;
   }
+
+  .question-line { margin-bottom: clamp(14px, 3dvh, 30px); }
 
   .rite-line { font-size: 14px; min-height: 3.2em; }
 

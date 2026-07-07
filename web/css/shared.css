@@ -109,4 +109,6 @@
     padding: 6px 16px;
     font-size: 13px;
   }
+  /* a chip's English example question yields; the keyword stays */
+  .qpick .qp-en { display: none; }
 }

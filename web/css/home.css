@@ -116,12 +116,12 @@
   .home-intro { font-size: 14px; line-height: 1.75; }
 
   .method {
-    grid-template-columns: 62px 1fr;
-    gap: 16px;
-    padding: 12px 16px;
-    min-height: 86px;
+    grid-template-columns: 88px 1fr;
+    gap: 14px;
+    padding: 12px 14px;
+    min-height: 104px;
   }
-  .method__fig { width: 62px; }
+  .method__fig { width: 88px; }
   .method__text { gap: 3px; }
   .method__name { font-size: 19px; letter-spacing: 0.1em; }
   .method__en { font-size: 10px; letter-spacing: 0.16em; }

@@ -15,9 +15,12 @@
 /* the single-card sitting needs no zodiac ring — a smaller table */
 .wheel--single { width: min(100%, max(280px, var(--wheel-room) * 0.74)); }
 /* on a phone the single table takes the full width, so the pile and
-   the drawn card are both a comfortable thumb's target */
+   the drawn card are both a comfortable thumb's target; without a ring
+   the square would be mostly dark, so the table is flattened to just
+   the room the pile and the drawn card need */
 @media (max-width: 700px) {
-  .wheel--single { width: 100%; }
+  .wheel--single { width: 100%; aspect-ratio: 100 / 62; }
+  .wheel--single .deck-hint { top: 76%; }
 }
 /* before anything is laid out (horary setup) the wheel takes no room */
 .wheel:empty { aspect-ratio: auto; margin-bottom: 0; }
@@ -145,6 +148,9 @@
   translate: -50% 0;
   z-index: 5;
 }
+/* the single table is a smaller square — the same percentages would
+   land the button on the hint's english line, so it sits lower */
+.wheel--single .act-btn--wheel { top: 84%; }
 
 /* the single sitting: “draw again” hugs the pile's foot, the
    return-and-reshuffle link the flipped card's — left/top set by JS,

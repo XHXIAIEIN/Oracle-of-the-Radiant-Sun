@@ -81,8 +81,12 @@ function scrollPanelTo(node, alignTop = false) {
 		m = 10 + stickyChrome();
 	const topDelta = r.top - (p.top + m);
 	let delta = 0;
-	if (alignTop) delta = topDelta;
-	else if (r.top < p.top + m) delta = topDelta;
+	if (alignTop) {
+		/* 条目的月份行也粘在上沿——深察块置顶时再让出它的高度，
+		   块首的标题行才不会躲进它身后 */
+		const where = node.closest('.entry')?.querySelector('.entry__where');
+		delta = topDelta - (where && !node.contains(where) ? where.offsetHeight : 0);
+	} else if (r.top < p.top + m) delta = topDelta;
 	else if (r.bottom > p.bottom - m) delta = Math.min(r.bottom - (p.bottom - m), topDelta);
 	if (!delta) return;
 	autoScrollUntil = performance.now() + (REDUCED ? 50 : 1200);

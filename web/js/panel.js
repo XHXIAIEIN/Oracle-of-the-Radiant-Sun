@@ -75,7 +75,7 @@ const syncChrome = () => panel.style.setProperty('--chrome-h', stickyChrome() + 
 const chromeWatch = new ResizeObserver(syncChrome);
 chromeWatch.observe($('#panel-grip'));
 chromeWatch.observe(panel.querySelector('.panel__head'));
-function scrollPanelTo(node, alignTop = false) {
+export function scrollPanelTo(node, alignTop = false) {
 	const p = panel.getBoundingClientRect(),
 		r = node.getBoundingClientRect(),
 		m = 10 + stickyChrome();

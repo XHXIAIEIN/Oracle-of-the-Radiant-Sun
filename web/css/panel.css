@@ -91,7 +91,16 @@
   letter-spacing: 0.24em;
   color: var(--gold);
   text-transform: uppercase;
+  cursor: pointer; /* 点月份行，滚回这一张的解读 */
 }
+@media (hover: hover) {
+  .entry__where:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: oklch(78% 0.12 85 / 0.35);
+  }
+}
+.entry__where:active { text-decoration: underline; text-underline-offset: 3px; }
 .entry__where .house-note { color: var(--ink-dim); letter-spacing: 0.06em; text-transform: none; }
 .entry__name {
   font-size: 21px;

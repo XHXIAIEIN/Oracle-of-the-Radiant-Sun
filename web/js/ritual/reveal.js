@@ -8,7 +8,7 @@ import { MONTHS, HOUSES } from '../../data/houses.js';
 import { psSuitLine } from '../../data/card/glyphs.js';
 import { STR, cnHouse } from '../../data/i18n.js';
 import { flipCard } from '../cards.js';
-import { openPanel, placeEntry } from '../panel.js';
+import { openPanel, placeEntry, scrollPanelTo } from '../panel.js';
 import { openDialog } from '../dialog.js';
 import { addAmplify } from './amplify.js';
 import { showShare } from '../share.js';
@@ -121,6 +121,8 @@ function appendEntry(pos) {
     <p class="entry__reading">${c.reading}</p>
     <p class="entry__events">Events — ${c.events}</p>`;
 	entry.querySelector('.entry__name').onclick = () => openDialog(S.placed.get(pos), ctxFor(pos));
+	/* 深读之中，粘在上沿的月份行便是归途——点它回到这一张的解读 */
+	entry.querySelector('.entry__where').onclick = () => scrollPanelTo(entry, true);
 
 	if (S.method === 'sunyear' && pos !== 13) addAmplify(pos, entry);
 

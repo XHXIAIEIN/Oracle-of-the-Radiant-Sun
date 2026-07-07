@@ -10,7 +10,7 @@ import { MODES } from '../../data/modes/index.js';
 import { STR } from '../../data/i18n.js';
 import { psSuitLine } from '../../data/card/glyphs.js';
 import { cardShell, flipCard } from '../cards.js';
-import { openPanel, placeEntry } from '../panel.js';
+import { openPanel, placeEntry, scrollPanelTo } from '../panel.js';
 import { openDialog } from '../dialog.js';
 import { deckPile, animateShuffle, syncDeckThickness, topLayerPose } from './deck-pile.js';
 import { showShare } from '../share.js';
@@ -223,6 +223,7 @@ function appendSingleEntry(di, n) {
     <p class="entry__reading">${c.reading}</p>
     <p class="entry__events">Events — ${c.events}</p>`;
 	entry.querySelector('.entry__name').onclick = () => openDialog(di, ctx);
+	entry.querySelector('.entry__where').onclick = () => scrollPanelTo(entry, true);
 	placeEntry(entry);
 	return entry;
 }

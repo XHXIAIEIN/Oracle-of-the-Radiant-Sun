@@ -3,7 +3,7 @@
    它们改列在仪轨行下的操作区，指下即是 */
 
 import { $, el, D, cryptoShuffle, MOBILE } from '../dom.js';
-import { wheel, actions, setRite, setActions, updateBadge } from '../stage.js';
+import { wheel, setRite, setActions, updateBadge } from '../stage.js';
 import { S, takeCards, drawCount } from '../state.js';
 import { DECK } from '../../data/card/deck.js';
 import { MODES } from '../../data/modes/index.js';
@@ -58,8 +58,6 @@ function setDrawable(on) {
 	if (MOBILE.matches) {
 		again.hidden = false;
 		setActions(on && live ? [again, live.link] : []);
-		// 抽屉升起后按钮落在其后，温和把操作行送回抽屉上沿之上
-		if (on) actions.scrollIntoView({ block: 'end', behavior: 'smooth' });
 		return;
 	}
 	again.hidden = !on;

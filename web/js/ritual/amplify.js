@@ -57,7 +57,7 @@ function dealWeeks(pos, amp, btn) {
 	});
 	block.append(row);
 	amp.append(block);
-	autoScrollTo(block, true);
+	autoScrollTo(block, true, true);
 	dealIn(row.querySelectorAll('.mini'));
 }
 
@@ -88,7 +88,7 @@ function dealDays(pos, week, parentBlock) {
 		const dy = tops.get(s) - s.getBoundingClientRect().top;
 		if (dy) gsap.from(s, { y: dy, duration: D(0.55), ease: 'power3.out' });
 	}
-	autoScrollTo(block, true);
+	autoScrollTo(block, true, true);
 	dealIn(row.querySelectorAll('.mini'));
 }
 
@@ -101,7 +101,8 @@ function hourForm(pos, amp) {
 	const m = MONTHS[pos - 1];
 	const block = el('div', 'amplify__block');
 	const form = el('div', 'hour-form');
-	form.append(el('p', 'hour-lead', A().hourLead));
+	const lead = el('p', 'hour-lead', A().hourLead);
+	form.append(lead);
 
 	/* 二十四格时盘：0 时即第 24 个钟点 */
 	const now = new Date().getHours() || 24;
@@ -135,7 +136,7 @@ function hourForm(pos, amp) {
 	form.append(grid, act);
 	block.append(form);
 	amp.append(block);
-	autoScrollTo(block, true);
+	autoScrollTo(block, true, true);
 	popIn([form]);
 
 	/* 抽过之后，够不着的钟点格随余牌一同暗下；所选超出余牌便收到最大可及处 */
@@ -160,7 +161,7 @@ function hourForm(pos, amp) {
 		const n = sel;
 		const idxs = takeCards(n);
 		if (!idxs) {
-			block.append(el('p', 'deck-empty-note', STR.deck.shortOfHour));
+			block.insertBefore(el('p', 'deck-empty-note', STR.deck.shortOfHour), form);
 			syncAvail();
 			return;
 		}
@@ -190,8 +191,15 @@ function hourForm(pos, amp) {
 		const revealed = miniFlipCard(idxs[n - 1], A().hourTag(n), A().hourCtx(m, n));
 		row.append(revealed);
 		res.append(row);
-		block.append(res);
-		autoScrollTo(res, true);
+
+		/* 新一问落在旧问之下，时盘滑退到末位候着——盘与钮始终紧随
+		   最新一张牌，问得再多也无需回卷去够 */
+		const formTop = form.getBoundingClientRect().top;
+		lead.remove(); // 引导语读过一遍即可，此后让位于牌
+		block.insertBefore(res, form);
+		const dy = formTop - form.getBoundingClientRect().top;
+		if (dy) gsap.from(form, { y: dy, duration: D(0.55), ease: 'power3.out' });
+		autoScrollTo(res, true, true);
 
 		/* 发牌的次第：面朝下逐张叠起 → 末张落下 → 一拍悬念 → 翻开。
 		   牌与签先各自藏好，免得随整块淡入后又消失重来 */

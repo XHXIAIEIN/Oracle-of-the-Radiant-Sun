@@ -75,13 +75,14 @@ const syncChrome = () => panel.style.setProperty('--chrome-h', stickyChrome() + 
 const chromeWatch = new ResizeObserver(syncChrome);
 chromeWatch.observe($('#panel-grip'));
 chromeWatch.observe(panel.querySelector('.panel__head'));
-function scrollPanelTo(node) {
+function scrollPanelTo(node, alignTop = false) {
 	const p = panel.getBoundingClientRect(),
 		r = node.getBoundingClientRect(),
 		m = 10 + stickyChrome();
 	const topDelta = r.top - (p.top + m);
 	let delta = 0;
-	if (r.top < p.top + m) delta = topDelta;
+	if (alignTop) delta = topDelta;
+	else if (r.top < p.top + m) delta = topDelta;
 	else if (r.bottom > p.bottom - m) delta = Math.min(r.bottom - (p.bottom - m), topDelta);
 	if (!delta) return;
 	autoScrollUntil = performance.now() + (REDUCED ? 50 : 1200);
@@ -101,8 +102,9 @@ function setPill(show) {
 }
 
 /* force 用于读者亲手唤出的内容（如深察一周七日）：无论跟卷锁
-   是否在读者手上，都把新内容送到眼前 */
-export function autoScrollTo(node, force = false) {
+   是否在读者手上，都把新内容送到眼前。top 让它对齐视区上沿——
+   深察的新牌置顶，其下的后续（七日按钮、时盘）一并入目 */
+export function autoScrollTo(node, force = false, top = false) {
 	lastAutoTarget = node;
 	if (!panelFollow && !force) {
 		/* something new arrived while the reader is elsewhere — nudge the capsule */
@@ -111,7 +113,7 @@ export function autoScrollTo(node, force = false) {
 		gsap.fromTo(jumpPill, { scale: 1.1 }, { scale: 1, duration: D(0.4), ease: 'back.out(2.5)' });
 		return;
 	}
-	scrollPanelTo(node);
+	scrollPanelTo(node, top);
 }
 
 export function resetFollow() {

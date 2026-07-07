@@ -3,7 +3,7 @@ from pathlib import Path
 import pillow_heif
 from PIL import Image
 SCAN = Path("scanner/uploads/diagrams")
-OUT = Path("scripts/out/verify")
+OUT = Path("scanner/scripts/out/verify")
 
 def load(stem):
     h = pillow_heif.open_heif(str(SCAN/f"{stem}.heic"))

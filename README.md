@@ -19,8 +19,7 @@
 
 - `web/` — 网页应用（纯静态，无构建步骤），部署到 GitHub Pages
 - `data/` — 数字化数据：卡牌 JSON（`cards/`）与全书章节文本（`chapters/`）
-- `scanner/` — 书页扫描上传服务脚本
-- `scripts/` — 扫描图裁切、图形生成等处理脚本
+- `scanner/` — 书页扫描上传服务（`server.py`）及扫描图裁切、图形生成等处理脚本（`scripts/`）
 
 ## 本地运行
 

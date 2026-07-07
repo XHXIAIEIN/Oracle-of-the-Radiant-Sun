@@ -1,7 +1,7 @@
 from pathlib import Path
 import pillow_heif, numpy as np
 from PIL import Image
-SCAN=Path("scanner/uploads/diagrams"); OUT=Path("scripts/out/verify")
+SCAN=Path("scanner/uploads/diagrams"); OUT=Path("scanner/scripts/out/verify")
 def load(stem):
     h=pillow_heif.open_heif(str(SCAN/f"{stem}.heic"))
     return Image.frombytes(h.mode,h.size,h.data,"raw")

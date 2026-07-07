@@ -10,11 +10,11 @@ A shape carries only what is constant for the planet -- the frame, notch, suit
 motif and planet glyph. The per-card number, zodiac glyph and name are filled in
 later by gen_deck.py / gen_readings.py mapping each card onto its planet shape.
 
-Run:  python scripts/gen_shapes.py
+Run:  python scanner/scripts/gen_shapes.py
 """
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parent.parent.parent
 SHAPES = ROOT / "web" / "assets" / "shapes"
 SHAPES.mkdir(parents=True, exist_ok=True)
 DIAGRAMS = ROOT / "data" / "diagrams"

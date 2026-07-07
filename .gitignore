@@ -4,7 +4,7 @@ scanner/out/
 scanner/work/
 
 # 脚本生成的参考图 / 验证图
-scripts/out/
+scanner/scripts/out/
 
 # 临时文件与回收站
 tmp/

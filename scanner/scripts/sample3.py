@@ -1,6 +1,6 @@
 import numpy as np
 from PIL import Image
-a=np.asarray(Image.open("scripts/out/verify/p127_scan_wheel.png").convert("RGB"))
+a=np.asarray(Image.open("scanner/scripts/out/verify/p127_scan_wheel.png").convert("RGB"))
 H,W=a.shape[:2]; print("crop",W,H)
 def patch(x,y,r=10): 
     p=a[y-r:y+r,x-r:x+r].reshape(-1,3)

@@ -8,7 +8,7 @@ import cairosvg
 ROOT = Path(".")
 SCAN = ROOT/"scanner/uploads/diagrams"
 DATA = ROOT/"data/diagrams"
-OUT  = ROOT/"scripts/out/verify"
+OUT  = ROOT/"scanner/scripts/out/verify"
 OUT.mkdir(parents=True, exist_ok=True)
 
 PAIRS = {

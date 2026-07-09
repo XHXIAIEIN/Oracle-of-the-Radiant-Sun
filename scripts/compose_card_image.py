@@ -1,0 +1,421 @@
+"""Compose a generated card artwork into a finished PNG card face.
+
+The image model is used for the illustrated color field only. This script
+adds the deterministic oracle-card furniture: frame lines, suit motif,
+top number, bottom title, planet glyph, and zodiac glyph.
+
+Usage:
+  python scripts/compose_card_image.py sun_aries input.png web/assets/images/sun_aries.png
+  python scripts/compose_card_image.py sun_aries input.png tmp/full.png --full-canvas
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import math
+import re
+from pathlib import Path
+import xml.etree.ElementTree as ET
+
+from PIL import Image, ImageColor, ImageDraw, ImageFont
+
+from card_template import (
+    CARD,
+    BOTTOM_GLYPH_FIT_H,
+    BOTTOM_GLYPH_FIT_W,
+    BOTTOM_GLYPH_OPTICAL_SCALE,
+    BOTTOM_GLYPH_SIZE as BOTTOM_GLYPH_RATIO,
+    CH,
+    CW,
+    FONT_NAME_FILE,
+    FONT_NUMBER_FILE,
+    FONT_SYMBOL_FILE,
+    INK,
+    PUNI as PLANET_GLYPHS,
+    SUIT_BAND,
+    TITLE_FONT_MAX_H_RATIO,
+    TITLE_WIDTH_RATIO,
+    VH,
+    VW,
+    ZUNI as SIGN_GLYPHS,
+    number_font_size,
+)
+from design_standards import layout_metrics
+
+
+ROOT = Path(__file__).resolve().parent.parent
+CARD_DIR = ROOT / "data" / "cards"
+SHAPES_DIR = ROOT / "web" / "assets" / "shapes"
+
+OUT_W, OUT_H = 900, 1338
+SCALE = OUT_W / VW
+
+BOTTOM_GLYPH_SIZE = BOTTOM_GLYPH_RATIO * CW
+OUTER_CROP_PAD = 20
+
+ART_PLACEMENT_OVERRIDES = {
+    # The chessboard is the main narrative object and must remain above the
+    # deterministic bottom band in the final composed card.
+    "mars_gemini": {"mode": "contain", "scale": 0.90, "anchor_x": 0.5, "anchor_y": 0.0, "fill": "#b8d2cc"},
+}
+
+
+def sc(v: float) -> float:
+    return v * SCALE
+
+
+def font(path: str, size: float) -> ImageFont.FreeTypeFont:
+    return ImageFont.truetype(path, int(round(sc(size))))
+
+
+def fit_font(path: str, text: str, size: float, max_w: float, max_h: float) -> ImageFont.FreeTypeFont:
+    while size > 4:
+        fnt = font(path, size)
+        bbox = fnt.getbbox(text)
+        if bbox[2] - bbox[0] <= sc(max_w) and bbox[3] - bbox[1] <= sc(max_h):
+            return fnt
+        size -= 0.25
+    return font(path, size)
+
+
+def font_asset(filename: str) -> str:
+    return str(ROOT / "web" / "assets" / "fonts" / filename)
+
+
+TEXT = font_asset(FONT_NAME_FILE)
+NUMBER = font_asset(FONT_NUMBER_FILE)
+SYMBOL = font_asset(FONT_SYMBOL_FILE)
+
+
+def symbol_font(ch: str, size: float) -> ImageFont.FreeTypeFont:
+    return font(SYMBOL, size)
+
+
+def fitted_symbol_font(ch: str, size: float, cell_w: float, cell_h: float) -> ImageFont.FreeTypeFont:
+    size *= BOTTOM_GLYPH_OPTICAL_SCALE.get(ch, 1.0)
+    return fit_font(SYMBOL, ch, size, cell_w * BOTTOM_GLYPH_FIT_W, cell_h * BOTTOM_GLYPH_FIT_H)
+
+
+def load_meta(slug: str) -> dict:
+    planet, sign = slug.split("_", 1)
+    for path in sorted(CARD_DIR.glob("*.json")):
+        for card in json.loads(path.read_text(encoding="utf-8")):
+            if card["planet"].lower() == planet and card["sign"].lower() == sign:
+                return card
+    raise SystemExit(f"Unknown card slug: {slug}")
+
+
+def center_text(draw: ImageDraw.ImageDraw, xy: tuple[float, float], text: str, fnt, fill=INK) -> None:
+    bbox = draw.textbbox((0, 0), text, font=fnt)
+    w = bbox[2] - bbox[0]
+    h = bbox[3] - bbox[1]
+    draw.text((xy[0] - w / 2 - bbox[0], xy[1] - h / 2 - bbox[1]), text, font=fnt, fill=fill)
+
+
+def fit_cover(img: Image.Image, size: tuple[int, int]) -> Image.Image:
+    target_w, target_h = size
+    scale = max(target_w / img.width, target_h / img.height)
+    resized = img.resize((round(img.width * scale), round(img.height * scale)), Image.Resampling.LANCZOS)
+    left = (resized.width - target_w) // 2
+    top = (resized.height - target_h) // 2
+    return resized.crop((left, top, left + target_w, top + target_h))
+
+
+def fit_fill(img: Image.Image, size: tuple[int, int]) -> Image.Image:
+    return img.resize(size, Image.Resampling.LANCZOS)
+
+
+def fit_underlay(slug: str, img: Image.Image, size: tuple[int, int]) -> Image.Image:
+    if slug.startswith("mercury_"):
+        return fit_fill(img, size)
+
+    override = ART_PLACEMENT_OVERRIDES.get(slug)
+    if not override:
+        return fit_cover(img, size)
+
+    target_w, target_h = size
+    if override["mode"] != "contain":
+        raise SystemExit(f"Unknown art placement mode for {slug}: {override['mode']}")
+
+    scale = min(target_w / img.width, target_h / img.height) * float(override.get("scale", 1.0))
+    resized = img.resize((round(img.width * scale), round(img.height * scale)), Image.Resampling.LANCZOS)
+    canvas = Image.new("RGB", size, str(override.get("fill", CARD)))
+    left = round((target_w - resized.width) * float(override.get("anchor_x", 0.5)))
+    top = round((target_h - resized.height) * float(override.get("anchor_y", 0.5)))
+    canvas.paste(resized, (left, top))
+    return canvas
+
+
+def crop_to_outer_card(img: Image.Image, outer_rect: ET.Element) -> Image.Image:
+    x1, y1, x2, y2 = rect_tuple(outer_rect)
+    stroke_pad = max(OUTER_CROP_PAD, math.ceil(sc(stroke_width(outer_rect)) / 2) + 1)
+    crop = (
+        max(0, math.floor(sc(x1) - stroke_pad)),
+        max(0, math.floor(sc(y1) - stroke_pad)),
+        min(img.width, math.ceil(sc(x2) + stroke_pad)),
+        min(img.height, math.ceil(sc(y2) + stroke_pad)),
+    )
+    return img.crop(crop)
+
+
+def tag_name(el: ET.Element) -> str:
+    return el.tag.rsplit("}", 1)[-1]
+
+
+def stroke_width(el: ET.Element, fallback: float = 1.0) -> float:
+    raw = el.attrib.get("stroke-width")
+    if raw:
+        return float(raw)
+    parent = el.attrib.get("_parent_stroke_width")
+    return float(parent) if parent else fallback
+
+
+def stroke_opacity(el: ET.Element, fallback: float = 1.0) -> float:
+    raw = el.attrib.get("stroke-opacity")
+    if raw:
+        return float(raw)
+    parent = el.attrib.get("_parent_stroke_opacity")
+    return float(parent) if parent else fallback
+
+
+def shape_parts(planet: str) -> dict:
+    """Read the actual web/assets/shapes SVG for all fixed geometry."""
+    shape_path = SHAPES_DIR / f"{planet.lower()}.svg"
+    root = ET.fromstring(shape_path.read_text(encoding="utf-8"))
+    children = list(root)
+    rects = [el for el in children if tag_name(el) == "rect"]
+    groups = [el for el in children if tag_name(el) == "g"]
+
+    for group in groups:
+        group_sw = group.attrib.get("stroke-width")
+        group_opacity = group.attrib.get("stroke-opacity")
+        for child in group:
+            if group_sw and "stroke-width" not in child.attrib:
+                child.attrib["_parent_stroke_width"] = group_sw
+            if group_opacity and "stroke-opacity" not in child.attrib:
+                child.attrib["_parent_stroke_opacity"] = group_opacity
+
+    bottom_group = next((group for group in groups if is_bottom_group(group)), None)
+    motif_group = next((group for group in groups if group is not bottom_group), None)
+    return {
+        "outer": rects[1],
+        "inner": rects[2],
+        "notch": rects[3],
+        "motif_group": motif_group,
+        "bottom_group": bottom_group,
+    }
+
+
+def rect_tuple(rect: ET.Element) -> tuple[float, float, float, float]:
+    x = float(rect.attrib["x"])
+    y = float(rect.attrib["y"])
+    w = float(rect.attrib["width"])
+    h = float(rect.attrib["height"])
+    return x, y, x + w, y + h
+
+
+def draw_rect_outline(draw: ImageDraw.ImageDraw, rect: ET.Element, *, fill: str | None = None) -> None:
+    x1, y1, x2, y2 = rect_tuple(rect)
+    width = max(1, round(sc(stroke_width(rect))))
+    radius = sc(float(rect.attrib.get("rx", "0")))
+    box = (sc(x1), sc(y1), sc(x2), sc(y2))
+    if radius:
+        draw.rounded_rectangle(box, radius=radius, fill=fill, outline=INK, width=width)
+    else:
+        draw.rectangle(box, fill=fill, outline=INK, width=width)
+
+
+def coords_from_path(d: str) -> list[tuple[float, float]]:
+    nums = [float(n) for n in re.findall(r"-?\d+(?:\.\d+)?", d)]
+    return list(zip(nums[0::2], nums[1::2]))
+
+
+def draw_path(draw: ImageDraw.ImageDraw, d: str, width: int, *, fill=INK) -> None:
+    if " A" in d:
+        vals = [float(n) for n in re.findall(r"-?\d+(?:\.\d+)?", d)]
+        x1, y1, rx, _ry, x2, _y2 = vals[0], vals[1], vals[2], vals[3], vals[-2], vals[-1]
+        draw.arc((sc(x1), sc(y1 - rx), sc(x2), sc(y1 + rx)), start=180, end=360, fill=fill, width=width)
+        return
+    points = coords_from_path(d)
+    if d.strip().endswith("Z") and points:
+        points.append(points[0])
+    if len(points) >= 2:
+        draw.line([(sc(x), sc(y)) for x, y in points], fill=fill, width=width, joint="curve")
+
+
+def is_bottom_group(group: ET.Element) -> bool:
+    for child in group:
+        if tag_name(child) != "line":
+            continue
+        y1 = float(child.attrib["y1"])
+        y2 = float(child.attrib["y2"])
+        if abs(y1 - y2) < 0.01 and y1 > 320:
+            return True
+    return False
+
+
+def draw_group(img: Image.Image, group: ET.Element | None) -> None:
+    if group is None:
+        return
+    children = list(group)
+    opacity = min(1.0, max(0.0, min((stroke_opacity(child) for child in children), default=1.0)))
+    if opacity < 1.0:
+        overlay = Image.new("RGBA", img.size, (0, 0, 0, 0))
+        draw = ImageDraw.Draw(overlay)
+        fill = (*ImageColor.getrgb(INK), round(255 * opacity))
+    else:
+        overlay = None
+        draw = ImageDraw.Draw(img)
+        fill = INK
+    for child in children:
+        width = max(1, round(sc(stroke_width(child))))
+        if tag_name(child) == "line":
+            draw.line(
+                (
+                    sc(float(child.attrib["x1"])),
+                    sc(float(child.attrib["y1"])),
+                    sc(float(child.attrib["x2"])),
+                    sc(float(child.attrib["y2"])),
+                ),
+                fill=fill,
+                width=width,
+            )
+        elif tag_name(child) == "path":
+            draw_path(draw, child.attrib["d"], width, fill=fill)
+    if overlay is not None:
+        img.alpha_composite(overlay)
+
+
+def bottom_band_geometry(group: ET.Element | None) -> dict[str, float]:
+    if group is None:
+        raise SystemExit("Shape SVG is missing the bottom information band group")
+    horizontal = []
+    vertical = []
+    for child in group:
+        if tag_name(child) != "line":
+            continue
+        y1 = float(child.attrib["y1"])
+        y2 = float(child.attrib["y2"])
+        x1 = float(child.attrib["x1"])
+        x2 = float(child.attrib["x2"])
+        if abs(y1 - y2) < 0.01:
+            horizontal.append((x1, x2, y1))
+        elif abs(x1 - x2) < 0.01:
+            vertical.append((x1, y1, y2))
+    if not horizontal:
+        raise SystemExit("Shape SVG bottom group has no horizontal band-top line")
+    if len(vertical) < 2:
+        raise SystemExit("Shape SVG bottom group has fewer than two vertical dividers")
+    band_line = min(horizontal, key=lambda item: item[2])
+    dividers = sorted(vertical, key=lambda item: item[0])
+    x1, x2, band_top = band_line
+    y_bottom = max(max(y1, y2) for _x, y1, y2 in vertical)
+    left_divider = dividers[0][0]
+    right_divider = dividers[-1][0]
+    return {
+        "x1": x1,
+        "x2": x2,
+        "top": band_top,
+        "bottom": y_bottom,
+        "left_divider": left_divider,
+        "right_divider": right_divider,
+        "left_center": (x1 + left_divider) / 2,
+        "right_center": (right_divider + x2) / 2,
+        "title_center": (left_divider + right_divider) / 2,
+        "cell_y": (band_top + y_bottom) / 2,
+        "title_width": right_divider - left_divider,
+    }
+
+
+def compose(slug: str, source: Path, output: Path, *, full_canvas: bool = False) -> None:
+    meta = load_meta(slug)
+    planet = meta["planet"]
+    sign = meta["sign"].lower()
+    band_fill = SUIT_BAND[planet]
+    parts = shape_parts(planet)
+
+    base = Image.open(source).convert("RGB")
+    img = Image.new("RGBA", (OUT_W, OUT_H), CARD)
+    ix1, iy1, ix2, iy2 = rect_tuple(parts["inner"])
+    art_box = (
+        round(sc(ix1)),
+        round(sc(iy1)),
+        round(sc(ix2)),
+        round(sc(iy2)),
+    )
+    art = fit_underlay(slug, base, (art_box[2] - art_box[0], art_box[3] - art_box[1]))
+    img.paste(art, art_box[:2])
+    draw = ImageDraw.Draw(img)
+
+    # Fill fixed information fields first. Lines are drawn once, from the shape SVG.
+    band = bottom_band_geometry(parts["bottom_group"])
+    draw.rectangle((sc(band["x1"]), sc(band["top"]), sc(band["x2"]), sc(band["bottom"])), fill=band_fill)
+    draw_rect_outline(draw, parts["outer"])
+    draw_rect_outline(draw, parts["inner"])
+    draw_group(img, parts["motif_group"])
+    draw = ImageDraw.Draw(img)
+    draw_group(img, parts["bottom_group"])
+    draw = ImageDraw.Draw(img)
+    draw_rect_outline(draw, parts["notch"], fill=band_fill)
+
+    number = str(meta["number"])
+    number_size = number_font_size(CW, number)
+    nx1, ny1, nx2, ny2 = layout_metrics()["notch"]  # type: ignore[misc]
+    center_text(draw, (sc((nx1 + nx2) / 2), sc(ny1 + (ny2 - ny1) * 0.54)), number, font(NUMBER, number_size))
+    center_text(
+        draw,
+        (sc(band["left_center"]), sc(band["cell_y"])),
+        PLANET_GLYPHS[planet],
+        fitted_symbol_font(
+            PLANET_GLYPHS[planet],
+            BOTTOM_GLYPH_SIZE,
+            band["left_divider"] - band["x1"],
+            band["bottom"] - band["top"],
+        ),
+    )
+    center_text(
+        draw,
+        (sc(band["right_center"]), sc(band["cell_y"])),
+        SIGN_GLYPHS[sign],
+        fitted_symbol_font(
+            SIGN_GLYPHS[sign],
+            BOTTOM_GLYPH_SIZE,
+            band["x2"] - band["right_divider"],
+            band["bottom"] - band["top"],
+        ),
+    )
+
+    name = meta["name"].upper()
+    size = TITLE_FONT_MAX_H_RATIO * CH
+    while size > 8:
+        fnt = font(TEXT, size)
+        bbox = draw.textbbox((0, 0), name, font=fnt)
+        if bbox[2] - bbox[0] <= sc(band["title_width"] * TITLE_WIDTH_RATIO):
+            break
+        size -= 0.5
+    center_text(draw, (sc(band["title_center"]), sc(band["cell_y"])), name, fnt)
+
+    if not full_canvas:
+        img = crop_to_outer_card(img, parts["outer"])
+
+    output.parent.mkdir(parents=True, exist_ok=True)
+    img.convert("RGB").save(output)
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("slug")
+    parser.add_argument("source", type=Path)
+    parser.add_argument("output", type=Path)
+    parser.add_argument(
+        "--full-canvas",
+        action="store_true",
+        help="Keep the full 300:446 template canvas instead of trimming to the card edge.",
+    )
+    args = parser.parse_args()
+    compose(args.slug, args.source, args.output, full_canvas=args.full_canvas)
+
+
+if __name__ == "__main__":
+    main()

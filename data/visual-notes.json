@@ -1,0 +1,945 @@
+{
+  "jupiter_aries": {
+    "visual_notes": [
+      "Enterprise, Jupiter in Aries: a chiromantic open right hand is the central subject, palm facing the viewer with fingers spread wide.",
+      "The hand has no face or body attached; its gaze-equivalent is the direct display of palmistry lines and planetary symbols across the fingers, palm, and thumb.",
+      "The hand gesture is declarative and offering, showing the full palm as if presenting available talents and potential.",
+      "Three acorns appear above and three below the hand, reinforcing the image_description fact that acorns are seeds of potential.",
+      "The hand sits inside a blue circle within a tall yellow diamond, framed by the card's black line geometry.",
+      "Pink scrollwork fills the upper corners, while pale green lower corners hold clusters of red, pink, purple, and orange flowers.",
+      "Spatially, the hand dominates the center, acorns balance top and bottom, and flowers anchor the lower corners.",
+      "The mood is optimistic, fertile, and enterprising, suggesting energetic use of latent gifts."
+    ]
+  },
+  "jupiter_taurus": {
+    "visual_notes": [
+      "Status, Jupiter in Taurus: a dignified man and woman are shown as paired classical busts, posed like a formal portrait.",
+      "Both figures face right in close profile, with the bearded older figure slightly behind the fair-haired figure in front.",
+      "Their faces are calm, reserved, and status-conscious, with fixed gazes directed outward beyond the card frame.",
+      "No hands are shown; the composition relies on posture, profile, crown, and decorative wealth rather than gesture.",
+      "They wear draped classical garments in rose, blue, and pale tones, with a jeweled crown hovering above them.",
+      "Two lion-headed dragons curl symmetrically in the pale upper corners, matching the card fact of might and dignity.",
+      "Elaborate brocade panels fill the lower left and right corners, visually indicating riches and material refinement.",
+      "The mood is formal, wealthy, and socially elevated, with the couple centered beneath symbols of power."
+    ]
+  },
+  "jupiter_gemini": {
+    "visual_notes": [
+      "Bluff, Jupiter in Gemini: a Minoan goddess stands frontally in the center, holding two ambiguous butterfly-or-axe forms.",
+      "Her body is upright and symmetrical, arms lifted to either side, while her patterned skirt tapers downward inside the diamond.",
+      "Her face is masklike and unreadable, with a dark eye band or shadow that makes her gaze mysterious and controlled.",
+      "Each raised hand presents a double-axe shape, while two disembodied lower hands show a front-and-back sleight-of-hand motif.",
+      "She wears a structured headdress and geometric, banded clothing covered in dots, stripes, and ornamental panels.",
+      "Two circular quartered disks flank her torso, and yellow stars decorate the pale green background around the pink diamond.",
+      "The lower hands rise from outside the main figure, making the goddess appear like both performer and trick being performed.",
+      "The mood is clever, theatrical, and ambiguous, faithful to the card's theme of bluff and conjuring."
+    ]
+  },
+  "jupiter_cancer": {
+    "visual_notes": [
+      "Speculation, Jupiter in Cancer: a large crab anchors the lower half, claws lifted toward an alchemical circle.",
+      "The crab faces upward from the bottom center, its body spread wide and symmetrical beneath the central diagram.",
+      "A king and queen occupy the upper corners, facing inward toward the central symbol with solemn, traditional expressions.",
+      "The monarchs hold scepters and courtly objects, while the crab's raised claws touch or nearly touch the circle of opportunity.",
+      "The central circle contains a radiant eye, planetary signs, elemental geometry, and alchemical words including Philosophiae and Vitriol.",
+      "The king and queen wear crowns, robes, and ermine-like finery, preserving the card facts of marriage, tradition, and stability.",
+      "Pink flowers sit in the lower side fields, balancing the regal figures above and the crab below.",
+      "The mood is watchful, familial, and opportunistic, with stability and risk held in the same frame."
+    ]
+  },
+  "jupiter_leo": {
+    "visual_notes": [
+      "Publicity, Jupiter in Leo: a winged female angel is the central figure, circling near a small elemental globe.",
+      "Her body sweeps diagonally upward, torso turned left while one arm reaches high toward a glowing star.",
+      "Her face is alert and fame-conscious, with a focused gaze angled toward the upper right action.",
+      "One hand reaches to touch or claim a star, while the other arm lowers near the globe; a flag with a sun emblem flies behind her.",
+      "She wears a pale blue, wind-swept dress with ruffled edges, a headband, and large feathered wings.",
+      "The globe at lower right contains the four elemental colors, labeled with text resembling Tetra.",
+      "Several stars decorate the upper right field, with one star circled in yellow light to emphasize the angel's touch.",
+      "The mood is bright, triumphant, and publicity-driven, as if spreading fame across the world."
+    ]
+  },
+  "jupiter_virgo": {
+    "visual_notes": [
+      "Patience, Jupiter in Virgo: a gentlewoman stands or strolls in a garden, centered within a pale blue diamond.",
+      "Her body faces forward with composed posture, feet small beneath a wide embroidered dress.",
+      "Her face is calm, serious, and patient, looking directly outward with a restrained expression.",
+      "She holds a long three-pronged staff or garden implement upright in one hand and a small ring-like object in the other.",
+      "Her cream dress is elaborately embroidered with vines, flowers, and leaves, matching the card fact of delicate ornament.",
+      "An ox and a lion recline across the upper background, looking away from each other peacefully.",
+      "Classical female heads appear in the lower corners, corresponding to the earth goddesses Circe and Gaia.",
+      "The mood is orderly, gentle, and cultivated, with garden patience balancing animal strength."
+    ]
+  },
+  "jupiter_libra": {
+    "visual_notes": [
+      "Negotiation, Jupiter in Libra: a dark maiden stands in a field before a small town, centered between Moon and Sun.",
+      "Her body faces forward with a poised, dance-like stance, arms raised outward to bridge the opposing lights.",
+      "Her face is shadowed and calm, with a composed, diplomatic expression directed generally toward the viewer.",
+      "One raised hand reaches toward the crescent Moon and the other toward the radiant Sun, forming a living link between them.",
+      "She wears a blue skirt or drape, with long dark hair falling around a mostly bare torso.",
+      "A small town, hills, and road-like field lines recede behind her within the central diamond.",
+      "The upper left is dark with Moon and stars, the upper right is bright with the Sun, and the lower corners carry pale ornamental scrollwork.",
+      "The mood is balanced, diplomatic, and liminal, suspended between night and day, emotion and creativity."
+    ]
+  },
+  "jupiter_scorpio": {
+    "visual_notes": [
+      "Manipulation, Jupiter in Scorpio: a powerful priest or shaman appears as a frontal bust filling the center.",
+      "The figure faces straight ahead, shoulders and head aligned squarely with the viewer.",
+      "His pale blue eyes stare directly and penetratingly outward, with an unsmiling, magnetic expression.",
+      "No hands are visible; power is conveyed through gaze, headdress, stillness, and frontal authority.",
+      "He wears a striped ceremonial headdress bearing three six-pointed stars, plus a pale draped cloth and gold collar.",
+      "An eight-pointed black star with a blue center hovers above, preserving the Scorpio eighth-house symbolism.",
+      "The upper background is a black star field, while the lower pale blue area contains spiral curls, dots, and decorative tendrils.",
+      "The mood is hypnotic, secretive, and commanding, suggesting charisma used as control."
+    ]
+  },
+  "jupiter_sagittarius": {
+    "visual_notes": [
+      "Principle, Jupiter in Sagittarius: the central subject is a blue dove beneath a bishop's mitre, flying above old ruins.",
+      "The dove is angled leftward with wings spread and an olive branch in its beak, while the mitre floats above it.",
+      "There is no main human face; instead, watchful Sun and Moon faces occupy the upper corners.",
+      "No hands appear; symbolic objects do the acting, with the dove carrying the branch and the mitre asserting spiritual authority.",
+      "The ornate mitre has red and gold panels with ribbons hanging down, matching the card fact of spiritual power across ages.",
+      "Stone walls, an arched gate, and ruined structures fill the lower scene, representing earlier establishments.",
+      "A tiny traveler at lower right gives scale to the large ruins and reinforces the theme of pilgrimage or grand travel.",
+      "The mood is principled, philosophical, and ancient, with celestial oversight above historical foundations."
+    ]
+  },
+  "jupiter_capricorn": {
+    "visual_notes": [
+      "Control, Jupiter in Capricorn: Zeus or Jupiter sits enthroned in the center, feet resting on a small globe of the world.",
+      "His body faces forward in a heavy seated pose, legs apart and drapery falling vertically beneath him.",
+      "His bearded face looks downward with a grave, judging, and responsibility-laden expression.",
+      "His hands rest folded or crossed on his lap, making the gesture restrained and authoritative rather than active.",
+      "He wears a pale blue robe and purple mantle, with sandals visible near the globe.",
+      "Cherubim carry a cloudy canopy of sky above him, while landscape, hills, settlements, and verdant earth spread below.",
+      "A red ouroboros serpent encircles the lower world area, preserving the symbol of time, eternity, and the universe.",
+      "The mood is stern, cosmic, and controlled, emphasizing authority, duty, and governance over creation."
+    ]
+  },
+  "jupiter_aquarius": {
+    "visual_notes": [
+      "Innovation, Jupiter in Aquarius: a female figure sits side-on atop a strange plant-stool rooted in a blue infinity-like base.",
+      "Her body is in right-facing profile, seated with one leg extended forward and the other bent on the stool.",
+      "Her face is calm and intent, gazing toward the instrument and hanging ball in front of her.",
+      "Both hands hold a curved whip-like instrument attached to a black ball containing a nine-petaled flower.",
+      "She wears unusual striped and patterned attire over the whole body, with long dark curly hair and small shoes.",
+      "Four ankhs decorate the corners; three share the same red-and-gold form, while the upper right one is distinct and pale blue.",
+      "Aquarius wave lines sit to the left of the figure, while the plant-stool rises from the lower central knot.",
+      "The mood is eccentric, inventive, and experimental, with asymmetry and odd tools suggesting original thought."
+    ]
+  },
+  "jupiter_pisces": {
+    "visual_notes": [
+      "Seduction, Jupiter in Pisces: Eve, the first woman, is shown nude and bending forward with a small apple in her hand.",
+      "Her body is in left-to-right profile, one foot trailing behind as if stepping or leaning into temptation.",
+      "Her face tilts downward toward the apple, giving her expression a private, absorbed, and vulnerable quality.",
+      "One hand presents or examines the apple plucked from the Tree of Knowledge, while the other is hidden by body and hair.",
+      "Her long yellow hair streams behind and partly covers her body, serving as her only covering.",
+      "A large Pisces glyph sits in the central blue diamond beside her, while landscape panels show hills, trees, water, and distant buildings.",
+      "Flowers and leafy branches fill the upper left, while a heart and the Cassiopeia constellation decorate the upper right.",
+      "The mood is alluring, tender, and cautionary, combining mundane love symbols with spiritual deception and sacrifice."
+    ]
+  },
+  "mars_aries": {
+    "visual_notes": [
+      "Upper panels show a protective six-step seal at left and a horseshoe beneath the Aries glyph at right.",
+      "Lower scene centers a wild mounted rider galloping left, the horse stretched in full stride with lifted forelegs and streaming tail.",
+      "The rider leans low over the horse's neck, gaze driven forward, face mostly obscured by motion and hair or head covering.",
+      "Hands grip the reins tightly; no weapon is emphasized, so the gesture reads as speed, impulse, and racing control.",
+      "A red cloak or drape flies backward from the rider, contrasting with the pale horse and sparse ground.",
+      "The environment is minimal and open, with only a thin ground line and empty sky to amplify the forward rush.",
+      "Mood: fiery impulsiveness, reckless courage, and competitive action already in motion."
+    ]
+  },
+  "mars_taurus": {
+    "visual_notes": [
+      "Upper panels pair a Taurean coin with a bull head at left and six decorative upright swords at right.",
+      "Three mounted warriors crowd the lower scene in a compressed wedge, horses reined in rather than freely racing.",
+      "The riders face into a shared threat, bodies overlapping, with helmets, cloaks, and armor making their faces guarded and hard to read.",
+      "Hands hold reins, raised arms, and martial gear close to the body, signaling readiness without reckless attack.",
+      "The horses bunch together shoulder-to-shoulder, forming a defensive wall across the foreground.",
+      "A low strip of ground and distant rise sit behind them, keeping attention on the tense mounted formation.",
+      "Mood: vigilant defense of valued possessions, practical force, and restrained martial pressure."
+    ]
+  },
+  "mars_gemini": {
+    "visual_notes": [
+      "Upper left panel holds a small winged figure or wheel emblem for airy mental movement; upper right is a dark wall with a small black doorway.",
+      "The lower half is dominated by a square chessboard filled with many pieces, arranged as a tactical mental battlefield.",
+      "The only figure is tiny and symbolic, seated or poised in the upper panel with an alert sideward gaze rather than a dramatic body scene.",
+      "A raised arm or wand-like gesture in the upper emblem suggests quick thought, signaling, or decision-making.",
+      "The doorway sits apart from the chessboard, challenging movement from calculated play into unknown territory.",
+      "Spatially the card is split into thought symbols above and the game board below, with no natural landscape.",
+      "Mood: sharp debate, strategic speed, mental aggression, and the pressure to choose a move."
+    ]
+  },
+  "mars_cancer": {
+    "visual_notes": [
+      "Upper panels show two classical male busts in profile facing each other with stern, glaring expressions.",
+      "Lower scene shows two mounted figures arguing over a gold ring, their horses pressed close in a crowded domestic standoff.",
+      "The left rider leans in from behind a plumed helmet, while the right rider faces back with a guarded, combative gaze.",
+      "Both figures extend hands toward the ring at the center, making the tug over betrothal, inheritance, or family bond the main gesture.",
+      "Costumes are ornate and martial, with helmets, striped armor, cloaks, and reins tangled among the horses.",
+      "The horses' bodies overlap so tightly that the conflict feels trapped inside the family scene rather than open battle.",
+      "Mood: emotional quarrel, possessiveness, divided loyalties, and old family grievances repeating."
+    ]
+  },
+  "mars_leo": {
+    "visual_notes": [
+      "Upper panels show a radiant Leo Sun face at left and a royal Egyptian scarab-like emblem at right.",
+      "The main subject is a strange crowned bird, half cockerel and half man, standing in proud profile facing right.",
+      "Its face and beak are lifted with a self-satisfied gaze; the long neck and upright chest make the pose theatrical.",
+      "There are no human hands; the gesture comes from the cocked head, raised tail feathers, and planted bird legs.",
+      "The figure wears a small crown and has dense patterned plumage, a huge dark tail, and human-like legs or stance.",
+      "Flowering plants and a low decorative ground line frame the bird as if it is posing before an audience.",
+      "Mood: showy egotism, royal self-display, creative pride, and a need to be admired."
+    ]
+  },
+  "mars_virgo": {
+    "visual_notes": [
+      "Upper left shows a woman's head in profile with wheat-like braided hair and a necklace; the Virgo glyph sits in the upper right.",
+      "A large hand and pointing finger enter from the right, accusingly indicating the woman's necklace or throat.",
+      "The woman's face is calm but exposed in profile, gaze fixed rightward, while the lower central eye stares directly outward.",
+      "Hands are disembodied and precise, using the extended finger as the card's main critical gesture.",
+      "Below the staring eye sits a simple basket overflowing with flowers, leaves, and careful botanical detail.",
+      "The scene is symbolic rather than environmental, divided into inspection panels with clean empty backgrounds.",
+      "Mood: scrutiny, perfectionism, analytical criticism, and beauty being examined for flaws."
+    ]
+  },
+  "mars_libra": {
+    "visual_notes": [
+      "Upper panels contrast a large rose with thorny stem at left and a symbolic leg or movement emblem at right.",
+      "Lower scene shows two women reclining or seated opposite each other on clouds with a small balance scale between them.",
+      "One woman is blindfolded as Justice, turned toward the scales; the other watches the balance swing with an intent, assessing gaze.",
+      "Hands hold, indicate, or hover near the scales, making weighing and choosing the central action rather than combat.",
+      "The women wear soft draped garments, with the cloud base and starry lower band giving the choice a suspended, ritual quality.",
+      "The rose and thorns above echo the lower decision, weighing beauty against pain and consequence.",
+      "Mood: difficult choice, tense diplomacy, unstable balance, and the need to judge fairly."
+    ]
+  },
+  "mars_scorpio": {
+    "visual_notes": [
+      "Upper right inset shows the lovers, Sun and Moon, embracing, while the main lower field stages a warrior trophy scene.",
+      "A heroic nude male stands tall on a small base, body turned three-quarter right, one arm lifting an enemy's severed head.",
+      "His face is stern and controlled, gaze angled toward the raised head; the enemy's face hangs slack and defeated.",
+      "The other hand holds a sword downward across the body, while a small winged figure approaches from the lower right with a fiery torch.",
+      "The warrior's nakedness emphasizes vulnerability, offset by helmet or headgear, sword, and rigid heroic posture.",
+      "The figures are vertically separated: giant victor above, small honor-bringer below, with the lovers inset as a symbolic backdrop.",
+      "Mood: revenge, extreme action, dangerous passion, and controlled but uncompromising triumph."
+    ]
+  },
+  "mars_sagittarius": {
+    "visual_notes": [
+      "Upper panels display three Abrahamic religious symbols: scroll or tablet form, crescent and star, and a cross.",
+      "Lower scene shows two naked young men wrestling in a field near a solid house or small town.",
+      "One wrestler bends over the other from above, forcing him downward; the lower figure twists into a yielding position near defeat.",
+      "Faces are turned down and sideways with strain rather than direct eye contact, emphasizing physical pressure and submission.",
+      "Hands lock around shoulders, back, and limbs, making the whole body-to-body grapple the dominant gesture.",
+      "The house and distant buildings sit behind the struggle, grounding the fight in ordinary territory under large belief symbols.",
+      "Mood: domination, competitive zeal, dogmatic pressure, and the urge to force a victory."
+    ]
+  },
+  "mars_capricorn": {
+    "visual_notes": [
+      "No scanner upload is available for this slug; these notes derive from the card data and the existing card crop only.",
+      "Upper panels show an equal-armed earth cross, a circular triangular authority seal, and the Capricorn glyph.",
+      "A crowned king stands firm in the lower-left field, body upright and slightly turned right beneath heavy formal robes.",
+      "His face is stern in profile or three-quarter view, gaze directed rightward with controlled, unsmiling authority.",
+      "One hand holds a tall scepter or staff, while the other presents an orb topped by an equal-armed cross.",
+      "Clothing is ceremonial: crown, patterned mantle, long robe, and draped fabric emphasizing rank and responsibility.",
+      "The card has almost no landscape, using vertical panels and empty space to isolate the king as the source of power.",
+      "Mood: duty, perseverance, command, material authority, and disciplined self-control."
+    ]
+  },
+  "mars_aquarius": {
+    "visual_notes": [
+      "Upper left shows two giant bearded nobles or authorities, while upper right shows a young warrior challenging them with a sword.",
+      "The warrior faces left, body angled forward in mid-step, sword arm thrust out across the dividing line toward the giants.",
+      "The giant nobles stare back with heavy, traditional authority; the warrior's posture reads defiant and confrontational.",
+      "Hands and gestures are starkly opposed: the warrior extends the blade, while the elders remain massive and immovable.",
+      "Lower scene shows a walled fortress town spread across hills beneath dark, brooding clouds.",
+      "The upper confrontation floats over the lower fortress, making rebellion against entrenched structures the spatial relationship.",
+      "Mood: courageous rebellion, social protest, refusal of old rules, and stormy pressure against authority."
+    ]
+  },
+  "mars_pisces": {
+    "visual_notes": [
+      "Upper panels show a boy riding a dolphin inside a circular sea seal at left and a seated Buddha figure at right.",
+      "Lower scene shows a woman escaping in an ornate chariot pulled by tigers, the vehicle racing across rough ground.",
+      "The woman turns back to look behind her from within the chariot, face anxious and compelled to see what she flees.",
+      "Hands grip the chariot or drapery while accompanying servants or attendants lean into the urgent motion.",
+      "The chariot has a large decorated wheel, curling frame, and flowing cloth, with tiger bodies low and stretched at the front.",
+      "The upper Buddha and dolphin seal hover above the flight, linking material escape with sea power and spiritual withdrawal.",
+      "Mood: urgent escape, sacrifice, hidden pressure, and the exhausted need to leave a difficult situation."
+    ]
+  },
+  "mercury_aries": {
+    "visual_notes": [
+      "Classical Mercury is the central subject, nearly nude and winged, dashing across a low urban skyline.",
+      "His body is in left-facing profile with one leg lifted behind, torso stretched diagonally as if mid-stride or leap.",
+      "His face and gaze turn intently left toward his raised hand; the expression is alert, quick, and purposeful.",
+      "One hand points upward while the other carries the caduceus staff; the winged helmet and staff identify Mercury clearly.",
+      "A sun-like compass disk fills the yellow left wedge, while towers, walls, bridges, and water form the city below.",
+      "Purple cloud bands decorate the pale blue sky, and the diagonal split pushes Mercury forward across the card.",
+      "Mood: restless motion, many possible directions, sharp curiosity, and urgent communication."
+    ]
+  },
+  "mercury_taurus": {
+    "visual_notes": [
+      "A rigid gray stone bull dominates the lower half, its heavy body in right-facing profile with head lowered defensively.",
+      "There is no human figure, face, or hand; the bull's fixed posture carries the card's stubborn resistance.",
+      "A wind-blown shrub rises behind the bull and spreads fine leafy branches across the upper left and top edge.",
+      "A small blue bird perches in the branches, while a green parrot hovers at upper right with wings half-open.",
+      "The black Taurus glyph floats near the parrot, echoing the bird-like shape described in the card facts.",
+      "The pale yellow and pale blue diagonal fields separate rooted matter from airy chatter around the immovable bull.",
+      "Mood: obstinate stillness surrounded by distracting movement, breeze, and meaningless talk."
+    ]
+  },
+  "mercury_gemini": {
+    "visual_notes": [
+      "A bearded sagacious rider on a nervous prancing horse fills the lower center, announcing himself with a great horn.",
+      "Horse and rider move left in profile; the horse lifts a foreleg and arches its neck beside an old stone tower.",
+      "The rider's face is intent and outward-facing under a red cap, with beard and cloak adding antique authority.",
+      "Both hands hold the curved horn at his mouth, and the horn blasts wide yellow rays across the right side of the sky.",
+      "A ruined venerated tower stands at left as a symbol of past wisdom, while dark clouds gather above.",
+      "Diagonal color panels divide tower, clouds, horse, and rays, making the horn's broadcast the main spatial force.",
+      "Mood: excitable proclamation, mental agility, quick news, and restless public communication."
+    ]
+  },
+  "mercury_cancer": {
+    "visual_notes": [
+      "A meditating four-armed figure sits cross-legged above a starred cloud, front-facing and centered in the blue left field.",
+      "The face looks straight ahead with calm, inward concentration, framed by a crown, red hair, jewelry, and patterned garments.",
+      "Two upper hands raise lotus flowers, while two lower hands rest open and receptive in the lap.",
+      "Three disks float on the orange right side: a pentacle with angel names, a seal marked Gabriel, and a lunar angel disk.",
+      "Star shapes scatter around the figure, and a soft cloud band with star tips supports the seated body.",
+      "The diagonal split separates mystical symbols from the figure, but the disks hover close like meditative visions.",
+      "Mood: intuitive, protected, lunar, and quietly inspired."
+    ]
+  },
+  "mercury_leo": {
+    "visual_notes": [
+      "A great lion sits in the lower left, body angled right and head thrown upward in a roaring display.",
+      "There is no human subject or hands; the lion's open mouth, lifted muzzle, and mane provide the expressive focus.",
+      "The lion's pink limbs and golden mane contrast with green ground and a cloudy edge behind it.",
+      "A large interlocking Moebius tube floats at upper right, drawn as a puzzling endless loop with dense hatch shading.",
+      "A round talisman disk with a pentacle and small symbols hangs below the loop, securing the eloquence theme.",
+      "The Leo glyph at upper left and diagonal color fields frame lion, talisman, and impossible tube as a theatrical triangle.",
+      "Mood: dramatic attention-seeking, intellectual showmanship, pride, and flamboyant mental performance."
+    ]
+  },
+  "mercury_virgo": {
+    "visual_notes": [
+      "A crowned earth-mother woman stands at right, tall and protective, facing left toward a rush of small antelopes.",
+      "Her body is mostly frontal but her face is in left profile, watchful and composed beneath a gold crown.",
+      "One hand lifts open in a stopping or shielding gesture, while the other lowers calmly beside her robe.",
+      "She wears a green-yellow dress, red sash, dark cloak, necklace, and crown, giving her a practical regal presence.",
+      "Antelopes race through the left and lower fields in many directions, with a darker jackal-like figure adding danger among them.",
+      "Pink-orange sky, clouds, scrubby ground, and the diagonal split turn her raised hand into a barrier between panic and order.",
+      "Mood: caution, protection, disciplined restraint, and the need to slow sudden movement before it attracts harm."
+    ]
+  },
+  "mercury_libra": {
+    "visual_notes": [
+      "Adam and Eve stand together at lower left in the garden, unaware of the coiled serpent dominating the right side.",
+      "Adam faces right toward Eve with one hand near her shoulder, while Eve stands slightly turned with arms crossed over her chest.",
+      "Their faces are calm and innocent, gazing away from the danger rather than directly at the serpent.",
+      "The giant serpent loops across the purple field, its head extended left and tongue shaped like Mercury's astrological sigil.",
+      "Roses and leafy stems grow beneath the couple, with thorns visible among the blossoms.",
+      "The diagonal boundary separates the vulnerable pair from the serpent's massive coils, but the tongue crosses into their space.",
+      "Mood: seductive persuasion, smooth talk, temptation, and hidden consequences beneath beauty."
+    ]
+  },
+  "mercury_scorpio": {
+    "visual_notes": [
+      "A penny-dreadful couple struggles over letters in the foreground, staged as a melodramatic confrontation.",
+      "The woman leans back on the left while the man steps in from the right, both bodies angled toward the contested papers.",
+      "Her flushed face looks shocked and resistant; his profile is stern, accusing, and fixed on the dispute.",
+      "He holds one written sheet high while reaching for another; she clutches a yellow letter against his pull.",
+      "She wears a pink dress, white apron, and hair bow, while he wears a dark burgundy coat, white shirt, and blue trousers.",
+      "A black crow shrieks overhead above rolling hills, with the Mercury symbol floating in the pale sky.",
+      "Mood: verbal violence, exposed secrets, drastic news, and emotional extremity sparked by written words."
+    ]
+  },
+  "mercury_sagittarius": {
+    "visual_notes": [
+      "A tall mummy or sarcophagus stands at left as the historical knowledge symbol, front-facing and still.",
+      "The mummy's calm mask looks outward, with no visible hands; hieroglyphic panels run down the wrapped body.",
+      "A river scene spreads behind it with a palm, distant hills, and a paddle steamer or travel boat crossing the water.",
+      "A huge globe-sun map fills the upper right, its polar grid and landmasses turning the sky into a world chart.",
+      "An arrow-like marker points toward the globe, and a separate striped ocean-wave panel fills the far right wedge.",
+      "The diagonal composition links mummy, boat, ocean, and globe as stages of learning, distance, and discovery.",
+      "Mood: adventurous inquiry, long-distance travel, old knowledge, and widening philosophical horizons."
+    ]
+  },
+  "mercury_capricorn": {
+    "visual_notes": [
+      "A farm scene fills the left side, crowded with cattle, sheep, workers, fields, a small farmhouse, and trees.",
+      "Tiny farm figures move through their tasks, while the largest human element is a disembodied hand at right gripping ripe wheat.",
+      "A round profile medallion near the upper left shows a Mercury-like head in side view, serious and practical.",
+      "The hand holds the sheaf upright with a firm fist, making harvested grain the main prop of duty and results.",
+      "Animals cluster across the foreground in orderly layers, with plowed land and distant labor behind them.",
+      "The diagonal split separates symbolic harvest from routine farm labor, yet the wheat visually crowns the whole scene.",
+      "Mood: organization, patience, tangible work, duty, and structured achievement."
+    ]
+  },
+  "mercury_aquarius": {
+    "visual_notes": [
+      "A large inventor or scientist head occupies the right side in left-facing profile, paired with a complex machine below left.",
+      "His gaze is steady and thoughtful, with a composed mouth, strong nose, dark coat, and red neckcloth.",
+      "No hands are shown; mental originality is expressed through the head, the flying bird, and the mechanism.",
+      "A blue bird flies near his forehead carrying or passing a bright star, suggesting hope and higher inspiration.",
+      "The machine is a detailed assembly of gears, levers, wheels, rods, and dotted construction arcs.",
+      "Striped blue-green wedges and pink background panels frame the head above the device, linking imagination to engineered reality.",
+      "Mood: objective insight, invention, humanitarian originality, and a flash of thought becoming machinery."
+    ]
+  },
+  "mercury_pisces": {
+    "visual_notes": [
+      "A draped dancer stands at left, stepping lightly in profile toward the right beneath a large pale Sun face.",
+      "Her body curves in a graceful S-shape, one bare leg forward, head lowered slightly with a serene inward expression.",
+      "One arm lifts toward the heavens while the other lowers toward earth, each hand delicately pinching a small ring or point.",
+      "She wears flowing blue patterned drapery, a fitted bodice, bracelets, and bound hair, with bare foot touching the ground.",
+      "The Sun face at upper right has closed eyes and a pale contemplative glow above a stone building with towers.",
+      "A large black Mercury glyph sits in the lower center, and the diagonal pink-blue field links dancer, sky, and architecture.",
+      "Mood: inspiration, psychic linking of spiritual and material realms, imagination, and dreamlike sympathy."
+    ]
+  },
+  "moon_aries": {
+    "visual_notes": [
+      "Central subject is a gentle mother with two children on a cushioned bed or dais, set above a separate tiger panel.",
+      "The mother sits turned toward the child at left while the sleeping child reclines against her, making a triangular protective grouping.",
+      "Her face is lowered and serious, with a tender but watchful expression; the left child looks up toward her, and the reclining child sleeps peacefully.",
+      "One maternal finger is raised near her lips in a quieting gesture, while the children reach, rest, or drape their hands into the bedding.",
+      "She wears a red turban, yellow dress, and blue cloak; pillows, a small banner-like symbol, and a waxing crescent moon fill the upper field.",
+      "A striped tiger walks across the lower blue panel, visually grounding the maternal scene with instinctive guardian force.",
+      "The mood is intimate, domestic, and protective, with softness above and animal vigilance below."
+    ]
+  },
+  "moon_taurus": {
+    "visual_notes": [
+      "The card is fully symbolic, with no human subject, face, gaze, or hands; abundance is shown through floral and fruit imagery.",
+      "A large waxing crescent sits over a central square medallion, radiating flower stems like a formal botanical sunburst.",
+      "Two garlanded cornucopias curve upward from the lower half, tied together by pink ribbons in a balanced symmetrical arrangement.",
+      "The cornucopias overflow with grapes, round fruits, leaves, and earth produce, matching the Taurus theme of material fertility.",
+      "Small green star-like motifs float in the pale yellow background, keeping the open field decorative but uncluttered.",
+      "The spatial design is centered and stable: moon emblem above, paired horns of plenty below, title strip and Taurus glyph at the base.",
+      "The mood is lush, secure, fertile, and quietly celebratory."
+    ]
+  },
+  "moon_gemini": {
+    "visual_notes": [
+      "Two strange performers dominate the upper scene: a four-armed figure stands balanced on the back of a prone man.",
+      "The upper figure faces forward with one leg extended in motion, while the lower man lies belly-down facing left with one raised foot.",
+      "The main performer's expression is calm and mask-like; the prone figure looks strained and focused, creating a staged acrobatic tension.",
+      "Four arms hold symbolic objects: a sun-moon face disk, a dove or blue bird, a growing shrub, and a flower or leaf.",
+      "The figures wear bright theatrical costume pieces, jewelry, and patterned garments; an ankh is balanced on the raised foot below.",
+      "In the lower register, a ritual boat with a crescent and golden disk is supported by four small Ape of Thoth figures.",
+      "The mood is clever, restless, and performative, built around balance, quickness, and mental adaptability."
+    ]
+  },
+  "moon_cancer": {
+    "visual_notes": [
+      "Two children sit among tall wheat, reeds, and blue cornflowers, sharing the sight of a heron flying overhead.",
+      "The left child kneels or sits in profile, turned toward the other child; the right child is mostly back-facing and seated low in the field.",
+      "The left child's face is soft and pleased, while the right child looks up toward the bird with absorbed delight.",
+      "One child reaches toward the other's head or shoulder, and the other raises an open hand toward the heron.",
+      "Their modest period clothing contrasts with the dense natural growth surrounding them, emphasizing childhood and rural closeness.",
+      "A large crescent moon fills the lower panel, flanked by two ancient alchemical silver symbols on a pale pink ground.",
+      "The mood is innocent, nurturing, affectionate, and quietly joyful."
+    ]
+  },
+  "moon_leo": {
+    "visual_notes": [
+      "An elegant lady performs on a lute in the upper scene while a swift flies nearby as her small audience.",
+      "She sits in a poised diagonal pose, the lute crossing her body from lower left to upper right.",
+      "Her head turns toward the bird with a serene, faintly appreciative expression, suggesting performance and response.",
+      "One hand strums near the lute body while the other supports the neck, making the instrument the main prop and gesture.",
+      "She wears a dark veil, rose-pink gown, yellow sleeves, and green sash, giving the figure a rich theatrical presence.",
+      "Below, a golden cornucopia spills fruit and leaves across a yellow panel, reinforcing generosity and creative plenty.",
+      "The mood is refined, warm, artistic, and quietly self-assured."
+    ]
+  },
+  "moon_virgo": {
+    "visual_notes": [
+      "The card has no human subject, face, gaze, or hands; its meaning is carried by ordered plants and ornamental design.",
+      "Three neat horizontal rows of growth descend through the main field, each row showing a different stage or type of plant.",
+      "The upper row forms tall, evenly spaced green tufts; the middle row shows smaller sprouts; the lower row repeats pink flowering plants.",
+      "Three geometric symbols sit above the rows, aligned like emblems of order in nature and design.",
+      "A separate lower brocade strip shows mirrored vines, tulip shapes, flowers, and scrollwork like patient needlework.",
+      "The composition is gridded, repetitive, and carefully separated into bands, with the Virgo glyph anchoring the bottom strip.",
+      "The mood is tidy, disciplined, modest, cultivated, and exacting."
+    ]
+  },
+  "moon_libra": {
+    "visual_notes": [
+      "Four classical feminine figures stand linked together in the upper scene, representing companionship and harmonious alliance.",
+      "They stand shoulder-to-shoulder on a low platform, alternating their head turns left and right for balanced symmetry.",
+      "Their faces are calm, statuesque, and detached, with outward gazes rather than direct engagement with the viewer.",
+      "Linked arms create the main gesture; the outer figures each extend an arm holding a small dangling flower or lamp-like charm.",
+      "They wear minimal golden belts and hair wraps, while a leafy decorative border hangs across the top.",
+      "The lower panel shows clasped hands beneath a pomegranate, wheat ears, and a laurel wreath on a dotted pink field.",
+      "The mood is graceful, social, formal, and balanced, with intimacy expressed through symmetry."
+    ]
+  },
+  "moon_scorpio": {
+    "visual_notes": [
+      "A monumental stone gateway rises in the upper scene, while a large dreaming woman's head fills the foreground below.",
+      "The gateway stands upright and centered, framing black hills and a suspended union of sun and crescent moon.",
+      "The woman's face lies horizontally in profile, pale and still, with half-open inward-looking eyes and red lips.",
+      "No hands or active gestures are visible; the power comes from stillness, scale, and the framed celestial symbol.",
+      "The gateway is built from block stones with columns and a female head relief in the lintel, implying ancient feminine force.",
+      "Dark hills sit behind the arch against a pale pink-yellow sky, separating the upper vision from the sleeping foreground.",
+      "The mood is intense, occult, brooding, and psychologically charged."
+    ]
+  },
+  "moon_sagittarius": {
+    "visual_notes": [
+      "A nude damsel rides a pair of sea-horses over waves, with a cherub flying above and three celebrants below.",
+      "The rider sits side-saddle facing right as the fish-tailed horses surge forward through the water.",
+      "Her face turns toward the horses and upper sky with an open, alert expression; the cherub looks toward the central action.",
+      "She holds draped cloth while balancing on the horses; the cherub reaches outward, and the lower figures raise a cup, hold a lyre, and lift a branch or wand.",
+      "The upper background includes a black ritual diagram associated with truth, justice, and love ruled by reason.",
+      "The lower register is a festive classical band of robed figures beneath the mythic water-riding scene.",
+      "The mood is buoyant, adventurous, ceremonial, and optimistic."
+    ]
+  },
+  "moon_capricorn": {
+    "visual_notes": [
+      "A rustic work scene shows a crowned ruler with servants, field workers, an ox, a cart, wheat, and a mill building.",
+      "The ruler stands at left with staff and raised hand, while laborers bend or move across the middle ground and the ox faces right.",
+      "Faces are small but purposeful: the ruler is composed, and the workers look down toward practical tasks.",
+      "Hands hold tools, staff, wheat, or working gestures; the ox is harnessed to the cart or plow in the foreground.",
+      "Clothing is medieval-rural, with tunics, caps, crown, sacks, and farm equipment emphasizing duty and labor.",
+      "The lower decorative panel repeats insects, reeds, lotus-like flowers, and star shapes in a worker-bee and Moon-lotus pattern.",
+      "The mood is diligent, practical, communal, and orderly."
+    ]
+  },
+  "moon_aquarius": {
+    "visual_notes": [
+      "An Egyptian female royal figure stands on a plinth before a circular Stonehenge plan, with megalithic Carnac stones below.",
+      "The figure is front-facing, vertical, and centered, feet together, using the circular plan behind her like a halo or diagram.",
+      "Her face is mask-like, serene, and directly frontal, creating a distant ceremonial presence.",
+      "One arm crosses the body beneath a blue drape while the other hangs down holding a small object, keeping the pose restrained.",
+      "She wears an Egyptian-style headdress and golden body covering; Aquarius waves sit to the left and a waxing crescent moon with a red profile sits to the right.",
+      "The lower landscape shows rows of dark standing stones beside water and hills, separated from the upper symbolic figure by a horizontal band.",
+      "The mood is independent, ancient, intellectual, and remote."
+    ]
+  },
+  "moon_pisces": {
+    "visual_notes": [
+      "A child pets a large dog in a gentle country scene under a spreading tree beside water and distant hills.",
+      "The child stands to the left of the dog and leans inward, while the dog stands in profile facing left with its body extending right.",
+      "The child's gaze drops affectionately toward the dog; the dog looks calm, soulful, and trusting.",
+      "One hand rests on the dog's head or ear while the other stays close to the body, making the contact tender and quiet.",
+      "The child wears a blue suit with a white collar; the dog is large, brown and white, and nearly as tall as the child's torso.",
+      "The lower panel shows a blue-and-gold bird carrying a shining ornament toward a large ear, symbolizing spirit connection and openness to calls for help.",
+      "The mood is gentle, empathetic, loyal, receptive, and quietly tender."
+    ]
+  },
+  "saturn_aries": {
+    "visual_notes": [
+      "Subject: a red-capped boy carries his worldly possessions on a shoulder pole while passing a large menacing bear.",
+      "The boy is angled in mid-step under trees, body pulling away from the bear while his face turns tensely toward the danger.",
+      "His hands steady the pole and bundle; below, a North American Indian fetish, a key, and a small starred tree serve as protective and Aries courage symbols.",
+      "The upper scene is a grassy path with heavy foliage, tree trunks, distant hills, and a pale sky.",
+      "The bear occupies the right foreground facing the boy, while the talismanic objects sit isolated in the lower panel beneath the encounter.",
+      "Mood: brave but wary, with a charged sense of calculated risk and protective magic."
+    ]
+  },
+  "saturn_taurus": {
+    "visual_notes": [
+      "Subject: Venus and a wealthy crowned woman share a split composition of pleasure, wealth, and display.",
+      "Above, the woman sits upright in an ornate golden chariot drawn to the right by two white bulls, her face calm and reserved.",
+      "She wears a crown, veil, and blue-green robe, holding reins and a round orb-like emblem while flowers fill the chariot behind her.",
+      "Below, Venus reclines on a sea-bull amid cherubim, dolphins, waves, and curling fish-tail forms inside an oval medallion.",
+      "The earthly chariot dominates the top panel, while the mythic sea scene below mirrors Taurus sensuality and Venusian abundance.",
+      "Mood: opulent, romantic, and deliberately showy, with soft colors and ceremonial stillness."
+    ]
+  },
+  "saturn_gemini": {
+    "visual_notes": [
+      "Subject: a green imp cavorts on tightly closed lips while a delicate spider web anchors the lower image.",
+      "The imp sits astride the lips with a frontal, teasing posture, arms raised and face mask-like or mischievous.",
+      "Seven small golden swords hover dangerously around him, and a red heart or fruit-like emblem with tiny marks decorates the upper left.",
+      "Below, a fine web stretches through grasses and leafy vines, with a red star fixed exactly at its center.",
+      "The floating lips and swords occupy a pale pink upper field, separated from the dense, patient web scene below.",
+      "Mood: mentally tense, clever, and distractible, emphasizing concentration amid chatter and danger."
+    ]
+  },
+  "saturn_cancer": {
+    "visual_notes": [
+      "Subject: a mother with two children moves away from a severe institutional building while angels reach down in sympathy.",
+      "The mother stands at lower right in profile, body angled protectively forward, her expression serious and flushed.",
+      "She wears a long ochre dress and supports the children close to her; one child reaches outward while the other clings behind.",
+      "Above, three pink-robed angels recline in clouds around a golden harp, extending compassionate hands toward the family.",
+      "The large yellow building sits distant at lower left, making the small family feel exposed under the heavenly panel.",
+      "Mood: protective, charitable, and anxious, with tenderness set against social severity."
+    ]
+  },
+  "saturn_leo": {
+    "visual_notes": [
+      "Subject: an enthusiastic speaker addresses a crowd beneath the inspiring image of a great bearded prophet.",
+      "The prophet appears half-length above, frontal and solemn, one hand raised in blessing or speech and the other extended outward.",
+      "The lower speaker stands at right with his back partly to the viewer, arm lifted toward the sky as he performs for the gathering.",
+      "A dense crowd fills the rocky landscape, with figures pointing, kneeling, and looking upward toward the floating star-like symbols.",
+      "A decorative round floral medallion glows near the prophet, while distant hills, a palm, and scattered people widen the scene.",
+      "Mood: generous, theatrical, and public, full of inspirational rhetoric and shared attention."
+    ]
+  },
+  "saturn_virgo": {
+    "visual_notes": [
+      "Subject: a woman comforts a despairing man in the foreground while monastery ruins and thriving trees appear above.",
+      "The man slumps diagonally in a chair, dressed in dark formal clothes, face hidden in one hand and gaze turned away.",
+      "The woman in a mauve dress leans toward him with a tender, downcast expression, holding his hand in reassurance.",
+      "The interior foreground includes a patterned wall or screen, wooden floor, simple chair, and a stylized pink flower.",
+      "Behind them, crumbling stone arches, old doors, grass, and leafy trees form a quiet country ruin scene.",
+      "Mood: isolated and melancholy, softened by intimate care and the suggestion of renewal in the background."
+    ]
+  },
+  "saturn_libra": {
+    "visual_notes": [
+      "Subject: a devoted dove remains in a tree near its motionless partner on the ground below.",
+      "The perched bird faces right from a dark leaning branch, its alert posture aimed toward the fallen bird at lower right.",
+      "There are no human hands or clothing; the gesture is expressed through the living bird's refusal to leave the still body.",
+      "The lower landscape is a quiet garden with shrubs, yellow blossoms, bare limbs, a pale path, and a small stone structure.",
+      "Above, a large orb split between sunlit day and moonlit night floats among seven-pointed stars.",
+      "Mood: loyal, tender, and mournful, balancing Libra harmony with grief and endurance."
+    ]
+  },
+  "saturn_scorpio": {
+    "visual_notes": [
+      "Subject: a huge castle, walled town, and circular maze create a symbolic scene of inheritance and guarded tradition.",
+      "No human figure is present; the central living form is the unicorn inside the maze, shown in profile and contained at the center.",
+      "The top panel is a pale labyrinth with black outer points and a golden unicorn, emphasizing secrecy and containment.",
+      "Below, a stone castle rises on pink craggy hills beyond water, with a town, bridge, towers, and buildings stretching to the right.",
+      "Foreground rocks, a bare branch, and the large Saturn glyph at left frame the distant seat of power.",
+      "Mood: ancient, reserved, and fortified, suggesting legacy locked behind walls, distance, and ritual paths."
+    ]
+  },
+  "saturn_sagittarius": {
+    "visual_notes": [
+      "Subject: a merchant waits on a quayside for a sailing ship from abroad, with money close at hand.",
+      "He sits side-on on a dark chest, body facing left toward the ship, his composed face watching the water expectantly.",
+      "One hand opens in a welcoming or bargaining gesture, while a large tied money sack with a dollar sign rests in the right foreground.",
+      "The lower scene includes stone quay tiles, open sea, and a small sailing ship with colored sails near the horizon.",
+      "Above, an ancient talisman shows a sword-bearing hand, numbers, planetary or zodiac glyphs, and a coin-like seal with script marks.",
+      "Mood: fulfilled and anticipatory, mixing business success, travel, and occult good fortune."
+    ]
+  },
+  "saturn_capricorn": {
+    "visual_notes": [
+      "Subject: the winged figure of Fortuna stands before a great circular seal of the fruits of the earth.",
+      "Fortuna faces forward in a calm, ceremonial stance, with a composed expression and wings rising behind her shoulders.",
+      "She wears layered purple and blue robes and carries symbolic riches, including a serpent-staff, horn or cornucopia-like forms, and arts/health emblems.",
+      "A large black-and-gold pentacle star floats beside her, representing man and the five senses.",
+      "Behind her, the great seal bears circular writing and Alpha et Omega, framed by pink clouds and a pale blue sky.",
+      "Mood: prosperous, dignified, and triumphant, with wealth presented as formal destiny."
+    ]
+  },
+  "saturn_aquarius": {
+    "visual_notes": [
+      "Subject: a strange mermaid-like creature kneels in water before a peaceful walled town, holding a rootless plant.",
+      "Her torso faces forward while her pink fish tail curls left; her head turns slightly, with an odd, watchful, self-contained expression.",
+      "One hand holds the tail and the other grips a plant that grows both upward and downward, bearing red flowers and leaves.",
+      "Behind her, calm water leads to a medieval walled town with towers, gates, red roofs, and small houses.",
+      "A long flying fish crosses the upper sky, echoing the mermaid's hybrid nature and adding eccentric motion above the still town.",
+      "Mood: whimsical, detached, and unconventional, peaceful but distinctly strange."
+    ]
+  },
+  "saturn_pisces": {
+    "visual_notes": [
+      "Subject: a black raven pecks the last scraps from a large bony skull beneath a distant grand estate.",
+      "The raven stands in side profile with tail stretched right and head lowered left, its beak actively working at the remaining flesh.",
+      "There are no human hands or clothing in the foreground; the gesture is starkly animal, focused on scavenging and loss.",
+      "The skull lies huge and horizontal across the lower panel, jaw open and empty eye socket exposed against a plain pale ground.",
+      "Above, a mansion with columns, a tower, trees, starry twilight sky, pink clouds, and tiny strolling couples fills the background.",
+      "Mood: bleak and elegiac, sharply contrasting carefree evening leisure with death, decay, and finality."
+    ]
+  },
+  "sun_aries": {
+    "reference_images": [
+      "tmp/imagegen_refs/live_cards/0_img_20260707_171213.jpg",
+      "tmp/imagegen_refs/live_cards/0_img_20260707_171009.jpg"
+    ],
+    "visual_notes": [
+      "Split card: pale aqua floral corner arch above, black semicircular sunrise fan; green landscape below with trees framing dragon and knight.",
+      "Dragon occupies left foreground, low and coiled; red-orange spotted body curls into an S, tail loops high, small bat wing low, head flattened and open toward the knight.",
+      "Knight stands at right in three-quarter side view facing left; legs braced wide, silver shield forward, sword raised diagonally, red cape and helmet plume trailing.",
+      "Face is mostly hidden by visor; posture and gaze read as focused challenge while the dragon's eye and open mouth read wary but dangerous.",
+      "Spatial tension is a left-right standoff across a grassy clearing, with the sword diagonal meeting the dragon's curled body.",
+      "Mood: reckless courage and immediate confrontation, bright medieval storybook color with dense black hatch shading."
+    ]
+  },
+  "sun_taurus": {
+    "reference_images": [],
+    "visual_notes": [
+      "Upper arch has black corner fields with pink scrolls, central pink Erzulie heart with leaves, inner hearts, curls, and two black snake bodies with red outward-facing heads.",
+      "Lower panel is a close half-length aristocratic couple against a flat blue field, not a walking landscape; black-and-gold flower disks float around them.",
+      "Man stands left, torso forward and slightly toward woman; he wears black tricorne with flower, red coat, blue waistcoat, gold gloves, and holds a rose at his chest.",
+      "Woman stands right close behind his arm, frontal with calm flirtatious gaze; high curled wig, rosy cheeks, yellow dotted collar, pink dress, jewelry, lace fan or muff.",
+      "Their shoulders and arms touch, making possession and courtship the core spatial relationship; both faces are composed, self-satisfied, and finely dressed.",
+      "Mood: seduction, perfume, jewelry, marriage-bond desire, and ostentatious material acquisition."
+    ]
+  },
+  "sun_gemini": {
+    "reference_images": [],
+    "visual_notes": [
+      "Upper arch is pale blue with pink ornamental corners and a large circular sun-star medallion hanging at top center, filled with triangles, leaves, dots, and a six-point star.",
+      "Lower scene shows a male acrobat in profile facing left, walking on his hands while his torso arches and yellow-clad legs fold high over his head.",
+      "His face is intent and showy beneath a small cap; one hand is planted on rocky ground while the other supports the inverted balance.",
+      "At left, a big yellow sun disk and vertical alchemical gold symbol stand near the horizon; at right, a small distant town and bridge sit beyond water.",
+      "The acrobat dominates the foreground diagonally, feet near the left sun disk and hands near rocks, making the pose read agile and clever.",
+      "Mood: mental speed, display, flexibility, and versatility in a sparse pink-sky landscape."
+    ]
+  },
+  "sun_cancer": {
+    "reference_images": [
+      "tmp/imagegen_refs/live_cards/0_img_20260707_171009.jpg"
+    ],
+    "visual_notes": [
+      "Upper arch is pale yellow with black spiral vine symbol centered under the number, scattered dots, gray corner panels, and small sun emblems in the upper corners.",
+      "Lower panel centers a large rounded decorated vase in the foreground, brown and rose with bold geometric bands, circles, zigzags, and a dark open rim.",
+      "A black raven perches on the vase rim facing upper left, neck lifted, beak pointed, alert eye bright, feathers built from dense hatch marks.",
+      "No human hands or tools appear; the action is implied by the raven claiming and adapting the discarded vessel as a home.",
+      "Bleak environment: pale blue empty sky, faint pink horizon, black low hills and stippled ground at the bottom.",
+      "Mood: shrewd protection, thrift, and resourcefulness, with the vase and raven isolated as a self-made shelter."
+    ]
+  },
+  "sun_leo": {
+    "reference_images": [],
+    "visual_notes": [
+      "Upper arch is yellow with blue starry corners, two partial moon faces peeking from the top corners, and a central oval medallion containing a small Leo solar emblem with crescent and stars.",
+      "Lower panel is symbolic: a large benign human-faced sun sits at upper left, smiling softly and sending dense straight and flame-shaped rays across the whole scene.",
+      "A small globe occupies the lower right corner, tilted partly off-frame, with simplified land and sea warmed by the sun's rays.",
+      "Scattered stars float between sun and globe, creating depth without a normal landscape.",
+      "The sun is the main subject, gazing calmly downward and right toward the world; no human body or hands are present.",
+      "Mood: fortunate radiance, recognition, creative life, and generous solar blessing."
+    ]
+  },
+  "sun_virgo": {
+    "reference_images": [],
+    "visual_notes": [
+      "Upper arch shows a round-faced sun centered in a wide yellow halo of many fine black rays, with pale blue field and pink corner fans.",
+      "Lower panel stages an Egyptian-styled princess or noble woman seated or kneeling in profile facing right on a low green couch or platform.",
+      "Her expression is composed and receptive; she wears a blue dress, black beaded hair, broad collar, headband, bracelets, and holds a small curved object in her lowered hand.",
+      "Three attendants actively tend her: two slim figures at left reach toward her back and pour water from a jar, while the right attendant offers a red flower or cup near her mouth.",
+      "A lettered pentacle/star diagram floats at upper right of the yellow background, separate from the figures.",
+      "Mood: health, order, ritual care, refinement, and practical service."
+    ]
+  },
+  "sun_libra": {
+    "reference_images": [],
+    "visual_notes": [
+      "Upper arch has purple starry corners and a large face of the sun centered above, half light and half dark, with alternating straight black rays and wavy yellow rays.",
+      "Lower panel shows a graceful nude figure seated sideways on a rounded mound of green foliage and red flowers.",
+      "The figure leans on one arm, crosses the other hand over the chest, and turns the face upward with a calm, contemplative gaze.",
+      "Many blue-green birds fly in all directions around the figure, forming a loose halo and diagonals across the pale sky.",
+      "The body is centered low while the birds surround and lift the composition, linking earth mound to sky.",
+      "Mood: harmony, beauty, social balance, and spiritual aspiration."
+    ]
+  },
+  "sun_scorpio": {
+    "reference_images": [],
+    "visual_notes": [
+      "Upper arch is a peach-pink sun field with black fan ornaments in the corners and a central human-faced sun surrounded by dense black radial hatching.",
+      "Lower scene shows a muscular Herculean nude male with a magenta drape, body bent forward and facing right as he wrestles a golden lion.",
+      "His face is downturned and determined; both arms clamp around the lion's neck and chest while one leg braces far back.",
+      "The lion rears partly upright, mouth open and tongue visible, forepaw lifted, tail extended, resisting the grip.",
+      "Rocky gray hills and barren ground fill the background; a beam from the sun descends directly onto the struggle.",
+      "Mood: endurance, self-control, extreme effort, and fierce regeneration."
+    ]
+  },
+  "sun_sagittarius": {
+    "reference_images": [],
+    "visual_notes": [
+      "Upper arch frames a bright human head with flame-like red hair and a yellow solar halo, flanked by black laurel branches and ornate bird/dragon corner scrolls.",
+      "The central object is a large dark circular alchemical jar or globe held before the head, its interior filled with stars, crescent moon, and small sun face.",
+      "Inside the vessel, a robed figure floats diagonally across the star field, arms extended as if swimming through the cosmos.",
+      "The head gazes forward with a mild, intelligent expression; long pale hands gather or clasp a white cloth over the vessel's top.",
+      "Flat yellow and pink background keeps attention on the visionary container rather than a real landscape.",
+      "Mood: enthusiasm, philosophical travel, inner vision, and optimistic inspiration."
+    ]
+  },
+  "sun_capricorn": {
+    "reference_images": [],
+    "visual_notes": [
+      "Upper arch is pink with pale blue corners and white star-flower ornaments, dominated by a black-and-gold reclining goat idol on a long plinth facing left.",
+      "Lower panel shows a fortified city and palace complex from an elevated view, with walls, courtyards, towers, roofs, ramps, and many tiny people.",
+      "A large ornate circular sun disk hangs at left above the city, patterned like a ceremonial medallion.",
+      "The architecture fills the lower half in stepped perspective, with the main palace rising at right and smaller buildings descending left and forward.",
+      "No central human figure appears; the subject is collective construction, authority, and ordered space.",
+      "Mood: achievement, duty, perseverance, ambition, and earned prestige."
+    ]
+  },
+  "sun_aquarius": {
+    "reference_images": [],
+    "visual_notes": [
+      "Upper arch shows a winged angel flying horizontally from left to right across a yellow field, pouring a stream from an orange jar into a black wave band below.",
+      "Lower scene places a dignitary riding a mule left of center, moving rightward, with a standing minstrel or piper at the right.",
+      "The rider sits casually side-on with relaxed face and downcast gaze, holding a horn-shaped cornucopia or cup in one hand and a long leafy wand across the body.",
+      "The mule faces right with lifted foreleg; the piper faces left, cheeks near a pipe or flute, wearing a wreath and light clothing.",
+      "A yellow rosette or solar disk floats at left, while the pale pink background and green ground keep the procession theatrical and sparse.",
+      "Mood: eccentric idealism, free-flowing wisdom, humanitarian generosity, and ceremonial oddity."
+    ]
+  },
+  "sun_pisces": {
+    "reference_images": [],
+    "visual_notes": [
+      "Upper arch centers a single open eye inside a yellow radiant oval of fine black rays, with red corner panels and a blue wave-pattern border.",
+      "Lower panel is a seashore: rocky pink-brown cliff at left, calm blue water at right, and a low horizontal horizon.",
+      "A lynx-like cat stands on the left cliff facing right, ears high, body partly cropped by the card edge, eyes alert and slightly uncanny.",
+      "A human-faced sun is half-submerged in the sea at center-right, its eyes just above the waterline and rays rising like a halo.",
+      "The lynx and sun appear to watch each other across the water, with no human hands or props in the scene.",
+      "Mood: psychic vision, mystery, sympathy, sacrifice, and the ambiguity of rising or setting."
+    ]
+  },
+  "venus_aries": {
+    "visual_notes": [
+      "Subject: an unadorned female figure stands as the object of desire beside an erupting volcano and a large chameleon.",
+      "Body orientation: the figure stands upright on the right, front-facing with a slight turn toward the viewer.",
+      "Face and gaze: her pale face is calm, reserved, and direct, contrasting with the fiery eruption behind her.",
+      "Hands and gestures: one hand lifts near her hair or shoulder while the other hangs relaxed at her side.",
+      "Clothing and props: the figure is unclothed; the chameleon grips a branch in the foreground as the main prop.",
+      "Environment: a sandy volcanic landscape opens to a small stream or waterway and distant greenery at the right edge.",
+      "Background decoration: smoke plumes billow across a pink sky, and broad leaves fill the lower foreground.",
+      "Spatial mood: the chameleon dominates the lower left while the figure and volcano balance desire, disguise, and sudden heat."
+    ]
+  },
+  "venus_taurus": {
+    "visual_notes": [
+      "Subject: a devoted young couple dances closely while Cupid accompanies them, matching the card's ideal romance theme.",
+      "Body orientation: the couple leans inward in a turning dance, their bodies crossing diagonally from lower left to upper right.",
+      "Face and gaze: the lovers nearly kiss, gazing at one another with soft, absorbed, affectionate expressions.",
+      "Hands and gestures: the man supports and gathers the woman while Cupid raises a bow behind them.",
+      "Clothing and props: the man wears blue and red garments; the woman wears a flowing yellow patterned dress.",
+      "Environment: the dancers float over a sparse ground line against a pale blue and pink open backdrop.",
+      "Background decoration: Cupid's small wings and bow frame the pair as a playful emblem of love and art.",
+      "Spatial mood: the three figures form a compact, lifted cluster of warmth, pleasure, and graceful physical closeness."
+    ]
+  },
+  "venus_gemini": {
+    "visual_notes": [
+      "Subject: the god Janus appears as a two-faced head beneath a spreading plant with red fruit.",
+      "Body orientation: the central bust is frontal, while the two profiles look left and right toward past and future.",
+      "Face and gaze: both faces are cool and watchful, with blank pale eyes that suggest listening and divided attention.",
+      "Hands and gestures: no hands are shown; expression is carried by the mirrored faces and open cranium.",
+      "Clothing and props: the bust is bare and stylized, topped by an oval medallion with two smaller facing heads.",
+      "Environment: the setting is symbolic rather than naturalistic, using a clean pale field around the central head.",
+      "Background decoration: branching stems, green leaves, and red berries spread outward to suggest multiplicity.",
+      "Spatial mood: the composition is symmetrical and conversational, with dual gazes implying flattery, wit, and shifting focus."
+    ]
+  },
+  "venus_cancer": {
+    "visual_notes": [
+      "Scanner photo missing; derive this entry from card data and the existing Venus/Cancer reference only.",
+      "Subject: the angel of birth hovers above or near a newborn baby, centering the image on nurturing arrival.",
+      "Body orientation: the angel should appear protective and elevated, oriented toward the baby within a sheltered space.",
+      "Face and gaze: the angel's expression should be gentle and watchful, with attention directed down toward the child.",
+      "Hands and gestures: hands should read as blessing, guarding, or presenting the newborn rather than active labor.",
+      "Clothing and props: include angelic wings, soft drapery, the newborn baby, and the Seal and Spirit of Venus sigils.",
+      "Environment: a rocky cavern surrounds the scene, evoking Cancer's hard protective shell around tender life.",
+      "Background decoration: the Sun and Moon appear above as safeguarding celestial presences over the birth.",
+      "Spatial mood: the baby is the protected focal point, with angel, cavern, sigils, Sun, and Moon forming a maternal enclosure."
+    ]
+  },
+  "venus_leo": {
+    "visual_notes": [
+      "Subject: two cherub-like adult figures caress in a scene of innocent, irresponsible pleasure and love of life.",
+      "Body orientation: the figures stand close at lower center, bodies turned inward and cheek-to-cheek in a tender embrace.",
+      "Face and gaze: both faces are soft, flushed, and absorbed in each other, with a dreamy childlike sweetness.",
+      "Hands and gestures: one figure holds blue drapery while the other leans in, their arms overlapping in a caress.",
+      "Clothing and props: the figures are mostly unclothed with small wings, drapery, and theatrical props near the ground.",
+      "Environment: a fantasy field with low hills, flowers, a small tree, and scattered objects creates a stage-like setting.",
+      "Background decoration: stars, hearts, a shell, and comet-like fireworks float overhead in Leo's dramatic sky.",
+      "Spatial mood: the embracing pair anchors the lower scene while airborne symbols make the mood lavish, playful, and showy."
+    ]
+  },
+  "venus_virgo": {
+    "visual_notes": [
+      "Subject: a garlanded woman walks barefoot through neat countryside while butterflies drift around her.",
+      "Body orientation: she stands on the left, facing right, with a measured forward step and modest upright posture.",
+      "Face and gaze: her face is composed and selective, looking toward the butterflies with quiet, careful attention.",
+      "Hands and gestures: one hand holds a flower at her chest while the other reaches out delicately toward the insects.",
+      "Clothing and props: she wears a pale blue patterned gown, a leafy hair garland, and carries a yellow flower.",
+      "Environment: orderly fields, shrubs, low trees, and distant ridges create a clean cultivated rural landscape.",
+      "Background decoration: multiple butterflies of different sizes and patterns fill the upper sky as delicate focal details.",
+      "Spatial mood: the fox watches from mid-ground near her feet, reinforcing Virgo's care for small, sensitive life."
+    ]
+  },
+  "venus_libra": {
+    "visual_notes": [
+      "Subject: Libra's indecision appears between a gentle virgin constellation figure and the dramatic sting of Scorpio.",
+      "Body orientation: the pale winged figure floats on the left while a darker scorpion-like figure stands partly hidden at right.",
+      "Face and gaze: the left figure looks calmly outward; the right figure is obscured, adding secrecy and tension.",
+      "Hands and gestures: the left figure holds a slender stem or wand, while the right raises arms near the head.",
+      "Clothing and props: a soft yellow robe with star markings contrasts with the dark silhouetted figure by the tree.",
+      "Environment: a large tree divides the composition, creating a visual fork between open air and shadowed foliage.",
+      "Background decoration: an hourglass with wings sits below, explicitly marking time and the pressure to decide.",
+      "Spatial mood: the image balances light and dark on either side of the tree, making hesitation feel suspended but urgent."
+    ]
+  },
+  "venus_scorpio": {
+    "visual_notes": [
+      "Subject: an inscrutable winged sphinx sits on a stone plinth, surrounded by mysterious knots, glyphs, and keys.",
+      "Body orientation: the sphinx faces left in profile, seated upright with wings raised behind its body.",
+      "Face and gaze: its ram-like head is stern and unreadable, looking away with guarded, ancient self-control.",
+      "Hands and gestures: no human hands appear; meaning rests in the sphinx's still pose and symbolic objects.",
+      "Clothing and props: the sphinx has a blue collar, a small lyre-like ornament, and a plinth marked with Scorpio and Venus signs.",
+      "Environment: a flat pale field isolates the figure, making the scene feel emblematic rather than natural.",
+      "Background decoration: keys, knots, crossed forms, and occult-looking devices orbit the sphinx in a loose constellation.",
+      "Spatial mood: the central guardian is heavy and fixed while the floating symbols suggest secrecy, passion, and hidden knowledge."
+    ]
+  },
+  "venus_sagittarius": {
+    "visual_notes": [
+      "Subject: a traveling minstrel serenades a beautiful young huntress, combining Venusian music with Sagittarian adventure.",
+      "Body orientation: the pair walks side by side from left to right, close together but still in motion.",
+      "Face and gaze: the minstrel looks toward the huntress while she faces outward with a cool, listening expression.",
+      "Hands and gestures: he plays or holds a lute; she carries a bow upright, with their free hands joined near the center.",
+      "Clothing and props: the minstrel wears a broad hat and ornate garments, while the huntress is draped in yellow and holds a bow.",
+      "Environment: low dark hills and a pale open sky place the flirtation in a traveler's landscape.",
+      "Background decoration: a radiant sun symbol and scattered pink flowers float around the figures like lighthearted signs.",
+      "Spatial mood: the bodies overlap in a walking duet, creating an adventurous, frank, and playful romantic mood."
+    ]
+  },
+  "venus_capricorn": {
+    "visual_notes": [
+      "Subject: a traditional, well-kept house rises above an orderly garden, with a child portrait framed by stone below.",
+      "Body orientation: no full body is present; the child's face appears front-facing inside a strict square frame.",
+      "Face and gaze: the child looks directly outward with a solemn, restricted, almost formal expression.",
+      "Hands and gestures: no hands are visible; restraint is shown through the frame, wall, and fixed architecture.",
+      "Clothing and props: the house, garden, stone frame, small lock-like element, and framed child portrait are the main props.",
+      "Environment: clipped trees, a fence, and carefully spaced garden plants create a controlled domestic setting.",
+      "Background decoration: repeated rows of shrubs and small ornamental trees emphasize convention, order, and perseverance.",
+      "Spatial mood: the proud house sits above the enclosed child image, making family duty and social restriction feel architectural."
+    ]
+  },
+  "venus_aquarius": {
+    "visual_notes": [
+      "Subject: an intelligent person's detached head floats before a watery landscape, marked with a phrenological map.",
+      "Body orientation: only the head and neck are visible, front-facing and centered low in the composition.",
+      "Face and gaze: the face looks straight ahead with calm, distant interest, emotionally reserved and absorbed in thought.",
+      "Hands and gestures: no hands appear; stillness and mental focus replace physical action.",
+      "Clothing and props: the cranium is labeled with numbered intellect areas, making the head itself the central prop.",
+      "Environment: a sea or wide inlet stretches behind the head, with islands, trees, boats, and a distant town.",
+      "Background decoration: sailboats and shoreline architecture form an idyllic scene that the thinker seems unaware of.",
+      "Spatial mood: the close head blocks much of the water view, separating intellect from the emotional sea behind it."
+    ]
+  },
+  "venus_pisces": {
+    "visual_notes": [
+      "Subject: a bird remains inside a beautiful cage placed within a decoratively draped window.",
+      "Body orientation: the cage is centered and front-facing, while the small bird perches diagonally inside.",
+      "Face and gaze: the bird's tiny face is turned sideways, making its passivity feel quiet and resigned.",
+      "Hands and gestures: no human hands appear; the open cage door functions as the key gesture of possible release.",
+      "Clothing and props: include the ornate cage, open door, draped curtains, tiled floor, and Venus glyph shining like the sun outside.",
+      "Environment: an arched window alcove with checkerboard flooring creates a private, enclosed interior.",
+      "Background decoration: an angelic face with wings and fish-like forms hover outside against a pink sky.",
+      "Spatial mood: the open door contrasts with the bird's choice to stay inside, creating a tender mood of sacrifice and isolation."
+    ]
+  }
+}

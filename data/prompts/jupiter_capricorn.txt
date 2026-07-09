@@ -1,0 +1,102 @@
+# META
+Card: Control
+Planet: Jupiter
+Sign: Capricorn
+Variant: 05 - simple-woodcut
+Style mode: deck-print
+Detail level: medium
+Validation: OK
+
+# VISUAL REFERENCES
+Base=tmp/imagegen_refs/
+R1=scanner/uploads/cards/jupiter/jupiter_capricorn_10_control.jpg
+R2=scanner/uploads/Control-Oracle-of-the-Radiant-Sun.webp
+R3=card_crops/jupiter_capricorn.jpg
+R4=uploaded_cards/shapes_5_jupiter.jpg
+R5=askastrology/sun_aries_assertion.webp
+R6=amazon_color_reference.jpg
+
+# CONTROL / MASK REFERENCES
+These are not visual style references and should not be treated as half-finished
+artwork. Use only when a tool supports layout masks, edge control, or manual
+engineering checks.
+- Control-only neutral layout mask: tmp/imagegen_guides/jupiter_underlay_guide.png
+- Exact final overlay SVG, for engineering/control use only: web/assets/shapes/jupiter.svg
+
+# POSITIVE PROMPT
+Underlay for web/assets/generated/jupiter_capricorn.png; final composed card will be web/assets/images/jupiter_capricorn.png
+
+Vertical portrait oracle-card underlay, 300:446 aspect ratio. Keep figures
+legible inside a tall narrow card after overlay.
+UNDERLAY ONLY. Code adds all fixed furniture later. Do not draw: outer/inner
+border, top number square, bottom band/dividers/cells, title, glyphs, or final
+planet-shape linework. Generate complete art behind overlays; no cutouts. When
+a planet shape suggests a diamond, circle, diagonal, arc, crossbar, or panel,
+use it as flat color-field organization only; do not outline it with strong
+black geometry that will double with the SVG overlay.
+Draw uninterrupted art across the card, including top center and bottom. Code later covers top square x 47-53%, y 8-12% and bottom band y 83-89%. Keep key faces, hands, tools, symbols mostly in x 12-88%, y 10-83%, away from outer 8%.
+
+Card: Control (Jupiter in Capricorn)
+Image description: The creator god Zeus/Jupiter, feet resting on the world, looks down at his work. Cherubim carry the canopy of the sky above the verdant earth. Below, the ouroboros, a serpent with its tail in its mouth, guards the earth, a symbol of time, eternity and the universe.
+
+Card-specific visual facts:
+- Control, Jupiter in Capricorn: Zeus or Jupiter sits enthroned in the center, feet resting on a small globe of the world.
+- His body faces forward in a heavy seated pose, legs apart and drapery falling vertically beneath him.
+- His bearded face looks downward with a grave, judging, and responsibility-laden expression.
+- His hands rest folded or crossed on his lap, making the gesture restrained and authoritative rather than active.
+- He wears a pale blue robe and purple mantle, with sandals visible near the globe.
+- Cherubim carry a cloudy canopy of sky above him, while landscape, hills, settlements, and verdant earth spread below.
+- A red ouroboros serpent encircles the lower world area, preserving the symbol of time, eternity, and the universe.
+- The mood is stern, cosmic, and controlled, emphasizing authority, duty, and governance over creation.
+
+Reference use:
+Use R1/R2/R3 for pose, expression, action, objects, and environment; R5/R6 for palette and print texture; R4 only for suit-shape structure. Do not copy borders, labels, glyphs, type, or exact linework.
+
+Create fresh original linework. Preserve symbolic content, action, and color mood.
+
+Narrative and variant:
+Show one pressured story moment through pose, gaze, diagonal gesture, reaction,
+and spatial conflict. Faces need intent; force comes from braced weight,
+strain, recoil, compression, and object pressure. No cinematic lighting.
+Variant 05 (simple-woodcut): Few details, bold silhouettes, simple hatching, naive print charm.
+
+Style:
+- Product anchor: 1980s-1990s mass-market occult oracle deck: cream stock, black ink, flat color.
+- Historical grammar: Woodcut, manuscript miniature, Florentine line, Byzantine flat color, emblem
+tableau. Use for pose, flatness, and staging.
+- Linework: Black outlines, folk hatching, readable silhouettes, stiff printed figures,
+simplified anatomy, low detail.
+
+Color/print:
+Palette: cream card stock, pale aqua, buttery yellow, pink-lavender, spring
+green, muted blue-gray, brick red, red-orange, antique gold, and black linework.
+Low-saturation flat fields, few gradients, subtle paper grain.
+Print-safe: avoid extreme saturation, micro-detail, noisy texture, and soft tiny
+lines. Prefer solid blocks, clear black lines, simple hatching.
+
+Shape:
+Jupiter underlay: central diamond/rhombus color field for main symbol/action. Keep diamond/circle as flat color fields with soft or minimal boundaries; do not draw final black diamond, circle outline, or label lines.
+
+# NEGATIVE PROMPT
+No readable text, no gibberish text, no fake letters, no text-like marks, no
+title, no watermark, no logo. Do not invent fixed card-furniture numbers,
+zodiac glyphs, or planet glyphs. Small symbolic diagram marks are allowed only
+when the card's actual illustration requires them, and only inside the picture
+scene or object, never as label-band furniture.
+No outer border, no inner border, no top number square, no bottom label-band
+outline, no bottom dividers, no planet/zodiac cells, no final suit-motif stroke
+lines, no finished card frame.
+Avoid modern fantasy, Dungeons-and-Dragons style, heroic game concept art,
+photorealism, 3D, anime, glossy metal, digital-painting polish, cinematic
+lighting, smoke, fire, magic glow, dense scenic realism, elaborate armor, and
+excessive texture.
+
+# ENGINEERING NOTES
+Raw generated underlay target: web/assets/generated/jupiter_capricorn.png
+Final composed card target: web/assets/images/jupiter_capricorn.png
+Final overlay source: web/assets/shapes/jupiter.svg
+Optional control/edge guide source: web/assets/shapes/jupiter.svg
+Control-only neutral layout mask: tmp/imagegen_guides/jupiter_underlay_guide.png
+Compositor: scripts/compose_card_image.py jupiter_capricorn web/assets/generated/jupiter_capricorn.png web/assets/images/jupiter_capricorn.png
+Canonical template source: scripts/card_template.py and web/assets/shapes/jupiter.svg. ViewBox 300x446; frame x1=20.0 y1=25.5 x2=280.0 y2=420.5; inner x1=36.9 y1=42.4 x2=263.1 y2=397.1; notch x1=141.4 y1=34.4 x2=158.6 y2=53.4; bottom band x1=36.9 y1=370.6 x2=263.1 y2=397.1.
+Positive prompt length: 3763 chars.

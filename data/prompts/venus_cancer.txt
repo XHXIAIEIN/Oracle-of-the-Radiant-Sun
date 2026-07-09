@@ -1,0 +1,102 @@
+# META
+Card: Birth
+Planet: Venus
+Sign: Cancer
+Variant: 05 - simple-woodcut
+Style mode: deck-print
+Detail level: medium
+Validation: OK
+
+# VISUAL REFERENCES
+Base=tmp/imagegen_refs/
+R1=scanner/uploads/Birth-Oracle-of-the-Radiant-Sun.webp
+R2=card_crops/venus_cancer.jpg
+R3=uploaded_cards/shapes_page_25_2.jpg
+R4=askastrology/sun_aries_assertion.webp
+R5=amazon_color_reference.jpg
+
+# CONTROL / MASK REFERENCES
+These are not visual style references and should not be treated as half-finished
+artwork. Use only when a tool supports layout masks, edge control, or manual
+engineering checks.
+- Control-only neutral layout mask: tmp/imagegen_guides/venus_underlay_guide.png
+- Exact final overlay SVG, for engineering/control use only: web/assets/shapes/venus.svg
+
+# POSITIVE PROMPT
+Underlay for web/assets/generated/venus_cancer.png; final composed card will be web/assets/images/venus_cancer.png
+
+Vertical portrait oracle-card underlay, 300:446 aspect ratio. Keep figures
+legible inside a tall narrow card after overlay.
+UNDERLAY ONLY. Code adds all fixed furniture later. Do not draw: outer/inner
+border, top number square, bottom band/dividers/cells, title, glyphs, or final
+planet-shape linework. Generate complete art behind overlays; no cutouts. When
+a planet shape suggests a diamond, circle, diagonal, arc, crossbar, or panel,
+use it as flat color-field organization only; do not outline it with strong
+black geometry that will double with the SVG overlay.
+Draw uninterrupted art across the card, including top center and bottom. Code later covers top square x 47-53%, y 8-12% and bottom band y 83-89%. Keep key faces, hands, tools, symbols mostly in x 12-88%, y 10-83%, away from outer 8%.
+
+Card: Birth (Venus in Cancer)
+Image description: The angel of birth above a newborn baby. The rocky cavern suggests the hard, protective shell of Cancer. Above, the Sun and Moon safeguard the birth. The two sigils represent the Seal of Venus and the Spirit of Venus.
+
+Card-specific visual facts:
+- Scanner photo missing; derive this entry from card data and the existing Venus/Cancer reference only.
+- Subject: the angel of birth hovers above or near a newborn baby, centering the image on nurturing arrival.
+- Body orientation: the angel should appear protective and elevated, oriented toward the baby within a sheltered space.
+- Face and gaze: the angel's expression should be gentle and watchful, with attention directed down toward the child.
+- Hands and gestures: hands should read as blessing, guarding, or presenting the newborn rather than active labor.
+- Clothing and props: include angelic wings, soft drapery, the newborn baby, and the Seal and Spirit of Venus sigils.
+- Environment: a rocky cavern surrounds the scene, evoking Cancer's hard protective shell around tender life.
+- Background decoration: the Sun and Moon appear above as safeguarding celestial presences over the birth.
+- Spatial mood: the baby is the protected focal point, with angel, cavern, sigils, Sun, and Moon forming a maternal enclosure.
+
+Reference use:
+Use R1/R2 for pose, expression, action, objects, and environment; R4/R5 for palette and print texture; R3 only for suit-shape structure. Do not copy borders, labels, glyphs, type, or exact linework.
+
+Create fresh original linework. Preserve symbolic content, action, and color mood.
+
+Narrative and variant:
+Show one pressured story moment through pose, gaze, diagonal gesture, reaction,
+and spatial conflict. Faces need intent; force comes from braced weight,
+strain, recoil, compression, and object pressure. No cinematic lighting.
+Variant 05 (simple-woodcut): Few details, bold silhouettes, simple hatching, naive print charm.
+
+Style:
+- Product anchor: 1980s-1990s mass-market occult oracle deck: cream stock, black ink, flat color.
+- Historical grammar: Woodcut, manuscript miniature, Florentine line, Byzantine flat color, emblem
+tableau. Use for pose, flatness, and staging.
+- Linework: Black outlines, folk hatching, readable silhouettes, stiff printed figures,
+simplified anatomy, low detail.
+
+Color/print:
+Palette: cream card stock, pale aqua, buttery yellow, pink-lavender, spring
+green, muted blue-gray, brick red, red-orange, antique gold, and black linework.
+Low-saturation flat fields, few gradients, subtle paper grain.
+Print-safe: avoid extreme saturation, micro-detail, noisy texture, and soft tiny
+lines. Prefer solid blocks, clear black lines, simple hatching.
+
+Shape:
+Venus underlay: open central field, graceful balance, light ornament. Do not draw final frame or label lines.
+
+# NEGATIVE PROMPT
+No readable text, no gibberish text, no fake letters, no text-like marks, no
+title, no watermark, no logo. Do not invent fixed card-furniture numbers,
+zodiac glyphs, or planet glyphs. Small symbolic diagram marks are allowed only
+when the card's actual illustration requires them, and only inside the picture
+scene or object, never as label-band furniture.
+No outer border, no inner border, no top number square, no bottom label-band
+outline, no bottom dividers, no planet/zodiac cells, no final suit-motif stroke
+lines, no finished card frame.
+Avoid modern fantasy, Dungeons-and-Dragons style, heroic game concept art,
+photorealism, 3D, anime, glossy metal, digital-painting polish, cinematic
+lighting, smoke, fire, magic glow, dense scenic realism, elaborate armor, and
+excessive texture.
+
+# ENGINEERING NOTES
+Raw generated underlay target: web/assets/generated/venus_cancer.png
+Final composed card target: web/assets/images/venus_cancer.png
+Final overlay source: web/assets/shapes/venus.svg
+Optional control/edge guide source: web/assets/shapes/venus.svg
+Control-only neutral layout mask: tmp/imagegen_guides/venus_underlay_guide.png
+Compositor: scripts/compose_card_image.py venus_cancer web/assets/generated/venus_cancer.png web/assets/images/venus_cancer.png
+Canonical template source: scripts/card_template.py and web/assets/shapes/venus.svg. ViewBox 300x446; frame x1=20.0 y1=25.5 x2=280.0 y2=420.5; inner x1=36.9 y1=42.4 x2=263.1 y2=397.1; notch x1=141.4 y1=34.4 x2=158.6 y2=53.4; bottom band x1=36.9 y1=370.6 x2=263.1 y2=397.1.
+Positive prompt length: 3755 chars.

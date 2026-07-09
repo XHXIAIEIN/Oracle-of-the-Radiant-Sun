@@ -1,9 +1,7 @@
-"""Build the draw-card deck: one standalone SVG card-face per card + a combined
-deck.json the page consumes. Reuses the authentic card() engine from
-tmp/gen_readings.py (the same renderer used for the reading-wheel diagrams), so
-the drawn card matches the book's real layout exactly.
+"""Build the draw-card deck: generated card art paths + SVG support assets.
 
-  web/assets/cards/<planet>_<sign>.svg   one face-up card, viewBox 0 0 300 446
+  web/assets/images/<planet>_<sign>.png  one finished face-up card
+  web/assets/cards/<planet>_<sign>.svg   fallback/template card, viewBox 0 0 300 446
   web/data/deck.json                     [{number,page,name,planet,sign,suit_name,
                                            sign_keyword,reading,events,img}]
 Run:  python scripts/gen_deck.py
@@ -11,33 +9,21 @@ Run:  python scripts/gen_deck.py
 import json
 from pathlib import Path
 
+from card_template import face_svg, shape_svg
+
 ROOT = Path(__file__).resolve().parent.parent
 WEB = ROOT / "web"
 CARDS_DIR = ROOT / "data" / "cards"
 OUT_SVG = WEB / "assets" / "cards"
+OUT_SHAPES = WEB / "assets" / "shapes"
 OUT_SVG.mkdir(parents=True, exist_ok=True)
+OUT_SHAPES.mkdir(parents=True, exist_ok=True)
 
-# Pull the card renderer (and palette) out of gen_readings.py without triggering
-# its diagram build: exec only the source above the "# build all" marker.
-src = (ROOT / "tmp" / "gen_readings.py").read_text(encoding="utf-8")
-head = src.split("# ---------- build all")[0]
-ns = {"__file__": str(ROOT / "tmp" / "gen_readings.py")}
-exec(compile(head, "gen_readings.py", "exec"), ns)
-card = ns["card"]; BG = ns["BG"]
+PLANETS = ["Sun", "Moon", "Mercury", "Venus", "Mars", "Jupiter", "Saturn"]
 
-# Card-face SVG: book-card aspect H/W 1.52 (re-measured 2026-06-20), centred with
-# a small margin so the 1.5px outer stroke is never clipped.
-VW, VH = 300, 446
-CW, CH = 260, 395
-
-
-def face_svg(planet, sign, name):
-    body = card(VW / 2, VH / 2, CW, CH, planet=planet, sign=sign.lower(),
-                name=name, faceup=True)
-    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {VW} {VH}" '
-            f'font-family="Georgia, \'Times New Roman\', serif">'
-            f'<rect width="{VW}" height="{VH}" fill="{BG}"/>'
-            f'{body}</svg>')
+for planet in PLANETS:
+    (OUT_SHAPES / f"{planet.lower()}.svg").write_text(
+        shape_svg(planet), encoding="utf-8")
 
 
 # 每张牌在原书中的页码（data/card-images.json，已逐图核对）
@@ -64,9 +50,9 @@ for f in sorted(CARDS_DIR.glob("*.json")):
             "personal": c.get("personal", ""),
             "reading": c.get("reading", ""),
             "events": c.get("events", ""),
-            "img": f"assets/cards/{slug}.svg",
+            "img": f"assets/images/{slug}.png",
         })
 
 (WEB / "data" / "deck.json").write_text(
     json.dumps(deck, ensure_ascii=False, indent=1), encoding="utf-8")
-print(f"wrote {len(deck)} cards + deck.json")
+print(f"wrote {len(deck)} cards + {len(PLANETS)} shapes + deck.json")

@@ -8,6 +8,7 @@ import { MONTHS, HOUSES } from '../../data/houses.js';
 import { psSuitLine } from '../../data/card/glyphs.js';
 import { STR, cnHouse } from '../../data/i18n.js';
 import { flipCard } from '../cards.js';
+import { preloadImage, warmCards } from '../image-loader.js';
 import { openPanel, placeEntry, scrollPanelTo } from '../panel.js';
 import { openDialog } from '../dialog.js';
 import { addAmplify } from './amplify.js';
@@ -56,6 +57,7 @@ function markNext() {
 		wheel.querySelector(`.card[data-pos="${pos}"]`)?.classList.add('is-next');
 		wheel.querySelector(`.slot-label[data-pos="${pos}"]`)?.classList.add('is-active');
 	}
+	warmCards(targets.map(pos => DECK[S.placed.get(pos)]), { priority: 'high', limit: targets.length });
 }
 
 export function onCardClick(pos, node) {
@@ -77,7 +79,7 @@ function flipAt(pos, node) {
 	node.classList.remove('is-next');
 	/* 中央主题是全年的收束——翻得更高，翻开时一圈金环自牌沿散开 */
 	const isTheme = S.method === 'sunyear' && pos === 13;
-	return flipCard(node, isTheme ? 1.28 : 1.16).then(() => {
+	return preloadImage(DECK[S.placed.get(pos)].img, 'high').then(() => flipCard(node, isTheme ? 1.28 : 1.16)).then(() => {
 		node.classList.add('is-up');
 		if (isTheme) node.classList.add('halo-burst');
 		node.setAttribute('aria-label', DECK[S.placed.get(pos)].name);

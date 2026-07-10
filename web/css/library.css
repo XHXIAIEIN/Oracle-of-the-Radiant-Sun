@@ -113,6 +113,8 @@
   aspect-ratio: var(--card-ratio);
   border-radius: 4px;
   display: block;
+  object-fit: cover;
+  background: var(--parchment);
   box-shadow: 0 5px 16px oklch(0% 0 0 / 0.45);
   transition: translate 0.3s, box-shadow 0.3s;
 }

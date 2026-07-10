@@ -4,6 +4,7 @@ import { $, D } from './dom.js';
 import { DECK } from '../data/card/deck.js';
 import { psLine, SUIT_ZH } from '../data/card/glyphs.js';
 import { STR } from '../data/i18n.js';
+import { cardImgAttrs, preloadImage, warmCards } from './image-loader.js';
 
 const dialog = $('#card-dialog');
 const zoom = $('#zoom-dialog');
@@ -12,6 +13,14 @@ const prevBtn = $('#dialog-prev');
 const nextBtn = $('#dialog-next');
 
 let nav = null; // { list: [{ idx, ctx }], at } — 同一行牌（如一周七日）间前后翻阅
+
+function warmDialogNeighbours(card) {
+	if (!nav) {
+		warmCards([card], { priority: 'high', limit: 1 });
+		return;
+	}
+	warmCards([nav.list[nav.at - 1], nav.list[nav.at + 1]].map(item => item && DECK[item.idx]).concat(card), { priority: 'high' });
+}
 
 function render(deckIdx, ctx) {
 	const c = DECK[deckIdx];
@@ -23,7 +32,7 @@ function render(deckIdx, ctx) {
 	body.innerHTML = `
     ${ctx ? `<p class="card-dialog__ctx">${ctx.replaceAll('<br>', '<span class="sep"></span>')}</p>` : ''}
     <div class="card-dialog__art">
-      <img src="${c.img}" alt="${c.name}">
+      <img ${cardImgAttrs(c, { loading: 'eager', priority: 'high' })}>
     </div>
     <header class="card-dialog__head">
       <h3>${c.name} <span class="num">No. ${c.number}</span></h3>
@@ -38,8 +47,10 @@ function render(deckIdx, ctx) {
       ${sec(STR.dialog.events, c.events)}
     </div>`;
 	body.scrollTop = 0;
+	warmDialogNeighbours(c);
 	body.querySelector('.card-dialog__art img').onclick = () => {
 		const z = $('#zoom-img');
+		preloadImage(c.img, 'high');
 		z.src = c.img;
 		z.alt = c.name;
 		zoom.showModal();

@@ -107,6 +107,7 @@
   scrollbar-gutter: stable; /* long and short cards share the same text width */
   min-height: 0;
   overscroll-behavior: contain;
+  padding-bottom: 3.5rem;
 }
 
 .card-dialog__ctx  { grid-area: ctx; }
@@ -222,6 +223,7 @@
     grid-template-columns: 100px minmax(0, 1fr);
     grid-template-rows: auto auto auto;
     column-gap: 16px;
+    padding-bottom: calc(4rem + var(--safe-bottom));
   }
 
   .card-dialog__ctx { padding-bottom: 8px; margin-bottom: 14px; }

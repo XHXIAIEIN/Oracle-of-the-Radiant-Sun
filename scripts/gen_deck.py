@@ -1,6 +1,6 @@
 """Build the draw-card deck: generated card art paths + SVG support assets.
 
-  web/assets/images/<planet>_<sign>.png  one finished face-up card
+  web/assets/images/<planet>_<sign>.webp one finished face-up card
   web/assets/cards/<planet>_<sign>.svg   fallback/template card, viewBox 0 0 300 446
   web/data/deck.json                     [{number,page,name,planet,sign,suit_name,
                                            sign_keyword,reading,events,img}]
@@ -50,7 +50,7 @@ for f in sorted(CARDS_DIR.glob("*.json")):
             "personal": c.get("personal", ""),
             "reading": c.get("reading", ""),
             "events": c.get("events", ""),
-            "img": f"assets/images/{slug}.png",
+            "img": f"assets/images/{slug}.webp",
         })
 
 (WEB / "data" / "deck.json").write_text(

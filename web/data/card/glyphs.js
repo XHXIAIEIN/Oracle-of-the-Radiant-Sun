@@ -24,6 +24,7 @@ export const PLANET = {
 	Jupiter: ['♃︎', '木星'],
 	Saturn: ['♄︎', '土星'],
 };
+export const PLANET_ORDER = ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn'];
 export const SUIT_ZH = {
 	Fortune: '幸运',
 	Security: '安稳',

@@ -32,7 +32,8 @@ PAGES = {(c["planet"], c["sign"]): c["page"]
                              .read_text(encoding="utf-8"))["cards"]}
 
 deck = []
-for f in sorted(CARDS_DIR.glob("*.json")):
+for planet_file in [p.lower() for p in PLANETS]:
+    f = CARDS_DIR / f"{planet_file}.json"
     for c in json.loads(f.read_text(encoding="utf-8")):
         planet = c["planet"]; sign = c["sign"]
         slug = f'{planet.lower()}_{sign.lower()}'

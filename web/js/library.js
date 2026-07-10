@@ -3,7 +3,7 @@
 
 import { $, el, D, REDUCED, swapScreen } from './dom.js';
 import { DECK } from '../data/card/deck.js';
-import { SIGN, ELEMENTS } from '../data/card/glyphs.js';
+import { SIGN, ELEMENTS, PLANET_ORDER } from '../data/card/glyphs.js';
 import { MONTHS } from '../data/houses.js';
 import { STR } from '../data/i18n.js';
 import { openDialog } from './dialog.js';
@@ -73,13 +73,9 @@ function libGroupSecs() {
 			});
 		}
 		default: {
-			/* deck.json is already grouped by planet — keep its order */
-			const groups = new Map();
-			DECK.forEach((c, i) => {
-				if (!groups.has(c.planet)) groups.set(c.planet, []);
-				groups.get(c.planet).push(i);
-			});
-			return [...groups].map(([planet, idxs]) => {
+			const groups = new Map(PLANET_ORDER.map(planet => [planet, []]));
+			DECK.forEach((c, i) => groups.get(c.planet)?.push(i));
+			return [...groups].filter(([, idxs]) => idxs.length).map(([planet, idxs]) => {
 				const suit = DECK[idxs[0]].suit_name;
 				return { cap: STR.library.secCap(planet, suit), ctx: STR.library.ctx(suit), idxs };
 			});
@@ -105,6 +101,20 @@ function buildSections() {
 	secsWrap.replaceChildren(frag);
 }
 
+function libraryNavFor(deckIdx) {
+	const list = [];
+	for (const sec of libSections) {
+		if (sec.hidden) continue;
+		for (const card of sec.querySelectorAll('.lib-card')) {
+			if (card.hidden) continue;
+			const idx = Number(card.dataset.deckIdx);
+			list.push({ idx, ctx: cardCtx[idx] });
+		}
+	}
+	const at = list.findIndex(item => item.idx === deckIdx);
+	return at >= 0 && list.length > 1 ? { list, at } : null;
+}
+
 function buildLibrary() {
 	if (libBuilt) return;
 	libBuilt = true;
@@ -121,9 +131,10 @@ function buildLibrary() {
          <span class="lib-card__ps">${STR.library.cardPs(c)}</span>`
 		);
 		t.type = 'button';
+		t.dataset.deckIdx = i;
 		t.dataset.sign = c.sign;
 		t.dataset.planet = c.planet;
-		t.onclick = () => openDialog(i, cardCtx[i]);
+		t.onclick = () => openDialog(i, cardCtx[i], libraryNavFor(i));
 		cardBtns.push(t);
 	});
 	buildSections();
@@ -160,11 +171,11 @@ function buildLibrary() {
 	const allSuit = mkSuitChip(STR.library.allPlanets, 'all');
 	allSuit.setAttribute('aria-pressed', true);
 	rowSuit.append(allSuit);
-	const suitOf = new Map();
-	DECK.forEach(c => {
-		if (!suitOf.has(c.planet)) suitOf.set(c.planet, c.suit_name);
-	});
-	for (const [planet, suit] of suitOf) rowSuit.append(mkSuitChip(STR.library.planetChip(planet, suit), planet));
+	const suitOf = new Map(DECK.map(c => [c.planet, c.suit_name]));
+	for (const planet of PLANET_ORDER) {
+		const suit = suitOf.get(planet);
+		if (suit) rowSuit.append(mkSuitChip(STR.library.planetChip(planet, suit), planet));
+	}
 
 	/* the sign row keeps every chip in step with the selected set */
 	const signChips = new Map(),

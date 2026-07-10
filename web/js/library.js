@@ -7,6 +7,7 @@ import { SIGN, ELEMENTS } from '../data/card/glyphs.js';
 import { MONTHS } from '../data/houses.js';
 import { STR } from '../data/i18n.js';
 import { openDialog } from './dialog.js';
+import { cardImgAttrs, warmCards } from './image-loader.js';
 import { syncRoute } from './router.js';
 
 let libBuilt = false;
@@ -115,7 +116,7 @@ function buildLibrary() {
 		const t = el(
 			'button',
 			'lib-card',
-			`<img src="${c.img}" alt="${c.name}" loading="lazy">
+			`<img ${cardImgAttrs(c)}>
          <span class="lib-card__name">${c.name}</span>
          <span class="lib-card__ps">${STR.library.cardPs(c)}</span>`
 		);
@@ -126,6 +127,7 @@ function buildLibrary() {
 		cardBtns.push(t);
 	});
 	buildSections();
+	warmCards(DECK.slice(0, 8), { limit: 8 });
 
 	/* three labelled rows: the suit (planet, single pick), the elements
 	   (quick picks for their three signs), and the twelve signs

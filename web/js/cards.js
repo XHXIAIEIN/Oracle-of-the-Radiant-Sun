@@ -5,12 +5,13 @@ import { DECK } from '../data/card/deck.js';
 import { BACK_SVG } from '../data/card/back.js';
 import { STR } from '../data/i18n.js';
 import { openDialog } from './dialog.js';
+import { cardImgAttrs } from './image-loader.js';
 
 export const cardShell = deckIdx => {
 	const card = DECK[deckIdx];
 	return `<span class="card__inner">
      <span class="card__face card__back">${BACK_SVG}</span>
-     <span class="card__face card__front"><img src="${card.img}" alt="${card.name}"></span>
+     <span class="card__face card__front"><img ${cardImgAttrs(card, { loading: 'eager', priority: 'low' })}></span>
    </span>`;
 };
 
@@ -46,7 +47,7 @@ export function flipCard(node, peak = 1.16) {
    never goes stale) */
 export function miniCard(deckIdx, tag, ctx, nav) {
 	const c = DECK[deckIdx];
-	const m = el('button', 'mini', `<img src="${c.img}" alt="${c.name}"><span class="mini__tag">${tag}</span><span class="mini__name">${c.name}</span>`);
+	const m = el('button', 'mini', `<img ${cardImgAttrs(c)}><span class="mini__tag">${tag}</span><span class="mini__name">${c.name}</span>`);
 	m.type = 'button';
 	m.onclick = () => openDialog(deckIdx, ctx, nav && { list: nav.list, at: nav.at });
 	return m;
@@ -61,7 +62,7 @@ export function miniFlipCard(deckIdx, tag, ctx, nav) {
 		'mini mini--flip',
 		`<span class="mini__inner">
        <span class="mini__face mini__back">${BACK_SVG}</span>
-       <span class="mini__face mini__front"><img src="${c.img}" alt="${c.name}"></span>
+       <span class="mini__face mini__front"><img ${cardImgAttrs(c)}></span>
      </span>
      <span class="mini__tag">${tag}</span><span class="mini__name">${c.name}</span>`
 	);

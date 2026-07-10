@@ -141,8 +141,11 @@
 }
 .card-dialog__art img {
   width: 100%;
+  aspect-ratio: var(--card-ratio);
   max-width: 280px;
   border-radius: 5px;
+  object-fit: cover;
+  background: var(--parchment);
   box-shadow: 0 14px 44px oklch(0% 0 0 / 0.55);
   display: block;
   cursor: zoom-in;

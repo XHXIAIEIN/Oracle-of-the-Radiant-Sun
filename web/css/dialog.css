@@ -10,15 +10,18 @@
   display: grid; /* single cell, so the grid can shrink and scroll */
 }
 .card-dialog {
+  --dialog-pad-block: clamp(20px, 3vw, 36px);
+  --dialog-pad-inline: clamp(24px, 3vw, 40px);
   grid-template-rows: minmax(0, 1fr); /* cap the cell at the dialog's max-height */
-  overflow: hidden;
+  overflow: visible;
   margin: auto; /* restore UA centring killed by the * { margin:0 } reset */
   border: 1px solid var(--gold-line);
   border-radius: 6px;
   background: var(--night-2);
   color: var(--ink);
-  padding: clamp(20px, 3vw, 36px);
+  padding: 0;
   width: min(920px, calc(100vw - 32px));
+  height: min(86dvh, 900px);
   max-height: min(86dvh, 900px);
 }
 .card-dialog::backdrop {
@@ -76,17 +79,43 @@
   z-index: 2;
   width: 34px;
   height: 34px;
-  display: grid;
-  place-items: center;
-  font-size: 22px;
-  line-height: 1;
+  padding: 0;
+  display: block;
+  font-size: 0;
+  line-height: 0;
   color: var(--ink-dim);
   border-radius: 50%;
   background: oklch(20% 0.035 275 / 0.85);
   transition: color 0.3s, opacity 0.3s;
 }
-.card-dialog__nav--prev { left: 8px; }
-.card-dialog__nav--next { right: 8px; }
+.card-dialog__nav::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  translate: -50% -50%;
+  background: currentColor;
+  mask: center / contain no-repeat;
+  -webkit-mask: center / contain no-repeat;
+}
+.card-dialog__nav--prev::before {
+  mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M15 18 9 12l6-6' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M15 18 9 12l6-6' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+.card-dialog__nav--next::before {
+  mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m9 18 6-6-6-6' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m9 18 6-6-6-6' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+.card-dialog__nav--prev {
+  left: -10px;
+  translate: 0 -50%;
+}
+.card-dialog__nav--next {
+  right: -10px;
+  translate: 0 -50%;
+}
 @media (hover: hover) {
   .card-dialog__nav:hover:not([disabled]) { color: var(--gold); }
 }
@@ -96,42 +125,79 @@
 .card-dialog__grid {
   display: grid;
   grid-template-areas:
-    "ctx ctx"
+    "meta meta"
     "art head"
     "art body";
   grid-template-columns: minmax(200px, 280px) minmax(0, 1fr);
-  grid-template-rows: auto auto 1fr;
+  grid-template-rows: auto auto minmax(0, 1fr);
   column-gap: clamp(18px, 3vw, 34px);
-  overflow-y: auto;
-  overflow-x: hidden; /* the prev/next slide-in must not spawn a bottom scrollbar */
-  scrollbar-gutter: stable; /* long and short cards share the same text width */
+  overflow: hidden; /* only the meaning text scrolls; the art and title stay put */
   min-height: 0;
-  overscroll-behavior: contain;
-  padding-bottom: 3.5rem;
+  padding: var(--dialog-pad-block) var(--dialog-pad-inline) calc(var(--dialog-pad-block) + 3.5rem);
 }
 
-.card-dialog__ctx  { grid-area: ctx; }
+.card-dialog__meta { grid-area: meta; }
 .card-dialog__art  { grid-area: art; }
 .card-dialog__head { grid-area: head; }
-.card-dialog__body { grid-area: body; }
+.card-dialog__body {
+  grid-area: body;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  margin-right: calc(-1 * var(--dialog-pad-inline));
+  padding-right: calc(var(--dialog-pad-inline) + 12px);
+}
+
+.card-dialog__back {
+  flex: 0 0 auto;
+  padding: 5px 10px;
+  border: 1px solid var(--gold-line);
+  border-radius: 999px;
+  color: var(--gold);
+  background: oklch(18% 0.035 275 / 0.72);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+@media (hover: hover) {
+  .card-dialog__back:hover {
+    border-color: var(--gold);
+    background: oklch(22% 0.04 275 / 0.9);
+  }
+}
+
+/* compact breadcrumb/title rail above the card detail */
+.card-dialog__meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  column-gap: 12px;
+  row-gap: 8px;
+  min-height: 32px;
+  margin-bottom: 18px;
+  padding-right: 44px; /* keep clear of the close button */
+  padding-bottom: 12px;
+  border-bottom: 1px solid oklch(78% 0.12 85 / 0.14);
+}
 
 /* where this card was drawn — sitting context, quieter than the card itself */
 .card-dialog__ctx {
   display: flex; /* the two segments wrap as units, not mid-phrase */
   flex-wrap: wrap;
-  column-gap: 1.6em;
+  flex: 1 1 220px;
+  column-gap: 0.8em;
   row-gap: 2px;
   font-size: 11.5px;
   letter-spacing: 0.06em;
   line-height: 1.6;
   color: var(--ink-dim);
-  padding-right: 44px; /* keep clear of the close button */
-  padding-bottom: 10px;
-  margin-bottom: 16px;
-  border-bottom: 1px solid oklch(78% 0.12 85 / 0.14);
 }
 .card-dialog__ctx b { color: var(--gold); font-weight: 400; }
-.card-dialog__ctx .sep { display: none; }
+.card-dialog__ctx .sep {
+  color: var(--gold-dim);
+  letter-spacing: 0;
+}
 
 /* the art keeps you company while the meanings scroll */
 .card-dialog__art {
@@ -182,6 +248,76 @@
 .dlg-sec h4 .zh { color: var(--ink-dim); letter-spacing: 0.2em; }
 .dlg-sec p { font-size: 13.5px; line-height: 1.75; color: var(--ink); }
 
+.card-ref-link {
+  display: inline;
+  padding: 0 0.14em;
+  border-radius: 4px;
+  color: var(--gold);
+  background: oklch(72% 0.13 86 / 0.12);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+@media (hover: hover) {
+  .card-ref-link:hover { background: oklch(72% 0.13 86 / 0.22); }
+}
+
+.card-ref-popover img {
+  width: 42px;
+  aspect-ratio: var(--card-ratio);
+  object-fit: cover;
+  border-radius: 3px;
+  background: var(--parchment);
+}
+.card-ref-popover__copy {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.card-ref-popover__eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.card-ref-popover__name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+  color: var(--ink);
+}
+.card-ref-popover__meta {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 11px;
+  color: var(--ink-dim);
+}
+
+.card-ref-popover {
+  position: fixed;
+  z-index: 50;
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  width: min(340px, calc(100vw - 28px));
+  padding: 11px 12px;
+  border: 1px solid var(--gold-line);
+  border-radius: 6px;
+  background: oklch(17% 0.035 275 / 0.96);
+  box-shadow: 0 16px 44px oklch(0% 0 0 / 0.48);
+  color: var(--ink);
+  text-align: left;
+}
+@media (hover: hover) {
+  .card-ref-popover:hover {
+    border-color: var(--gold);
+    background: oklch(22% 0.04 275 / 0.96);
+  }
+}
+
 /* ── full-size art lightbox ───────────────────────────────────── */
 .zoom-dialog {
   margin: auto;
@@ -207,29 +343,39 @@
 /* ── bottom sheet ─────────────────────────────────────────────── */
 @media (max-width: 700px) {
   .card-dialog {
+    --dialog-pad-block: 26px;
+    --dialog-pad-inline: 18px;
     width: 100vw;
     max-width: 100vw;
     margin: auto 0 0;
     border: 0;
     border-top: 1px solid var(--gold-line);
     border-radius: 16px 16px 0 0;
+    height: calc(100dvh - var(--safe-top) - 40px);
     max-height: calc(100dvh - var(--safe-top) - 40px);
-    padding: 26px 18px calc(16px + var(--safe-bottom));
+    padding: 0;
+    overflow: hidden;
   }
   .card-dialog__grab { display: grid; }
 
   .card-dialog__grid {
     grid-template-areas:
-      "ctx ctx"
+      "meta meta"
       "art head"
       "body body";
     grid-template-columns: 100px minmax(0, 1fr);
-    grid-template-rows: auto auto auto;
+    grid-template-rows: auto auto minmax(0, 1fr);
     column-gap: 16px;
-    padding-bottom: calc(4rem + var(--safe-bottom));
+    padding: var(--dialog-pad-block) var(--dialog-pad-inline) calc(4rem + var(--safe-bottom));
   }
 
-  .card-dialog__ctx { padding-bottom: 8px; margin-bottom: 14px; }
+  .card-dialog__meta {
+    align-items: flex-start;
+    margin-bottom: 14px;
+    padding-right: 40px;
+    padding-bottom: 10px;
+  }
+  .card-dialog__ctx { flex-basis: 100%; }
 
   .card-dialog__art { position: static; }
   .card-dialog__head { align-self: center; }
@@ -245,4 +391,9 @@
   /* roomier type for phone-length reading */
   .dlg-sec { margin-top: 20px; }
   .dlg-sec p { font-size: 15px; line-height: 1.85; }
+  .card-ref-popover {
+    grid-template-columns: 42px minmax(0, 1fr);
+    width: min(318px, calc(100vw - 20px));
+    padding: 10px;
+  }
 }

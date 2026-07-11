@@ -5,10 +5,248 @@
 
 .screen--home {
   display: grid;
-  align-content: center;
+  align-content: safe center;
   justify-items: center;
   gap: var(--gap-section);
   text-align: center;
+}
+
+.top-capsules {
+  position: fixed;
+  top: calc(max(18px, var(--safe-top)) + var(--tap) + 10px);
+  right: max(18px, var(--page-pad-inline));
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0;
+  color: var(--ink-dim);
+  overflow: visible;
+  pointer-events: none;
+}
+
+body:has(#screen-ritual:not([hidden])) .top-capsules,
+body:has(#screen-library:not([hidden])) .top-capsules {
+  top: max(18px, var(--safe-top));
+  right: calc(max(18px, var(--page-pad-inline)) + 112px);
+}
+
+.top-capsules--docked {
+  position: static;
+  inset: auto;
+  z-index: auto;
+  flex: 0 0 auto;
+  min-height: 27px;
+  border: 1px solid var(--gold-line);
+  border-radius: 999px;
+  background: oklch(16% 0.03 275 / 0.48);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: inset 0 1px 0 oklch(100% 0 0 / 0.035);
+}
+
+.language-switch {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  width: auto;
+  height: 100%;
+  pointer-events: auto;
+}
+
+.global-lang {
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  width: var(--tap);
+  min-width: var(--tap);
+  height: var(--tap);
+  padding: 0;
+  color: var(--ink-dim);
+  border: 1px solid var(--gold-line);
+  border-radius: 999px;
+  background: oklch(16% 0.03 275 / 0.48);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-indent: 0;
+  line-height: 1;
+  overflow: hidden;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.3s, border-color 0.3s, background 0.3s, box-shadow 0.3s;
+}
+
+.top-capsules--docked .global-lang {
+  width: auto;
+  min-width: 38px;
+  height: auto;
+  min-height: 25px;
+  padding: 3px 11px;
+  color: inherit;
+  border: 0;
+  background: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  font-size: 12.5px;
+  font-weight: 400;
+}
+
+.language-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4px;
+  width: 94px;
+  padding: 6px;
+  color: var(--ink-dim);
+  border: 1px solid var(--gold-line);
+  border-radius: 24px;
+  background: oklch(16% 0.03 275 / 0.76);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 10px 30px oklch(0% 0 0 / 0.24);
+  transform-origin: top right;
+  animation: language-menu-in 0.18s ease-out;
+}
+
+.language-menu[hidden] {
+  display: none;
+}
+
+.language-menu button {
+  display: inline-grid;
+  place-items: center;
+  width: 100%;
+  min-height: 33px;
+  padding: 0 12px;
+  color: inherit;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: 12px;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  transition: color 0.25s, border-color 0.25s, background 0.25s;
+}
+
+.language-menu button[aria-checked="true"] {
+  color: var(--gold);
+  border-color: transparent;
+  background: oklch(78% 0.12 85 / 0.12);
+}
+
+@keyframes language-menu-in {
+  from { opacity: 0; scale: 0.92; translate: 0 -4px; }
+  to { opacity: 1; scale: 1; translate: 0 0; }
+}
+@media (hover: hover) {
+  .global-lang:hover, .global-lang:focus-visible {
+    color: var(--gold);
+    border-color: var(--gold);
+    background: oklch(20% 0.035 275 / 0.72);
+    box-shadow: 0 0 0 3px oklch(78% 0.12 85 / 0.08);
+  }
+  .top-capsules--docked .global-lang:hover,
+  .top-capsules--docked .global-lang:focus-visible {
+    color: var(--gold);
+    border-color: transparent;
+    background: oklch(78% 0.12 85 / 0.08);
+    box-shadow: none;
+  }
+  .language-menu button:hover, .language-menu button:focus-visible {
+    color: var(--gold);
+    border-color: var(--gold-line);
+  }
+}
+.global-lang:active,
+.global-lang[aria-expanded="true"] {
+  color: var(--gold);
+  border-color: var(--gold);
+  background: oklch(78% 0.12 85 / 0.1);
+}
+.top-capsules--docked .global-lang:active,
+.top-capsules--docked .global-lang[aria-expanded="true"] {
+  border-color: transparent;
+}
+
+.top-capsules--docked:has(.global-lang:hover),
+.top-capsules--docked:has(.global-lang:focus-visible),
+.top-capsules--docked:has(.global-lang[aria-expanded="true"]) {
+  border-color: var(--gold);
+}
+
+@media (max-width: 700px) {
+  .top-capsules {
+    top: calc(max(18px, var(--safe-top)) + var(--tap) + 8px);
+  }
+
+  body:has(#screen-ritual:not([hidden])) .top-capsules,
+  body:has(#screen-library:not([hidden])) .top-capsules {
+    top: max(10px, var(--safe-top));
+    right: calc(var(--page-pad-inline) + 66px);
+  }
+
+  .top-capsules--docked {
+    position: static;
+    inset: auto;
+  }
+
+  .global-lang {
+    width: var(--tap);
+    min-width: var(--tap);
+    height: var(--tap);
+    padding: 0;
+    font-size: 13px;
+  }
+
+  .top-capsules--docked .global-lang {
+    width: auto;
+    min-width: 34px;
+    height: auto;
+    min-height: 26px;
+    padding-inline: 9px;
+    font-size: 12px;
+  }
+}
+
+.github-link {
+  position: absolute;
+  top: max(18px, var(--safe-top));
+  right: max(18px, var(--page-pad-inline));
+  display: grid;
+  place-items: center;
+  width: var(--tap);
+  height: var(--tap);
+  color: var(--ink);
+  opacity: 0.62;
+  border: 1px solid var(--gold-line);
+  border-radius: 999px;
+  background: oklch(16% 0.03 275 / 0.42);
+  backdrop-filter: blur(10px);
+  transition: opacity 0.3s, border-color 0.3s, background 0.3s, translate 0.3s;
+}
+
+.github-link svg {
+  width: 23px;
+  height: 23px;
+  fill: currentColor;
+}
+
+@media (hover: hover) {
+  .github-link:hover, .github-link:focus-visible {
+    opacity: 1;
+    border-color: var(--gold);
+    background: oklch(20% 0.035 275 / 0.72);
+    translate: 0 -2px;
+  }
+}
+.github-link:active {
+  opacity: 1;
+  border-color: var(--gold);
 }
 
 .masthead__sun {
@@ -127,6 +365,26 @@
   .method__en { font-size: 10px; letter-spacing: 0.16em; }
   .method__use { font-size: 13px; }
   .method__desc { display: none; }
+
+  .language-menu {
+    width: var(--tap);
+    padding: 7px 0;
+    border-radius: 999px;
+  }
+  .language-menu button {
+    min-height: 32px;
+    padding: 0;
+    font-size: 0;
+  }
+  .language-menu button::after {
+    font-size: 12px;
+    letter-spacing: 0;
+  }
+  .language-menu button[data-lang-option="en"]::after { content: "EN"; }
+  .language-menu button[data-lang-option="zh"]::after { content: "中"; }
+  .language-menu button[aria-checked="true"] {
+    background: transparent;
+  }
 }
 
 /* quiet doorway to the complete deck */

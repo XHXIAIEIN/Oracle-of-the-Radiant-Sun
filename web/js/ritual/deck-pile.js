@@ -3,9 +3,10 @@
 import { el, D, MOBILE } from '../dom.js';
 import { wheel } from '../stage.js';
 import { drawCount } from '../state.js';
-import { BACK_SVG } from '../../data/card/back.js';
-import { DECK } from '../../data/card/deck.js';
-import { STR } from '../../data/i18n.js';
+import { BACK_SVG } from '../model/card-back.js';
+import { DECK } from '../model/deck.js';
+import { STR } from '../model/i18n.js';
+import { t } from '../bilingual.js';
 
 export let deckPile;
 
@@ -32,7 +33,7 @@ export function topLayerPose(remaining = drawCount()) {
 export function createDeckPile() {
 	deckPile = el('button', 'deck');
 	deckPile.type = 'button';
-	deckPile.setAttribute('aria-label', STR.deck.aria);
+	deckPile.setAttribute('aria-label', t(STR.deck.aria));
 	// 手机的轮盘本就小一圈，牌堆放大些才指得住
 	Object.assign(deckPile.style, { left: '50%', top: '50%', width: MOBILE.matches ? '15%' : '12.8%' });
 	gsap.set(deckPile, { xPercent: -50, yPercent: -50 });
@@ -89,3 +90,7 @@ export function retireDeckPile() {
 		onComplete: () => deckPile.remove(),
 	});
 }
+
+window.addEventListener('languagechange', () => {
+	if (deckPile?.isConnected) deckPile.setAttribute('aria-label', t(STR.deck.aria));
+});

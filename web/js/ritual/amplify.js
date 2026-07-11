@@ -3,12 +3,13 @@
 
 import { el, popIn, dealIn, D, REDUCED } from '../dom.js';
 import { takeCards, drawCount } from '../state.js';
-import { MONTHS } from '../../data/houses.js';
-import { STR } from '../../data/i18n.js';
-import { BACK_SVG } from '../../data/card/back.js';
-import { MODES } from '../../data/modes/index.js';
+import { BACK_SVG } from '../model/card-back.js';
+import { MONTHS } from '../model/solar-ring.js';
+import { STR, bi } from '../model/i18n.js';
+import { MODES } from '../model/modes/index.js';
 import { miniCard, miniFlipCard, revealMini } from '../cards.js';
 import { autoScrollTo } from '../panel.js';
+import { drawerLiftForEntry } from '../drawer.js';
 
 const A = () => MODES.sunyear.amplify;
 
@@ -17,9 +18,11 @@ export function addAmplify(pos, entry) {
 	const acts = el('div', 'entry__acts');
 	const amp = el('div', 'amplify');
 	const bW = el('button', 'sub-btn', A().weeksBtn);
+	bW.dataset.ui = 'weeks-btn';
 	bW.type = 'button';
 	bW.onclick = () => dealWeeks(pos, amp, bW);
 	const bH = el('button', 'sub-btn', A().hoursBtn);
+	bH.dataset.ui = 'hours-btn';
 	bH.type = 'button';
 	bH.onclick = () => {
 		hourForm(pos, amp);
@@ -29,11 +32,16 @@ export function addAmplify(pos, entry) {
 	entry.append(acts, amp);
 }
 
+window.addEventListener('languagechange', () => {
+	document.querySelectorAll('[data-ui="weeks-btn"]').forEach(btn => (btn.textContent = A().weeksBtn));
+	document.querySelectorAll('[data-ui="hours-btn"]').forEach(btn => (btn.textContent = A().hoursBtn));
+});
+
 /* “deal from the top of the deck four more cards … the four weeks” */
 function dealWeeks(pos, amp, btn) {
 	const idxs = takeCards(4);
 	if (!idxs) {
-		amp.append(el('p', 'deck-empty-note', STR.deck.empty));
+		amp.append(el('p', 'deck-empty-note', bi(STR.deck.empty)));
 		btn.disabled = true;
 		return;
 	}
@@ -57,6 +65,7 @@ function dealWeeks(pos, amp, btn) {
 	});
 	block.append(row);
 	amp.append(block);
+	drawerLiftForEntry(amp.closest('.entry'));
 	autoScrollTo(block, true, true);
 	dealIn(row.querySelectorAll('.mini'));
 }
@@ -67,7 +76,7 @@ function dealWeeks(pos, amp, btn) {
 function dealDays(pos, week, parentBlock) {
 	const idxs = takeCards(7);
 	if (!idxs) {
-		parentBlock.append(el('p', 'deck-empty-note', STR.deck.empty));
+		parentBlock.append(el('p', 'deck-empty-note', bi(STR.deck.empty)));
 		return;
 	}
 	const m = MONTHS[pos - 1];
@@ -88,6 +97,7 @@ function dealDays(pos, week, parentBlock) {
 		const dy = tops.get(s) - s.getBoundingClientRect().top;
 		if (dy) gsap.from(s, { y: dy, duration: D(0.55), ease: 'power3.out' });
 	}
+	drawerLiftForEntry(parentBlock.closest('.entry'));
 	autoScrollTo(block, true, true);
 	dealIn(row.querySelectorAll('.mini'));
 }
@@ -136,6 +146,7 @@ function hourForm(pos, amp) {
 	form.append(grid, act);
 	block.append(form);
 	amp.append(block);
+	drawerLiftForEntry(amp.closest('.entry'));
 	autoScrollTo(block, true, true);
 	popIn([form]);
 
@@ -161,15 +172,24 @@ function hourForm(pos, amp) {
 		const n = sel;
 		const idxs = takeCards(n);
 		if (!idxs) {
-			block.insertBefore(el('p', 'deck-empty-note', STR.deck.shortOfHour), form);
+			block.insertBefore(el('p', 'deck-empty-note', bi(STR.deck.shortOfHour)), form);
 			syncAvail();
 			return;
 		}
 		dealing = true;
 		go.disabled = true;
 		cells.forEach(c => (c.disabled = true));
+		const priorHourResults = [...block.children].filter(child => child.classList?.contains('amplify__block')).length;
+		const baseOffset = Math.max(
+			0,
+			block.getBoundingClientRect().height -
+				[...block.children]
+					.filter(child => child.classList?.contains('amplify__block'))
+					.reduce((sum, child) => sum + child.getBoundingClientRect().height, 0)
+		);
 
 		const res = el('div', 'amplify__block');
+		res.dataset.hourResult = String(priorHourResults + 1);
 		res.append(el('p', 'amplify__cap', A().hourCap(n)));
 		const row = el('div', 'minirow minirow--hour');
 		let backs = [];
@@ -199,28 +219,36 @@ function hourForm(pos, amp) {
 		block.insertBefore(res, form);
 		const dy = formTop - form.getBoundingClientRect().top;
 		if (dy) gsap.from(form, { y: dy, duration: D(0.55), ease: 'power3.out' });
-		autoScrollTo(res, true, true);
+		drawerLiftForEntry(block.closest('.entry'));
+		autoScrollTo(res, true, true, baseOffset * priorHourResults);
 
-		/* 发牌的次第：面朝下逐张叠起 → 末张落下 → 一拍悬念 → 翻开。
-		   牌与签先各自藏好，免得随整块淡入后又消失重来 */
-		gsap.set(backs, { opacity: 0, y: -14, rotation: () => gsap.utils.random(-8, 8) });
-		if (stackTag) gsap.set(stackTag, { opacity: 0 });
-		gsap.set(revealed, { opacity: 0, y: -14 });
+		/* 发牌的次第只是增强层：结果一插入便保持可见，避免浏览器节流、
+		   切页或滚动打断时间线后留下“已扣牌但空白”的状态。 */
+		let finished = false;
+		const finish = () => {
+			if (finished) return;
+			finished = true;
+			gsap.killTweensOf([res, revealed, ...backs, stackTag].filter(Boolean));
+			gsap.set([res, revealed, ...backs, stackTag].filter(Boolean), { opacity: 1, y: 0, rotation: 0, clearProps: 'opacity,transform,filter' });
+			revealed.classList.add('is-up');
+			revealed.disabled = false;
+			dealing = false;
+			go.disabled = false;
+			syncAvail();
+			if (!go.disabled) go.textContent = A().hourAgain;
+		};
+		gsap.set([res, revealed, ...backs, stackTag].filter(Boolean), { opacity: 1, y: 0, rotation: 0, clearProps: 'opacity,transform,filter' });
 		const tl = gsap.timeline({
-			onComplete: () => {
-				dealing = false;
-				go.disabled = false;
-				syncAvail();
-				if (!go.disabled) go.textContent = A().hourAgain;
-			},
+			onComplete: finish,
 		});
-		tl.from(res, { opacity: 0, duration: D(0.3) });
+		tl.from(res, { opacity: 0.65, duration: D(0.3) });
 		if (backs.length) {
 			const per = Math.min(0.05, 1.1 / backs.length);
-			tl.to(backs, { opacity: 1, y: 0, rotation: 0, duration: D(0.26), stagger: REDUCED ? 0 : per, ease: 'power2.out' }, '<0.1');
-			tl.to(stackTag, { opacity: 1, duration: D(0.3) }, '>-0.1');
+			tl.fromTo(backs, { y: -8, rotation: () => gsap.utils.random(-5, 5) }, { y: 0, rotation: 0, duration: D(0.22), stagger: REDUCED ? 0 : per, ease: 'power2.out' }, '<0.1');
+			tl.fromTo(stackTag, { opacity: 0.65 }, { opacity: 1, duration: D(0.22) }, '>-0.1');
 		}
-		tl.to(revealed, { opacity: 1, y: 0, duration: D(0.3), ease: 'power2.out' }, backs.length ? '>-0.05' : '<0.1');
+		tl.fromTo(revealed, { y: -8 }, { y: 0, duration: D(0.22), ease: 'power2.out' }, backs.length ? '>-0.05' : '<0.1');
 		tl.add(revealMini(revealed), `+=${D(0.3)}`);
+		setTimeout(finish, REDUCED ? 80 : Math.max(1200, n * 70 + 1400));
 	};
 }

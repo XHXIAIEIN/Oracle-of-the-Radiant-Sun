@@ -1,3 +1,5 @@
+import { cardName } from './model/deck.js';
+
 const decoded = new Map();
 
 const idle = cb => {
@@ -6,7 +8,8 @@ const idle = cb => {
 };
 
 export function cardImgAttrs(card, { loading = 'lazy', priority = 'auto' } = {}) {
-	return `src="${card.img}" alt="${card.name}" loading="${loading}" decoding="async" fetchpriority="${priority}"`;
+	const alt = String(cardName(card)).replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;');
+	return `src="${card.img}" alt="${alt}" loading="${loading}" decoding="async" fetchpriority="${priority}"`;
 }
 
 export function preloadImage(src, priority = 'auto') {

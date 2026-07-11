@@ -1,0 +1,242 @@
+/* Choreographed feedback layer.
+   Component CSS owns layout; this file adds motion language for state changes. */
+
+:root {
+  --ease-oracle: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-turn: cubic-bezier(0.2, 0.78, 0.2, 1);
+}
+
+.global-lang,
+.analysis-pill,
+.deck-badge,
+.qpick,
+.house-chip,
+.hour-cell,
+.act-btn,
+.sub-btn,
+.lib-more,
+.panel__jump,
+.share-btn,
+.card-ref-link {
+  position: relative;
+}
+
+.global-lang::after,
+.analysis-pill::after,
+.qpick::after,
+.house-chip::after,
+.hour-cell::after,
+.act-btn::after,
+.sub-btn::after,
+.lib-more::after,
+.panel__jump::after,
+.card-ref-link::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  border: 1px solid transparent;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.28s ease, border-color 0.28s ease, transform 0.28s var(--ease-oracle);
+}
+
+:where(.global-lang, .analysis-pill, .qpick, .house-chip, .hour-cell, .act-btn, .sub-btn, .lib-more, .panel__jump, .card-ref-link):is(:active, [aria-pressed="true"], [aria-expanded="true"], [aria-checked="true"])::after {
+  border-color: oklch(78% 0.12 85 / 0.44);
+  opacity: 1;
+  animation: feedback-ring 0.46s var(--ease-oracle);
+}
+
+@keyframes feedback-ring {
+  from { transform: scale(0.92); opacity: 0; }
+  45% { opacity: 1; }
+  to { transform: scale(1.12); opacity: 0; }
+}
+
+.qpick[aria-pressed="true"],
+.house-chip[aria-pressed="true"],
+.hour-cell[aria-checked="true"] {
+  box-shadow: inset 0 0 0 1px oklch(78% 0.12 85 / 0.1), 0 0 18px oklch(78% 0.12 85 / 0.08);
+}
+
+.qpick[aria-pressed="true"]::before,
+.house-chip[aria-pressed="true"]::before,
+.hour-cell[aria-checked="true"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(110deg, transparent, oklch(78% 0.12 85 / 0.12), transparent);
+  opacity: 0;
+  pointer-events: none;
+  animation: selected-sheen 0.72s ease-out;
+}
+
+@keyframes selected-sheen {
+  from { opacity: 0; transform: translateX(-28%); }
+  30% { opacity: 1; }
+  to { opacity: 0; transform: translateX(28%); }
+}
+
+:where(button, [role="button"])[disabled],
+:where(button, [role="button"])[aria-disabled="true"] {
+  filter: saturate(0.72);
+  transition: opacity 0.28s ease, filter 0.28s ease, color 0.28s ease, border-color 0.28s ease;
+}
+
+.language-menu {
+  animation: language-menu-in 0.22s var(--ease-oracle);
+}
+
+.language-menu button[aria-checked="true"] {
+  animation: option-settle 0.34s var(--ease-oracle);
+}
+
+@keyframes option-settle {
+  from { transform: scale(0.92); }
+  to { transform: scale(1); }
+}
+
+.deck-badge.is-updating,
+.share-btn.is-copied,
+.global-lang.is-switching {
+  animation: soft-pop 0.5s var(--ease-oracle);
+}
+
+@keyframes soft-pop {
+  0% { transform: scale(1); }
+  38% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+.rite-line.is-changing {
+  animation: rite-glow 0.8s ease-out;
+}
+
+@keyframes rite-glow {
+  0% { text-shadow: 0 0 0 transparent; }
+  38% { text-shadow: 0 0 24px oklch(78% 0.12 85 / 0.34); }
+  100% { text-shadow: 0 0 0 transparent; }
+}
+
+.stage-actions > * {
+  transform-origin: 50% 70%;
+}
+
+.panel__jump {
+  animation: jump-breathe 2.2s ease-in-out infinite;
+}
+
+@keyframes jump-breathe {
+  50% { box-shadow: 0 8px 24px oklch(0% 0 0 / 0.5), 0 0 20px oklch(78% 0.12 85 / 0.18); }
+}
+
+.entry {
+  animation: entry-rule 0.75s ease-out;
+}
+
+@keyframes entry-rule {
+  from { border-bottom-color: oklch(78% 0.12 85 / 0.36); }
+  to { border-bottom-color: oklch(78% 0.12 85 / 0.14); }
+}
+
+.amplify__block,
+.hour-form,
+.minirow {
+  animation: block-arrive 0.5s var(--ease-oracle);
+}
+
+@keyframes block-arrive {
+  from { opacity: 0; transform: translateY(10px); filter: blur(3px); }
+  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+.lib-frow {
+  animation: filter-row-in 0.42s var(--ease-oracle);
+}
+
+.lib-frow:nth-child(2) { animation-delay: 0.04s; }
+.lib-frow:nth-child(3) { animation-delay: 0.08s; }
+.lib-frow:nth-child(4) { animation-delay: 0.12s; }
+
+@keyframes filter-row-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.lib-card img,
+.card-dialog__art img,
+.mini img,
+.mini svg {
+  transform-origin: 50% 82%;
+}
+
+.card-dialog[open] {
+  animation: dialog-frame-in 0.32s var(--ease-oracle);
+}
+
+.card-dialog[open]::backdrop {
+  animation: backdrop-in 0.28s ease-out;
+}
+
+@keyframes dialog-frame-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.card-dialog__grid.is-turning {
+  pointer-events: none;
+}
+
+.card-dialog__grid > * {
+  transform-origin: 50% 55%;
+}
+
+.card-ref-popover {
+  transform-origin: 50% 100%;
+}
+
+.zoom-dialog[open]::backdrop {
+  animation: backdrop-in 0.24s ease-out;
+}
+
+.setup:not([hidden]),
+.question-line:not([hidden]) {
+  animation: setup-arrive 0.48s var(--ease-oracle);
+}
+
+@keyframes setup-arrive {
+  from { opacity: 0; transform: translateY(10px); filter: blur(3px); }
+  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+.house-pop[open] {
+  animation: popover-in 0.22s var(--ease-oracle);
+}
+
+@keyframes popover-in {
+  from { opacity: 0; transform: translateY(6px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel__jump,
+  .entry,
+  .amplify__block,
+  .hour-form,
+  .minirow,
+  .lib-frow,
+  .card-dialog[open],
+  .card-dialog[open]::backdrop,
+  .zoom-dialog[open]::backdrop,
+  .setup:not([hidden]),
+  .question-line:not([hidden]),
+  .house-pop[open] {
+    animation: none !important;
+  }
+}

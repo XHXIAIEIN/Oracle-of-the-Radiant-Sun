@@ -1,0 +1,94 @@
+/* Click feedback loaded last, so every interactive surface can share the
+   same press motion without fighting its own component styles. */
+
+:where(
+  button,
+  a[href],
+  [role="button"],
+  .entry__where,
+  .entry__name,
+  .card-dialog__art img,
+  .zoom-dialog
+) {
+  --press-x: 0px;
+  --press-y-base: 0px;
+  --press-y: 0px;
+  translate: var(--press-x) calc(var(--press-y-base) + var(--press-y));
+  will-change: translate;
+  transition-property: translate, color, border-color, background, box-shadow, opacity, width, text-decoration-color;
+  transition-duration: 0.22s, 0.3s, 0.3s, 0.3s, 0.3s, 0.3s, 0.3s, 0.3s;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1), ease, ease, ease, ease, ease, ease, ease;
+}
+
+button,
+a[href],
+[role="button"],
+.entry__where,
+.entry__name,
+.card-dialog__art img,
+.zoom-dialog {
+  translate: var(--press-x) calc(var(--press-y-base) + var(--press-y));
+}
+
+:where(
+  button,
+  a[href],
+  [role="button"],
+  .entry__where,
+  .entry__name,
+  .card-dialog__art img,
+  .zoom-dialog
+):active:not(:disabled):not([disabled]):not([aria-disabled="true"]) {
+  --press-y: 2px;
+  transition-duration: 0.09s, 0.3s, 0.3s, 0.3s, 0.3s, 0.3s, 0.3s, 0.3s;
+  transition-timing-function: cubic-bezier(0.25, 0.75, 0.35, 1), ease, ease, ease, ease, ease, ease, ease;
+}
+
+@media (hover: hover) {
+  .global-lang:hover,
+  .global-lang:focus-visible {
+    --press-x: 0px;
+  }
+}
+
+@media (hover: hover) {
+  .github-link:hover,
+  .github-link:focus-visible {
+    --press-y-base: -2px;
+  }
+}
+
+@media (hover: hover) {
+  .method:hover,
+  .method:focus-visible {
+    --press-y-base: -3px;
+  }
+}
+
+.immersive-copy__toggle { --press-y-base: -0.06em; }
+@media (hover: hover) {
+  .immersive-copy__toggle:hover,
+  .immersive-copy__toggle:focus-visible {
+    --press-y-base: -0.12em;
+  }
+}
+
+.card-dialog__nav,
+.card-dialog__nav--prev,
+.card-dialog__nav--next {
+  --press-y-base: -50%;
+}
+
+.act-btn--wheel,
+.act-btn--deck,
+.act-link--card {
+  --press-x: -50%;
+}
+
+@media (max-width: 700px) {
+  .card-dialog__nav,
+  .card-dialog__nav--prev,
+  .card-dialog__nav--next {
+    --press-y-base: 0px;
+  }
+}

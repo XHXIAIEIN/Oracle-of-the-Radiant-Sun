@@ -1,6 +1,7 @@
 /* 仪式舞台的常驻节点，与其上的两类提示：仪轨行与操作按钮 */
 
 import { $, D } from './dom.js';
+import { t } from './bilingual.js';
 
 export const wheel = $('#wheel');
 export const panel = $('#panel');
@@ -9,9 +10,23 @@ export const riteLine = $('#rite-line');
 export const actions = $('#stage-actions');
 export const setup = $('#setup');
 
+let lastRite = ['', ''];
+
+function riteHTML(zh, en) {
+	return t([zh, en]);
+}
+
 export function setRite(zh, en) {
-	riteLine.innerHTML = zh + (en ? `<small>${en}</small>` : '');
+	lastRite = [zh, en];
+	riteLine.classList.remove('is-changing');
+	void riteLine.offsetWidth;
+	riteLine.classList.add('is-changing');
+	riteLine.innerHTML = riteHTML(zh, en);
 	gsap.fromTo(riteLine, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: D(0.8), ease: 'power2.out' });
+}
+
+export function refreshRite() {
+	riteLine.innerHTML = riteHTML(...lastRite);
 }
 
 export function setActions(btns) {
@@ -20,6 +35,12 @@ export function setActions(btns) {
 }
 
 export function updateBadge(count) {
-	$('#deck-badge').hidden = false;
+	const badge = $('#deck-badge');
+	badge.hidden = false;
 	$('#deck-count').textContent = count;
+	badge.classList.remove('is-updating');
+	void badge.offsetWidth;
+	badge.classList.add('is-updating');
 }
+
+window.addEventListener('languagechange', refreshRite);

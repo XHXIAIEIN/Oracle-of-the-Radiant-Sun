@@ -1,0 +1,190 @@
+{
+	"signs": {
+		"Aries": {
+			"glyph": "♈︎"
+		},
+		"Taurus": {
+			"glyph": "♉︎"
+		},
+		"Gemini": {
+			"glyph": "♊︎"
+		},
+		"Cancer": {
+			"glyph": "♋︎"
+		},
+		"Leo": {
+			"glyph": "♌︎"
+		},
+		"Virgo": {
+			"glyph": "♍︎"
+		},
+		"Libra": {
+			"glyph": "♎︎"
+		},
+		"Scorpio": {
+			"glyph": "♏︎"
+		},
+		"Sagittarius": {
+			"glyph": "♐︎"
+		},
+		"Capricorn": {
+			"glyph": "♑︎"
+		},
+		"Aquarius": {
+			"glyph": "♒︎"
+		},
+		"Pisces": {
+			"glyph": "♓︎"
+		}
+	},
+	"planets": {
+		"Sun": {
+			"glyph": "☉︎"
+		},
+		"Moon": {
+			"glyph": "☽︎"
+		},
+		"Mercury": {
+			"glyph": "☿︎"
+		},
+		"Venus": {
+			"glyph": "♀︎"
+		},
+		"Mars": {
+			"glyph": "♂︎"
+		},
+		"Jupiter": {
+			"glyph": "♃︎"
+		},
+		"Saturn": {
+			"glyph": "♄︎"
+		}
+	},
+	"suits": {
+		"Fortune": {},
+		"Security": {},
+		"Change": {},
+		"Love": {},
+		"Action": {},
+		"Gain": {},
+		"Ambition": {}
+	},
+	"elements": {
+		"fire": {
+			"signs": [
+				"Aries",
+				"Leo",
+				"Sagittarius"
+			]
+		},
+		"earth": {
+			"signs": [
+				"Taurus",
+				"Virgo",
+				"Capricorn"
+			]
+		},
+		"air": {
+			"signs": [
+				"Gemini",
+				"Libra",
+				"Aquarius"
+			]
+		},
+		"water": {
+			"signs": [
+				"Cancer",
+				"Scorpio",
+				"Pisces"
+			]
+		}
+	},
+	"months": [
+		{
+			"key": "january",
+			"sign": "Capricorn"
+		},
+		{
+			"key": "february",
+			"sign": "Aquarius"
+		},
+		{
+			"key": "march",
+			"sign": "Pisces"
+		},
+		{
+			"key": "april",
+			"sign": "Aries"
+		},
+		{
+			"key": "may",
+			"sign": "Taurus"
+		},
+		{
+			"key": "june",
+			"sign": "Gemini"
+		},
+		{
+			"key": "july",
+			"sign": "Cancer"
+		},
+		{
+			"key": "august",
+			"sign": "Leo"
+		},
+		{
+			"key": "september",
+			"sign": "Virgo"
+		},
+		{
+			"key": "october",
+			"sign": "Libra"
+		},
+		{
+			"key": "november",
+			"sign": "Scorpio"
+		},
+		{
+			"key": "december",
+			"sign": "Sagittarius"
+		}
+	],
+	"houses": [
+		{
+			"id": 1
+		},
+		{
+			"id": 2
+		},
+		{
+			"id": 3
+		},
+		{
+			"id": 4
+		},
+		{
+			"id": 5
+		},
+		{
+			"id": 6
+		},
+		{
+			"id": 7
+		},
+		{
+			"id": 8
+		},
+		{
+			"id": 9
+		},
+		{
+			"id": 10
+		},
+		{
+			"id": 11
+		},
+		{
+			"id": 12
+		}
+	]
+}

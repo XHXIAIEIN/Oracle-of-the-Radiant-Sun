@@ -5,7 +5,7 @@
 /* screen header: back link · title · badge (ritual + library) */
 .ritual-head {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 18px;
   border-bottom: 1px solid var(--gold-line);
   padding-bottom: 12px;
@@ -16,7 +16,8 @@
   letter-spacing: 0.08em;
 }
 
-.deck-badge {
+.deck-badge,
+.share-btn {
   margin-left: auto;
   font-size: 12.5px;
   color: var(--ink-dim);
@@ -24,8 +25,29 @@
   border-radius: 999px;
   padding: 3px 12px;
   white-space: nowrap;
+  transition: color 0.3s, border-color 0.3s, background 0.3s;
 }
 .deck-badge b { color: var(--gold); font-weight: 400; }
+.share-btn { margin-left: 0; }
+@media (hover: hover) {
+  .share-btn:hover, .share-btn:focus-visible {
+    color: var(--gold);
+    border-color: var(--gold);
+    background: oklch(78% 0.12 85 / 0.08);
+  }
+}
+.share-btn:active {
+  color: var(--gold);
+  border-color: var(--gold);
+}
+
+.ritual-head__tools {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-left: auto;
+}
+.ritual-head__tools + .deck-badge { margin-left: 0; }
 
 .ghost-btn {
   font-size: 13px;
@@ -37,6 +59,27 @@
 }
 /* the long back label reads well on a desk; on a phone the word 返回 is enough */
 .ghost-btn .label-short { display: none; }
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: max(24px, calc(var(--safe-bottom) + 16px));
+  z-index: 80;
+  max-width: min(92vw, 420px);
+  transform: translateX(-50%);
+  color: var(--gold);
+  border: 1px solid var(--gold-line);
+  border-radius: 999px;
+  padding: 7px 16px;
+  background: color-mix(in oklab, var(--night-2) 88%, var(--gold));
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 10px 32px oklch(0% 0 0 / 0.36);
+  font-size: 12.5px;
+  letter-spacing: 0.08em;
+  text-align: center;
+  pointer-events: none;
+}
 
 /* pill chips, single or multi select (horary setup + library filters) */
 .qpicks { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
@@ -50,14 +93,65 @@
 }
 .qpick[aria-pressed="true"] { color: var(--gold); border-color: var(--gold); }
 
+/* inline language toggle for explanatory paragraphs. It is appended as the
+   final inline item, so the control sits at the end of the paragraph copy. */
+.immersive-copy {
+  --translate-dot: oklch(78% 0.12 85 / 0.46);
+}
+.immersive-copy__text {
+  display: inline;
+  will-change: opacity, transform, filter;
+}
+.immersive-copy__toggle {
+  display: inline-grid;
+  place-items: center;
+  min-width: 2.2em;
+  height: 1.75em;
+  margin-inline-start: 0.55em;
+  padding: 0 0.52em;
+  translate: 0 -0.06em;
+  vertical-align: text-bottom;
+  color: color-mix(in oklab, var(--translate-dot) 92%, var(--ink));
+  border: 1px solid color-mix(in oklab, var(--translate-dot) 72%, transparent);
+  border-radius: 999px;
+  background: linear-gradient(180deg, oklch(22% 0.035 275 / 0.34), oklch(14% 0.03 275 / 0.2));
+  box-shadow: inset 0 1px 0 oklch(100% 0 0 / 0.05);
+  font-size: 0.68em;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-indent: 0;
+  opacity: 0.72;
+  transition: opacity 0.25s, color 0.25s, border-color 0.25s, background 0.25s, box-shadow 0.25s, translate 0.25s;
+}
+.immersive-copy__toggle:focus-visible {
+  outline: 2px solid oklch(78% 0.12 85 / 0.36);
+  outline-offset: 2px;
+}
+
 /* pointer affordances live behind a hover guard, so a finger's tap
    never leaves a chip looking half-selected */
 @media (hover: hover) {
   .ghost-btn:hover { color: var(--gold); }
   .qpick:hover { color: var(--gold); border-color: var(--gold); }
+  .immersive-copy__toggle:hover, .immersive-copy__toggle:focus-visible {
+    opacity: 1;
+    color: var(--gold);
+    border-color: var(--gold);
+    background: linear-gradient(180deg, oklch(26% 0.045 275 / 0.68), oklch(18% 0.035 275 / 0.5));
+    box-shadow: inset 0 1px 0 oklch(100% 0 0 / 0.08), 0 0 0 3px oklch(78% 0.12 85 / 0.08);
+    translate: 0 -0.12em;
+  }
 }
 .ghost-btn:active { color: var(--gold); }
 .qpick:active { border-color: var(--gold); }
+.immersive-copy__toggle:active,
+.immersive-copy__toggle[aria-pressed="true"] {
+  opacity: 0.95;
+  color: var(--gold);
+  border-color: color-mix(in oklab, var(--gold) 75%, transparent);
+  background: oklch(22% 0.04 275 / 0.62);
+}
 
 /* ── the phone app bar ──────────────────────────────────────────
    One line pinned to the top: back · title (ellipsised) · badge.
@@ -87,8 +181,8 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  /* the title's English half yields; the Chinese name stays */
-  .ritual-head__title .t-en, .ritual-head__title .t-dot { display: none; }
+  /* the secondary half yields; the current language stays */
+  .ritual-head__title .t-alt, .ritual-head__title .t-dot { display: none; }
 
   .ghost-btn {
     display: inline-flex;
@@ -100,7 +194,7 @@
   .ghost-btn .label-long { display: none; }
   .ghost-btn .label-short { display: inline; }
 
-  .deck-badge { font-size: 12px; padding: 4px 10px; }
+  .deck-badge, .share-btn { font-size: 12px; padding: 4px 10px; }
 
   .qpick {
     min-height: 38px;

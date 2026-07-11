@@ -7,10 +7,12 @@
   /* centring is done with gsap xPercent/yPercent so its transforms never clash */
   aspect-ratio: var(--card-ratio);
   padding: 0;
-  perspective: 900px;
+  perspective: 1100px;
   border-radius: 6px;
   outline-offset: 3px;
   z-index: 1;
+  transform-style: preserve-3d;
+  will-change: transform, opacity, filter;
 }
 .card:focus-visible { outline: 1px solid var(--gold); }
 
@@ -25,6 +27,7 @@
   height: 100%;
   transform-style: preserve-3d;
   border-radius: 6px;
+  will-change: transform;
 }
 
 .card__face {
@@ -39,6 +42,14 @@
 .card__front { transform: rotateY(180deg); background: var(--parchment); }
 .card__front img { width: 100%; height: 100%; display: block; }
 .card__back svg { width: 100%; height: 100%; display: block; }
+
+.card.is-dealing .card__face {
+  box-shadow: 0 10px 28px oklch(0% 0 0 / 0.5);
+}
+
+.card.is-flipping .card__face {
+  box-shadow: 0 14px 36px oklch(0% 0 0 / 0.52);
+}
 
 /* golden call: “this one is next” */
 .card.is-next .card__inner::after {

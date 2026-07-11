@@ -1,0 +1,28 @@
+{
+  "slug": "moon_leo",
+  "attempts": [
+    {
+      "attempt": 1,
+      "raw_image": "web/assets/generated/moon_leo.png",
+      "final_image": "web/assets/images/moon_leo.png",
+      "started_at": "2026-07-09T06:05:34",
+      "reviews": {
+        "facts": {
+          "status": "pass",
+          "notes": "PASS: Upper scene faithful with lady, dark veil, rose-pink gown, yellow sleeves, green sash/scarf. Large old lute crosses body diagonally with strumming hand near body and other hand on neck. Head/gaze turns toward swift at upper-left. Lower panel has one golden cornucopia with fruit spilling left and twisted horn tapering right. Final preserves Moon upper/lower staging.",
+          "reviewed_at": "2026-07-09T06:14:18"
+        },
+        "production": {
+          "status": "fail",
+          "notes": "FAIL: Raw underlay includes a hard bottom panel/divider line, which violates the raw-art constraint against drawing final Moon horizontal rule or divider structure. No fake text/labels/watermark; final overlay is readable and does not obscure main elements, but raw furniture-like line requires regeneration.",
+          "reviewed_at": "2026-07-09T06:14:19"
+        }
+      },
+      "status": "fail"
+    }
+  ],
+  "current_attempt": 1,
+  "final_status": "retry_needed",
+  "created_at": "2026-07-09T06:05:34",
+  "updated_at": "2026-07-09T06:14:19"
+}

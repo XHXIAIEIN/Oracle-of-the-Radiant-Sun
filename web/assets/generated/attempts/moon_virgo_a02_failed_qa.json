@@ -1,0 +1,42 @@
+{
+  "slug": "moon_virgo",
+  "attempts": [
+    {
+      "attempt": 1,
+      "raw_image": "web/assets/generated/moon_virgo.png",
+      "final_image": "web/assets/images/moon_virgo.png",
+      "started_at": "2026-07-09T07:14:02",
+      "reviews": {
+        "facts": {
+          "status": "fail",
+          "notes": "FAIL attempt 1: top three emblems are cropped too aggressively; plants and bottom ornament are faithful, production layer is clean, but source fidelity requires a higher crop.",
+          "reviewed_at": "2026-07-09T07:20:19"
+        }
+      },
+      "status": "fail"
+    },
+    {
+      "attempt": 2,
+      "raw_image": "web/assets/generated/moon_virgo.png",
+      "final_image": "web/assets/images/moon_virgo.png",
+      "started_at": "2026-07-09T07:26:19",
+      "reviews": {
+        "facts": {
+          "status": "fail",
+          "notes": "FAIL attempt 2: top-left star emblem still loses its upper point and the lower half of the yellow vine/tulip ornament is hidden by the final bottom band; plant rows are faithful and production layer is clean.",
+          "reviewed_at": "2026-07-09T07:36:44"
+        },
+        "production": {
+          "status": "pass",
+          "notes": "PASS attempt 2: raw underlay has no old UI/text/glyph remnants and final overlay text/glyphs are readable; only source-fidelity crop issues remain.",
+          "reviewed_at": "2026-07-09T07:36:44"
+        }
+      },
+      "status": "fail"
+    }
+  ],
+  "current_attempt": 2,
+  "final_status": "retry_needed",
+  "created_at": "2026-07-09T07:14:02",
+  "updated_at": "2026-07-09T07:36:44"
+}

@@ -1,0 +1,36 @@
+{
+  "slug": "mercury_leo",
+  "attempts": [
+    {
+      "attempt": 1,
+      "raw_image": "web/assets/generated/mercury_leo.png",
+      "final_image": "web/assets/images/mercury_leo.png",
+      "started_at": "2026-07-09T03:21:21",
+      "reviews": {
+        "facts": {
+          "status": "pass",
+          "notes": "PASS: lion pose, upward roaring muzzle, golden mane, pink limbs, no human figure, green ground, pale left cloud column, diagonal fields, upper-left picture Leo emblem, upper-right Moebius tube, and talisman disk are faithful; drama/pride/showmanship mood preserved.",
+          "reviewed_at": "2026-07-09T03:27:01"
+        },
+        "production": {
+          "status": "fail",
+          "notes": "FAIL: raw is clean and style/template text are fine, but final bottom band hides part of lion lower feet/paws, and Mercury diagonal overlay line cuts too visibly through lion mouth/head and talisman disk.",
+          "reviewed_at": "2026-07-09T03:27:01"
+        }
+      },
+      "status": "fail"
+    },
+    {
+      "attempt": 2,
+      "raw_image": "web/assets/generated/mercury_leo.png",
+      "final_image": "web/assets/images/mercury_leo.png",
+      "started_at": "2026-07-09T03:36:37",
+      "reviews": {},
+      "status": "pending_review"
+    }
+  ],
+  "current_attempt": 2,
+  "final_status": "retry_needed",
+  "created_at": "2026-07-09T03:21:21",
+  "updated_at": "2026-07-09T03:36:37"
+}

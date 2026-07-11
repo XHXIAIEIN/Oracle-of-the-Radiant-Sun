@@ -1,0 +1,17 @@
+{
+  "slug": "moon_virgo",
+  "attempts": [
+    {
+      "attempt": 1,
+      "raw_image": "web/assets/generated/moon_virgo.png",
+      "final_image": "web/assets/images/moon_virgo.png",
+      "started_at": "2026-07-09T07:14:02",
+      "reviews": {},
+      "status": "pending_review"
+    }
+  ],
+  "current_attempt": 1,
+  "final_status": "pending",
+  "created_at": "2026-07-09T07:14:02",
+  "updated_at": "2026-07-09T07:14:02"
+}

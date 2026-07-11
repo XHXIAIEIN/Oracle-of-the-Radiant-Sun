@@ -3,12 +3,14 @@
 
 import { $ } from './dom.js';
 import { S, mode } from './state.js';
-import { DECK } from '../data/card/deck.js';
+import { DECK } from './model/deck.js';
+import { text } from './model/i18n.js';
 import { PATH_OF } from './router.js';
 
 const btn = $('#btn-share');
-const LABEL = btn.textContent;
+const toast = $('#toast');
 let restore;
+let toastRestore;
 
 /* 当局 → 路由：翻牌位上的牌依次序取原书页码；时占再带上宫位与题问 */
 function shareURL() {
@@ -27,11 +29,24 @@ function shareURL() {
 
 export function showShare() {
 	btn.hidden = false;
+	gsap.fromTo(btn, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' });
 }
 
 export function hideShare() {
 	btn.hidden = true;
-	btn.textContent = LABEL;
+	btn.textContent = text('ritual.share');
+}
+
+function showToast(message) {
+	if (!toast) return;
+	toast.textContent = message;
+	toast.hidden = false;
+	clearTimeout(toastRestore);
+	gsap.killTweensOf(toast);
+	gsap.fromTo(toast, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.25, ease: 'power2.out' });
+	toastRestore = setTimeout(() => {
+		gsap.to(toast, { opacity: 0, y: 8, duration: 0.25, ease: 'power2.in', onComplete: () => (toast.hidden = true) });
+	}, 2600);
 }
 
 btn.onclick = async () => {
@@ -39,10 +54,18 @@ btn.onclick = async () => {
 	if (!url) return;
 	try {
 		await navigator.clipboard.writeText(url);
-		btn.textContent = '已复制 ✓ 打开链接即重现此局';
+		showToast(text('ritual.shareCopied'));
+		btn.classList.remove('is-copied');
+		void btn.offsetWidth;
+		btn.classList.add('is-copied');
 	} catch {
-		prompt('复制这段链接：', url); // 剪贴板不可用（非安全上下文）时的退路
+		showToast(text('ritual.shareFallback'));
+		prompt(text('ritual.shareFallback'), url); // 剪贴板不可用（非安全上下文）时的退路
 	}
 	clearTimeout(restore);
-	restore = setTimeout(() => (btn.textContent = LABEL), 2600);
+	restore = setTimeout(() => (btn.textContent = text('ritual.share')), 2600);
 };
+
+window.addEventListener('languagechange', () => {
+	if (!btn.hidden) btn.textContent = text('ritual.share');
+});

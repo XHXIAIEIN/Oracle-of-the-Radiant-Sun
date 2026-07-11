@@ -2,8 +2,8 @@
 
 import { cryptoShuffle } from './dom.js';
 import { updateBadge } from './stage.js';
-import { DECK } from '../data/card/deck.js';
-import { MODES } from '../data/modes/index.js';
+import { DECK } from './model/deck.js';
+import { MODES } from './model/modes/index.js';
 
 export const S = {
 	seq: 0, // 局次序号：换局即递增，旧局残留的动画回调据此作废

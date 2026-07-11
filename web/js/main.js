@@ -8,24 +8,26 @@
 
 import { $ } from './dom.js';
 import { riteLine } from './stage.js';
-import { loadDeck } from '../data/card/deck.js';
-import { STR } from '../data/i18n.js';
+import { loadDeck } from './model/deck.js';
+import { STR } from './model/i18n.js';
 import { showHome, startMethod } from './ritual/start.js';
 import { showLibrary } from './library.js';
 import { applyRoute } from './router.js';
+import { initBilingualCopy, initGlobalLanguageToggle, t } from './bilingual.js';
+import { initScrollMotion } from './scroll-motion.js';
+import { renderHomeMethods } from './home-methods.js';
 import './panel.js'; // 排序与跟卷的接线
 import './dialog.js'; // 对话框关闭的接线
-import './home-figs.js'; // 起始页牌阵预览小图
 
 $('#btn-home').onclick = showHome;
 
-document.querySelectorAll('.method').forEach(b => {
-	b.onclick = () => startMethod(b.dataset.method);
-});
-
 $('#btn-library').onclick = showLibrary;
 $('#btn-lib-home').onclick = showHome;
+await initGlobalLanguageToggle();
+renderHomeMethods(startMethod);
+initBilingualCopy();
+initScrollMotion();
 
 loadDeck().then(applyRoute, () => {
-	riteLine.textContent = STR.loadFail;
+	riteLine.textContent = t(STR.loadFail);
 });

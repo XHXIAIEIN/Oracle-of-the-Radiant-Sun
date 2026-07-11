@@ -9,6 +9,12 @@ export const sleep = ms => new Promise(r => setTimeout(r, REDUCED ? 0 : ms));
    queries) and the JS that arranges the table differently on a phone */
 export const MOBILE = matchMedia('(max-width: 700px)');
 
+export const currentScreen = () => document.querySelector('.screen:not([hidden])');
+
+export function scrollScreenToTop(screen = currentScreen(), behavior = REDUCED ? 'auto' : 'smooth') {
+	screen?.scrollTo({ top: 0, left: 0, behavior });
+}
+
 export const el = (tag, cls, html) => {
 	const n = document.createElement(tag);
 	if (cls) n.className = cls;
@@ -26,7 +32,9 @@ export function cryptoShuffle(a) {
 export function swapScreen(fn) {
 	const go = () => {
 		fn();
-		scrollTo(0, 0); // 每一屏都是新的一页，从顶端读起
+		const screen = currentScreen();
+		scrollScreenToTop(screen); // 每一屏都是新的一页，从顶端读起
+		import('./scroll-motion.js').then(({ animateScreenIn }) => animateScreenIn(screen));
 	};
 	if (document.startViewTransition && !REDUCED) document.startViewTransition(go);
 	else go();

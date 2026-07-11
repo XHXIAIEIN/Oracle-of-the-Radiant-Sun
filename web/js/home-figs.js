@@ -43,6 +43,8 @@ const FIGS = {
 	</svg>`,
 };
 
-document.querySelectorAll('.method').forEach(b => {
-	b.querySelector('.method__fig').innerHTML = FIGS[b.dataset.method] ?? '';
-});
+export function initHomeFigs(root = document) {
+	root.querySelectorAll('.method').forEach(b => {
+		b.querySelector('.method__fig').innerHTML = FIGS[b.dataset.method] ?? '';
+	});
+}

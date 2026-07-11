@@ -4,10 +4,14 @@
 import { el, D, MOBILE } from '../dom.js';
 import { setup, wheel, setRite, setActions } from '../stage.js';
 import { S } from '../state.js';
-import { HOUSES } from '../../data/houses.js';
-import { cnHouse } from '../../data/i18n.js';
-import { MODES } from '../../data/modes/index.js';
+import { HOUSES } from '../model/solar-ring.js';
+import { cnHouse, houseLabel } from '../model/i18n.js';
+import { MODES } from '../model/modes/index.js';
 import { shufflePhase } from './shuffle.js';
+import { language } from '../bilingual.js';
+
+let currentStep = 1;
+let refreshCurrentStep = null;
 
 export function horarySetup() {
 	const C = MODES.horary.setup;
@@ -29,6 +33,7 @@ export function horarySetup() {
 
 	/* — 壹 · the question — */
 	const step1 = () => {
+		currentStep = 1;
 		setRite(...C.step1.rite);
 
 		const q = el('input', 'setup__q');
@@ -40,9 +45,7 @@ export function horarySetup() {
 
 		const picks = el('div', 'qpicks');
 		for (const p of MODES.horary.quickpicks) {
-			// 标签的中文关键词与英文例句分开包起，手机上只显中文
-			const [zh, en] = p.label.split(' · ');
-			const b = el('button', 'qpick', `${zh}<span class="qp-en"> · ${en}</span>`);
+			const b = el('button', 'qpick', p.label);
 			b.type = 'button';
 			b.onclick = () => {
 				q.value = p.q;
@@ -68,11 +71,12 @@ export function horarySetup() {
 
 	/* — 贰 · the houses — */
 	const step2 = () => {
+		currentStep = 2;
 		setRite(...C.step2.rite);
 
 		const grid = el('div', 'houses-grid');
 		for (const h of HOUSES) {
-			const chip = el('button', 'house-chip', `<span class="n">${h.n}</span><span class="info" title="${C.infoTitle}">ⓘ</span><span class="kw">${h.zh}</span>`);
+			const chip = el('button', 'house-chip', `<span class="n">${h.n}</span><span class="info" title="${C.infoTitle}">ⓘ</span><span class="kw">${language() === 'zh' ? h.zh : h.en}</span>`);
 			chip.type = 'button';
 			chip.setAttribute('aria-pressed', S.chosen.has(h.n));
 			if (h.n === 1) chip.title = C.step2.firstHouse;
@@ -123,6 +127,11 @@ export function horarySetup() {
 	};
 
 	setup.hidden = false;
+	refreshCurrentStep = () => {
+		const q = setup.querySelector('.setup__q');
+		if (q) S.question = q.value.trim();
+		(currentStep === 2 ? step2 : step1)();
+	};
 	step1();
 	intro();
 }
@@ -135,7 +144,8 @@ function showHousePop(h, anchor) {
 		housePop.popover = 'auto';
 		document.body.append(housePop);
 	}
-	housePop.innerHTML = `<b>${cnHouse(h.n)} · ${h.zh} — ${h.en}</b>${h.desc}`;
+	const title = language() === 'zh' ? `${cnHouse(h.n)} · ${h.zh}` : `${houseLabel(h.n)} · ${h.en}`;
+	housePop.innerHTML = `<b>${title}</b>${h.desc}`;
 	housePop.showPopover();
 	const r = anchor.getBoundingClientRect(),
 		pw = housePop.offsetWidth,
@@ -143,3 +153,8 @@ function showHousePop(h, anchor) {
 	housePop.style.left = Math.max(8, Math.min(innerWidth - pw - 8, r.left)) + 'px';
 	housePop.style.top = (r.bottom + ph + 12 > innerHeight ? r.top - ph - 8 : r.bottom + 8) + 'px';
 }
+
+window.addEventListener('languagechange', () => {
+	if (setup.hidden || !refreshCurrentStep) return;
+	refreshCurrentStep();
+});

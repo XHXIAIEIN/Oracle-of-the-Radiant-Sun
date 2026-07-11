@@ -19,6 +19,7 @@
   opacity: 0;
   transition: opacity 0.4s ease;
 }
+.panel * { min-width: 0; }
 .ritual-body.has-panel .panel { opacity: 1; transition: opacity 0.6s ease 0.3s; }
 @media (max-width: 980px) {
   .panel { border-left: none; padding-left: 0; max-height: none; }
@@ -30,16 +31,19 @@
   flex-direction: column;
   align-items: center;
   gap: 0;
-  padding: 10px 0 6px;
+  padding: 12px 0 8px;
   touch-action: none; /* the grip is for dragging, never for scrolling */
   cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
 }
 .panel__grip::before {
   content: "";
-  width: 44px;
-  height: 4px;
+  width: 48px;
+  height: 5px;
   border-radius: 999px;
   background: var(--gold-dim);
+  transition: background 0.25s, transform 0.25s;
 }
 
 .panel__head {
@@ -47,12 +51,15 @@
   align-items: baseline;
   justify-content: space-between;
   gap: 12px;
+  min-width: 0;
 }
 .panel__title {
   font-weight: 400;
   font-size: 15px;
   letter-spacing: 0.28em;
   color: var(--gold);
+  overflow-wrap: anywhere;
+  text-wrap: balance;
 }
 /* flip the order of the reading log */
 .panel__sort {
@@ -74,13 +81,15 @@
 .entry {
   padding: 16px 0 18px;
   border-bottom: 1px solid oklch(78% 0.12 85 / 0.14);
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 /* the entry's month/house line rides sticky while its reading scrolls —
    deep amplification (weeks, days, hours) never loses its month.
    --chrome-h (js/panel.js) keeps it beneath the drawer's grip and head. */
 .entry__where {
   position: sticky;
-  top: calc(var(--chrome-h, 0px) - 1px);
+  top: calc(var(--entry-sticky-top, var(--chrome-h, 0px)) - 1px);
   z-index: 4;
   padding-block: 7px 6px;
   margin-block-start: -7px;
@@ -92,6 +101,9 @@
   color: var(--gold);
   text-transform: uppercase;
   cursor: pointer; /* 点月份行，滚回这一张的解读 */
+  line-height: 1.55;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 @media (hover: hover) {
   .entry__where:hover {
@@ -105,18 +117,21 @@
 .entry__name {
   font-size: 21px;
   letter-spacing: 0.04em;
+  line-height: 1.2;
   margin-top: 4px;
   cursor: pointer;
   width: fit-content;
+  max-width: 100%;
+  overflow-wrap: anywhere;
   transition: color 0.3s;
 }
 @media (hover: hover) {
   .entry__name:hover { color: var(--gold); }
 }
 .entry__name:active { color: var(--gold); }
-.entry__ps { font-size: 12.5px; color: var(--ink-dim); letter-spacing: 0.1em; margin-top: 1px; }
-.entry__reading { font-size: 13.5px; color: var(--ink); margin-top: 9px; }
-.entry__events { font-size: 12.5px; color: var(--ink-dim); margin-top: 7px; font-style: italic; }
+.entry__ps { font-size: 12.5px; color: var(--ink-dim); letter-spacing: 0.1em; margin-top: 1px; overflow-wrap: anywhere; }
+.entry__reading { font-size: 13.5px; color: var(--ink); margin-top: 9px; overflow-wrap: anywhere; hyphens: auto; }
+.entry__events { font-size: 12.5px; color: var(--ink-dim); margin-top: 7px; font-style: italic; overflow-wrap: anywhere; hyphens: auto; }
 .entry__acts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
 
 .sub-btn {
@@ -193,6 +208,11 @@
 }
 .mini__front { transform: rotateY(180deg); background: var(--parchment); }
 .mini--flip img, .mini--flip svg { width: 100%; height: 100%; box-shadow: none; border-radius: 0; }
+.mini--flip.is-flipping .mini__face {
+  box-shadow:
+    0 7px 18px oklch(0% 0 0 / 0.48),
+    0 0 14px oklch(78% 0.12 85 / 0.14);
+}
 /* the name keeps to itself until the card is turned */
 .mini--flip .mini__tag, .mini--flip .mini__name { opacity: 0; transition: opacity 0.5s; }
 .mini--flip.is-up .mini__tag, .mini--flip.is-up .mini__name { opacity: 1; }
@@ -300,13 +320,18 @@
     background: color-mix(in oklab, var(--night-2) 96%, var(--gold));
     box-shadow: 0 -16px 48px oklch(0% 0 0 / 0.55);
     opacity: 1;
-    transition: height 0.45s cubic-bezier(0.25, 0.8, 0.3, 1);
+    transition: height 0.58s cubic-bezier(0.16, 0.92, 0.18, 1.04);
     overscroll-behavior: contain; /* the log's end must not scroll the wheel away */
   }
   .panel[data-drawer="peek"] { height: 96px; overflow-y: hidden; }
   .panel[data-drawer="half"] { height: 46dvh; }
   .panel[data-drawer="full"] { height: calc(100dvh - var(--safe-top) - 56px); }
   .panel.is-dragging { transition: none; }
+  .panel.is-dragging .panel__grip { cursor: grabbing; }
+  .panel.is-dragging .panel__grip::before {
+    background: var(--gold);
+    transform: scaleX(1.12);
+  }
 
   /* the drawer rises from below the fold when the sitting first opens it */
   .panel[data-drawer] { animation: drawer-in 0.55s cubic-bezier(0.25, 0.8, 0.3, 1); }
@@ -324,6 +349,16 @@
   .panel__head { top: 20px; padding-bottom: 8px; }
 
   .panel__sort { min-height: 38px; }
+
+  .entry__where {
+    position: static;
+    top: auto;
+    z-index: auto;
+    margin-block-start: 0;
+    background: transparent;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
 
   /* phone-length reading type */
   .entry__reading { font-size: 15px; line-height: 1.8; }

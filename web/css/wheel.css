@@ -12,14 +12,18 @@
      is their room, keeping the rite line at arm's length */
   margin-bottom: clamp(14px, 2.6vh, 30px);
 }
-/* the single-card sitting needs no zodiac ring — a smaller table */
-.wheel--single { width: min(100%, max(280px, var(--wheel-room) * 0.74)); }
+/* the single-card sitting needs no zodiac ring — a smaller, shallower table */
+.wheel--single {
+  width: min(100%, max(280px, var(--wheel-room) * 0.74));
+  aspect-ratio: 100 / 72;
+  margin-bottom: 0;
+}
 /* on a phone the single table takes the full width, so the pile and
    the drawn card are both a comfortable thumb's target; without a ring
    the square would be mostly dark, so the table is flattened to just
    the room the pile and the drawn card need */
 @media (max-width: 700px) {
-  .wheel--single { width: 100%; aspect-ratio: 100 / 62; }
+  .wheel--single { width: 100%; aspect-ratio: 100 / 50; margin-bottom: 0; }
   .wheel--single .deck-hint { top: 76%; }
 }
 /* before anything is laid out (horary setup) the wheel takes no room */
@@ -34,15 +38,20 @@
   display: grid;
   justify-items: center;
   gap: 1px;
+  width: max-content;
+  max-width: min(24ch, 28vw);
   font-size: clamp(9px, 1.15vw, 12px);
+  line-height: 1.35;
   letter-spacing: 0.14em;
   color: var(--ink-dim);
   text-align: center;
   pointer-events: none;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
 }
 .slot-label .glyph { color: var(--gold); font-size: 1.35em; letter-spacing: 0; }
 .slot-label.is-active { color: var(--gold); }
+.slot-label--r, .slot-label--l { max-width: min(18ch, 18vw); }
 .slot-label--r { translate: 0 -50%; justify-items: start; text-align: left; }
 .slot-label--l { translate: -100% -50%; justify-items: end; text-align: right; }
 
@@ -50,7 +59,8 @@
    keeps only the short one, so the side labels stay on screen */
 .slot-label .lab-short { display: none; }
 @media (max-width: 700px) {
-  .slot-label { font-size: 10px; letter-spacing: 0.06em; }
+  .slot-label { max-width: 13ch; font-size: 10px; letter-spacing: 0.06em; }
+  .slot-label--r, .slot-label--l { max-width: 11ch; }
   .slot-label .lab-full { display: none; }
   .slot-label .lab-short { display: block; }
   /* above and below the ring the cards leave no headroom — those labels

@@ -19,8 +19,8 @@
        index.html#/12?houses=1,7&q=我们该结婚吗
        index.html?cards=62,41,98 */
 
-import { DECK } from '../data/card/deck.js';
-import { MODES } from '../data/modes/index.js';
+import { DECK } from './model/deck.js';
+import { MODES } from './model/modes/index.js';
 import { showHome, startMethod } from './ritual/start.js';
 import { showLibrary } from './library.js';
 

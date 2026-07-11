@@ -4,8 +4,9 @@ import { $, el, D, cryptoShuffle, MOBILE } from '../dom.js';
 import { wheel, setRite, setActions } from '../stage.js';
 import { S, mode, applyPreset } from '../state.js';
 import { drawRing } from '../wheel.js';
-import { STR, bi } from '../../data/i18n.js';
+import { STR, bi } from '../model/i18n.js';
 import { createDeckPile, animateShuffle } from './deck-pile.js';
+import { t } from '../bilingual.js';
 import { dealPhase } from './deal.js';
 
 export function shufflePhase() {
@@ -40,12 +41,14 @@ export function shufflePhase() {
 	setRite(...mode().shuffleLine);
 
 	const hint = el('p', 'deck-hint', bi(STR.deck.hint));
+	hint.dataset.ui = 'deck-hint';
 	wheel.append(hint);
 	gsap.fromTo(hint, { opacity: 0 }, { opacity: 1, duration: D(0.9), delay: D(0.4) });
 
 	/* 桌面端这一钮悬在轮盘下部；手机上那里既挤着提示行，又离拇指远，
 	   便让它列在仪轨行下的操作区 */
-	const bDeal = el('button', 'act-btn' + (MOBILE.matches ? '' : ' act-btn--wheel'), S.method === 'single' ? STR.deck.drawOne : STR.deck.deal);
+	const bDeal = el('button', 'act-btn' + (MOBILE.matches ? '' : ' act-btn--wheel'), t(S.method === 'single' ? STR.deck.drawOne : STR.deck.deal));
+	bDeal.dataset.ui = 'deal';
 	bDeal.type = 'button';
 	bDeal.hidden = true;
 	if (!MOBILE.matches) wheel.append(bDeal);
@@ -60,6 +63,7 @@ export function shufflePhase() {
 		S.busy = false;
 		if (S.shuffles === 1) {
 			hint.innerHTML = bi(STR.deck.hintAgain);
+			hint.dataset.shuffled = 'true';
 			bDeal.hidden = false;
 			if (MOBILE.matches) setActions([bDeal]);
 			else gsap.fromTo(bDeal, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: D(0.6), ease: 'power2.out' });
@@ -68,7 +72,7 @@ export function shufflePhase() {
 
 	bDeal.onclick = () => {
 		if (S.busy) return;
-		deckPile.disabled = true;
+		S.busy = true;
 		hint.style.animation = 'none';
 		gsap.to([hint, bDeal], {
 			opacity: 0,
@@ -84,3 +88,11 @@ export function shufflePhase() {
 
 	setActions([]);
 }
+
+window.addEventListener('languagechange', () => {
+	if ($('#screen-ritual').hidden) return;
+	const hint = wheel.querySelector('[data-ui="deck-hint"]');
+	if (hint) hint.innerHTML = bi(hint.dataset.shuffled === 'true' ? STR.deck.hintAgain : STR.deck.hint);
+	const deal = document.querySelector('[data-ui="deal"]');
+	if (deal) deal.textContent = t(S.method === 'single' ? STR.deck.drawOne : STR.deck.deal);
+});

@@ -3,16 +3,23 @@
 import { $, swapScreen } from '../dom.js';
 import { wheel, panel, panelList, setup } from '../stage.js';
 import { S, resetState, applyPreset } from '../state.js';
-import { MODES } from '../../data/modes/index.js';
-import { resetFollow } from '../panel.js';
+import { MODES } from '../model/modes/index.js';
+import { resetFollow, resetPanelChrome } from '../panel.js';
 import { resetDrawer } from '../drawer.js';
 import { horarySetup } from './horary-setup.js';
 import { shufflePhase } from './shuffle.js';
 import { syncRoute } from '../router.js';
 import { hideShare } from '../share.js';
+import { dockTopCapsules } from '../bilingual.js';
+
+function updateRitualTitle(m) {
+	$('#ritual-title').innerHTML = `<span class="t-main">${MODES[m].title}</span>`;
+}
 
 export function showHome() {
 	syncRoute('home');
+	resetPanelChrome();
+	dockTopCapsules(null);
 	swapScreen(() => {
 		$('#screen-ritual').hidden = true;
 		$('#screen-library').hidden = true;
@@ -24,6 +31,7 @@ export function showHome() {
    houses 为时占预选的宫位——给了宫位便跳过时占的两步设置 */
 export function startMethod(m, opts = {}) {
 	syncRoute(m);
+	dockTopCapsules('#ritual-tools');
 	resetState(m);
 	if (opts.preset?.length) applyPreset(opts.preset);
 	if (opts.question) S.question = opts.question;
@@ -33,16 +41,16 @@ export function startMethod(m, opts = {}) {
 		$('#screen-home').hidden = true;
 		$('#screen-library').hidden = true;
 		$('#screen-ritual').hidden = false;
-		/* "The Sun Year · 太阳年" — the phone app bar keeps only the zh half */
-		const [en, zh] = MODES[m].title.split(' · ');
-		$('#ritual-title').innerHTML = `<span class="t-en">${en}</span><span class="t-dot"> · </span><span class="t-zh">${zh}</span>`;
+		updateRitualTitle(m);
 		$('#deck-badge').hidden = true;
 		hideShare();
 		panel.hidden = true;
 		panelList.replaceChildren();
 		resetFollow();
+		resetPanelChrome();
 		resetDrawer();
 		$('#ritual-body').classList.remove('has-panel');
+		$('#stage-actions').closest('.stage-wrap')?.classList.toggle('is-single-layout', m === 'single');
 		wheel.replaceChildren();
 		wheel.classList.toggle('wheel--single', m === 'single');
 		setup.hidden = true;
@@ -52,3 +60,8 @@ export function startMethod(m, opts = {}) {
 		else shufflePhase();
 	});
 }
+
+window.addEventListener('languagechange', () => {
+	if (!S.method || $('#screen-ritual').hidden) return;
+	updateRitualTitle(S.method);
+});

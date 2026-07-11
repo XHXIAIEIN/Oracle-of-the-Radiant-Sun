@@ -6,35 +6,43 @@
 
 [hidden] { display: none !important; }
 
-html, body { height: 100%; }
+html, body { height: 100%; overflow: hidden; }
 
-/* the page is the one scroller; the stable gutter keeps the scrollbar's
-   coming and going from nudging the whole page sideways */
+/* The viewport is a locked app shell; the visible screen owns scrolling. */
 html {
   overflow-x: hidden;
-  overflow-y: auto;
-  scrollbar-gutter: stable;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  overscroll-behavior: none;
   -webkit-text-size-adjust: 100%; /* keep our type scale in landscape webviews */
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 /* a modal on top owns the scroll — the gutter above makes the lock shift-free */
 html:has(:modal) { overflow: hidden; }
 
-/* themed scrollbars, everywhere: a thin gold thread on a bare track
-   (standard properties first; the -webkit- rules cover Safari) */
+/* themed scrollbars for local scrollers: quieter than the page chrome, but
+   still discoverable inside panels and dialogs */
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--gold-dim) transparent;
+  scrollbar-color: oklch(78% 0.12 85 / 0.28) transparent;
 }
-::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background: var(--gold-dim);
+  background: oklch(78% 0.12 85 / 0.28);
   border-radius: 999px;
 }
-::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+::-webkit-scrollbar-thumb:hover { background: oklch(78% 0.12 85 / 0.58); }
 ::-webkit-scrollbar-corner { background: transparent; }
 
 body {
+  height: 100dvh;
+  overflow: hidden;
   font-family: var(--serif);
   color: var(--ink);
   background:
@@ -57,13 +65,20 @@ button, a, select, input, label, dialog {
 }
 #bg canvas { display: block; }
 
-/* every screen is a full-height page; block padding gives the top and
+/* every screen is a full-height scrollport; block padding gives the top and
    bottom sections room to breathe — and clears the notch and the
    home indicator on phones (viewport-fit=cover) */
 .screen {
   position: relative;
   z-index: 1;
-  min-height: 100dvh;
+  height: 100dvh;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  -webkit-overflow-scrolling: touch;
+  scroll-padding-block: max(var(--page-pad-block), var(--safe-top)) max(var(--page-pad-block), var(--safe-bottom));
   padding: max(var(--page-pad-block), var(--safe-top))
            var(--page-pad-inline)
            max(var(--page-pad-block), var(--safe-bottom));
@@ -79,9 +94,35 @@ button {
 
 ::selection { background: var(--gold-dim); }
 
+[data-scroll-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0) scale(0.985);
+  filter: blur(5px);
+  transition:
+    opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
+    filter 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition-delay: var(--scroll-reveal-delay, 0ms);
+  will-change: opacity, transform, filter;
+}
+
+[data-scroll-reveal].is-in-view {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: blur(0);
+}
+
 @media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
   *, *::before, *::after {
     animation-duration: 0.001s !important;
     transition-duration: 0.001s !important;
+  }
+
+  [data-scroll-reveal] {
+    opacity: 1;
+    transform: none;
+    filter: none;
   }
 }

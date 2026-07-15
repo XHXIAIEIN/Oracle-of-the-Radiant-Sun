@@ -1,6 +1,6 @@
 /* 卡片详情对话框 */
 
-import { $, D } from './dom.js';
+import { $, D, esc } from './dom.js';
 import { DECK, cardName, cardSignKeyword, cardText } from './model/deck.js';
 import { planetNameFor, psLine, signNameFor, suitNameFor } from './model/card-symbols.js';
 import { STR, text, textf } from './model/i18n.js';
@@ -21,11 +21,10 @@ let openQueue = [];
 let queueBusy = false;
 let refBubble = null;
 
-const attr = text => String(text).replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;');
-const esc = text => String(text).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
 const pageRefPattern = /(?:see\s+)?(?:p(?:age|p?\.?)\s*)(\d{1,3})|(?:参见|见)?第?\s*(\d{1,3})\s*页/gi;
 
-const cardPageIndex = () => new Map(DECK.map((card, idx) => [Number(card.page), idx]));
+let pageIndexCache = null; // 页码 -> deck 下标，牌组装载后不再变
+const cardPageIndex = () => (pageIndexCache ??= new Map(DECK.map((card, idx) => [Number(card.page), idx])));
 
 function animateDialogContent(from, to = {}) {
 	body.classList.add('is-turning');
@@ -88,7 +87,7 @@ function render(deckIdx, ctx) {
 		return (
 		text
 			? `
-    <section class="dlg-sec"><h4>${title}</h4><p${textZh ? ` class="immersive-copy" data-en-html="${attr(textEnHtml)}" data-zh-html="${attr(textZhHtml)}"` : ''}><span${textZh ? ' class="immersive-copy__text"' : ''}>${textHtml}</span></p></section>`
+    <section class="dlg-sec"><h4>${title}</h4><p${textZh ? ` class="immersive-copy" data-en-html="${esc(textEnHtml)}" data-zh-html="${esc(textZhHtml)}"` : ''}><span${textZh ? ' class="immersive-copy__text"' : ''}>${textHtml}</span></p></section>`
 			: ''
 		);
 	};

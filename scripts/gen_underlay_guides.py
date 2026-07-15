@@ -3,7 +3,7 @@
 These are not artwork and should not be used as visual style references. They
 are low-contrast control masks for broad composition, safe overlay zones, and
 manual checks. The exact black card furniture is still added later by
-compose_card_image.py from web/assets/shapes/*.svg.
+compose_card_image.py from artwork/shapes/*.svg.
 
 Run:
   python scripts/gen_underlay_guides.py

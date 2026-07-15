@@ -157,7 +157,7 @@
   display: grid;
   gap: 10px;
   padding: 10px 0 12px 14px;
-  border-left: 2px solid oklch(78% 0.12 85 / 0.28);
+  border-left: 2px solid var(--gold-line);
 }
 .amplify__block .amplify__block {
   border-left: 1px solid oklch(78% 0.12 85 / 0.16);
@@ -349,7 +349,7 @@
   .panel__grip { margin-inline: -16px; }
   .panel__head { top: 20px; padding-bottom: 8px; }
 
-  .panel__sort { min-height: 38px; }
+  .panel__sort { min-height: var(--tap); }
 
   .entry__where {
     position: static;
@@ -365,9 +365,9 @@
   .entry__reading { font-size: 15px; line-height: 1.8; }
   .entry__events { font-size: 13px; }
   .entry__acts { gap: 10px; }
-  .sub-btn { min-height: 38px; display: inline-flex; align-items: center; padding: 4px 16px; font-size: 12.5px; }
+  .sub-btn { min-height: var(--tap); display: inline-flex; align-items: center; padding: 4px 16px; font-size: 12.5px; }
 
   .hour-grid { width: 100%; }
-  .hour-cell { min-height: 40px; font-size: 14px; }
-  .panel__jump { min-height: 40px; bottom: 4px; }
+  .hour-cell { min-height: var(--tap); font-size: 14px; }
+  .panel__jump { min-height: var(--tap); bottom: 4px; }
 }

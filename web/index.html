@@ -8,7 +8,25 @@
 		<meta name="format-detection" content="telephone=no,email=no,address=no" />
 		<title>Oracle of the Radiant Sun</title>
 		<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ctext y='13' font-size='13'%3E☀%3C/text%3E%3C/svg%3E" />
-		<link rel="stylesheet" href="css/style.css" />
+		<!-- every sitting needs all four — fetch them before the module graph asks -->
+		<link rel="preload" href="data/lang/en.json" as="fetch" />
+		<link rel="preload" href="data/lang/zh.json" as="fetch" />
+		<link rel="preload" href="data/deck.json" as="fetch" />
+		<link rel="preload" href="data/catalog.json" as="fetch" />
+		<!-- one file per component: tokens and base first, screens, then motion and press feedback last -->
+		<link rel="stylesheet" href="css/tokens.css" />
+		<link rel="stylesheet" href="css/base.css" />
+		<link rel="stylesheet" href="css/shared.css" />
+		<link rel="stylesheet" href="css/home.css" />
+		<link rel="stylesheet" href="css/ritual.css" />
+		<link rel="stylesheet" href="css/wheel.css" />
+		<link rel="stylesheet" href="css/cards.css" />
+		<link rel="stylesheet" href="css/setup.css" />
+		<link rel="stylesheet" href="css/panel.css" />
+		<link rel="stylesheet" href="css/library.css" />
+		<link rel="stylesheet" href="css/dialog.css" />
+		<link rel="stylesheet" href="css/motion.css" />
+		<link rel="stylesheet" href="css/press.css" />
 	</head>
 	<body>
 		<!-- p5 ambient sky: stars + slow radiant halo -->
@@ -119,9 +137,8 @@
 			<img id="zoom-img" alt="" />
 		</dialog>
 
-		<script src="vendor/p5.min.js"></script>
-		<script src="vendor/gsap.min.js"></script>
-		<script src="js/sketch.js"></script>
+		<script defer src="vendor/gsap.min.js"></script>
+		<script defer src="js/sketch.js"></script>
 		<script type="module" src="js/main.js"></script>
 	</body>
 </html>

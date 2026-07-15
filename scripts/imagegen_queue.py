@@ -17,7 +17,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 CARD_DIR = ROOT / "data" / "cards"
 PROMPT_DIR = ROOT / "data" / "prompts"
-RAW_DIR = ROOT / "web" / "assets" / "generated"
+RAW_DIR = ROOT / "artwork" / "generated"
 FINAL_DIR = ROOT / "web" / "assets" / "images"
 QA_DIR = ROOT / "tmp" / "imagegen_qa"
 OUT_PATH = ROOT / "tmp" / "imagegen_queue.json"

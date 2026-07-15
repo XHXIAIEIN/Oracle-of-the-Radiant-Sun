@@ -33,7 +33,7 @@ FONT_NAME_FILE = "EBGaramond-SemiBold.ttf"
 FONT_NAME_WEIGHT = 600
 FONT_NUMBER_FILE = "GoudyOldStyle-Bold.ttf"
 FONT_SYMBOL_FILE = "Quivira.otf"
-FONT_DIR = Path(__file__).resolve().parent.parent / "web" / "assets" / "fonts"
+FONT_DIR = Path(__file__).resolve().parent.parent / "artwork" / "fonts"
 
 # Measured ratios from real card photos and the page-25 Card Shapes plate.
 INSET = 0.065

@@ -20,10 +20,10 @@ These are not visual style references and should not be treated as half-finished
 artwork. Use only when a tool supports layout masks, edge control, or manual
 engineering checks.
 - Control-only neutral layout mask: tmp/imagegen_guides/venus_underlay_guide.png
-- Exact final overlay SVG, for engineering/control use only: web/assets/shapes/venus.svg
+- Exact final overlay SVG, for engineering/control use only: artwork/shapes/venus.svg
 
 # POSITIVE PROMPT
-Underlay for web/assets/generated/venus_taurus.png; final composed card will be web/assets/images/venus_taurus.png
+Underlay for artwork/generated/venus_taurus.png; final composed card will be web/assets/images/venus_taurus.png
 
 Vertical portrait oracle-card underlay, 300:446 aspect ratio. Keep figures
 legible inside a tall narrow card after overlay.
@@ -91,11 +91,11 @@ lighting, smoke, fire, magic glow, dense scenic realism, elaborate armor, and
 excessive texture.
 
 # ENGINEERING NOTES
-Raw generated underlay target: web/assets/generated/venus_taurus.png
+Raw generated underlay target: artwork/generated/venus_taurus.png
 Final composed card target: web/assets/images/venus_taurus.png
-Final overlay source: web/assets/shapes/venus.svg
-Optional control/edge guide source: web/assets/shapes/venus.svg
+Final overlay source: artwork/shapes/venus.svg
+Optional control/edge guide source: artwork/shapes/venus.svg
 Control-only neutral layout mask: tmp/imagegen_guides/venus_underlay_guide.png
-Compositor: scripts/compose_card_image.py venus_taurus web/assets/generated/venus_taurus.png web/assets/images/venus_taurus.png
-Canonical template source: scripts/card_template.py and web/assets/shapes/venus.svg. ViewBox 300x446; frame x1=20.0 y1=25.5 x2=280.0 y2=420.5; inner x1=36.9 y1=42.4 x2=263.1 y2=397.1; notch x1=141.4 y1=34.4 x2=158.6 y2=53.4; bottom band x1=36.9 y1=370.6 x2=263.1 y2=397.1.
+Compositor: scripts/compose_card_image.py venus_taurus artwork/generated/venus_taurus.png web/assets/images/venus_taurus.png
+Canonical template source: scripts/card_template.py and artwork/shapes/venus.svg. ViewBox 300x446; frame x1=20.0 y1=25.5 x2=280.0 y2=420.5; inner x1=36.9 y1=42.4 x2=263.1 y2=397.1; notch x1=141.4 y1=34.4 x2=158.6 y2=53.4; bottom band x1=36.9 y1=370.6 x2=263.1 y2=397.1.
 Positive prompt length: 3560 chars.

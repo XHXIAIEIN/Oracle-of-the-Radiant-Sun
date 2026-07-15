@@ -3,7 +3,7 @@
   "attempts": [
     {
       "attempt": 1,
-      "raw_image": "web/assets/generated/moon_virgo.png",
+      "raw_image": "artwork/generated/moon_virgo.png",
       "final_image": "web/assets/images/moon_virgo.png",
       "started_at": "2026-07-09T07:14:02",
       "reviews": {
@@ -17,7 +17,7 @@
     },
     {
       "attempt": 2,
-      "raw_image": "web/assets/generated/moon_virgo.png",
+      "raw_image": "artwork/generated/moon_virgo.png",
       "final_image": "web/assets/images/moon_virgo.png",
       "started_at": "2026-07-09T07:26:19",
       "reviews": {
@@ -33,10 +33,18 @@
         }
       },
       "status": "fail"
+    },
+    {
+      "attempt": 3,
+      "raw_image": "artwork/generated/moon_virgo.png",
+      "final_image": "web/assets/images/moon_virgo.png",
+      "started_at": "2026-07-09T07:41:17",
+      "reviews": {},
+      "status": "pending_review"
     }
   ],
-  "current_attempt": 2,
+  "current_attempt": 3,
   "final_status": "retry_needed",
   "created_at": "2026-07-09T07:14:02",
-  "updated_at": "2026-07-09T07:36:44"
+  "updated_at": "2026-07-09T07:41:17"
 }

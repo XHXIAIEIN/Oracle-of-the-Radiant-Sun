@@ -62,7 +62,7 @@
   position: absolute;
   inset: -7px;
   border-radius: 9px;
-  border: 1px solid oklch(78% 0.12 85 / 0.28);
+  border: 1px solid var(--gold-line);
   opacity: 0.7;
   pointer-events: none;
 }

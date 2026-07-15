@@ -57,6 +57,7 @@ body:has(#screen-library:not([hidden])) .top-capsules {
 .global-lang {
   display: grid;
   place-items: center;
+  place-content: center;
   box-sizing: border-box;
   width: var(--tap);
   min-width: var(--tap);
@@ -214,11 +215,13 @@ body:has(#screen-library:not([hidden])) .top-capsules {
 }
 
 .github-link {
-  position: absolute;
+  position: fixed;
   top: max(18px, var(--safe-top));
   right: max(18px, var(--page-pad-inline));
+  z-index: 40;
   display: grid;
   place-items: center;
+  place-content: center;
   width: var(--tap);
   height: var(--tap);
   color: var(--ink);
@@ -231,6 +234,7 @@ body:has(#screen-library:not([hidden])) .top-capsules {
 }
 
 .github-link svg {
+  display: block;
   width: 23px;
   height: 23px;
   fill: currentColor;

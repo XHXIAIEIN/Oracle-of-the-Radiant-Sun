@@ -101,18 +101,6 @@
 	},
 	"months": [
 		{
-			"key": "january",
-			"sign": "Capricorn"
-		},
-		{
-			"key": "february",
-			"sign": "Aquarius"
-		},
-		{
-			"key": "march",
-			"sign": "Pisces"
-		},
-		{
 			"key": "april",
 			"sign": "Aries"
 		},
@@ -147,6 +135,18 @@
 		{
 			"key": "december",
 			"sign": "Sagittarius"
+		},
+		{
+			"key": "january",
+			"sign": "Capricorn"
+		},
+		{
+			"key": "february",
+			"sign": "Aquarius"
+		},
+		{
+			"key": "march",
+			"sign": "Pisces"
 		}
 	],
 	"houses": [

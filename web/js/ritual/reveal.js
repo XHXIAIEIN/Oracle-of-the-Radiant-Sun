@@ -16,8 +16,8 @@ import { showShare } from '../share.js';
 import { language, t } from '../bilingual.js';
 
 const REVEAL_ALL_DELAY_MS = 650; // 自动翻牌时，两张牌之间的停顿。
-const REVEAL_ALL_FAST_DELAY_MS = 15; // 点“加速”后，两张牌之间的停顿。
-const REVEAL_ALL_FAST_SPEED = 5; // 点“加速”后，单张翻牌动画的播放倍率。
+const REVEAL_ALL_FAST_DELAY_MS = 4; // 点“加速”后，两张牌之间的停顿。
+const REVEAL_ALL_FAST_SPEED = 1.75; // 点“加速”后，单张翻牌动画的播放倍率。
 
 // 进入翻牌阶段，接好面板、提示和自动翻牌按钮。
 export function revealPhase() {
@@ -98,7 +98,9 @@ function dialogNavFor(pos) {
 		.filter(p => p === pos || revealed.has(p))
 		.map(p => ({ idx: S.placed.get(p), ctx: ctxFor(p) }))
 		.filter(item => item.idx != null);
-	const at = sunYearReadingOrder().filter(p => p === pos || revealed.has(p)).indexOf(pos);
+	const at = sunYearReadingOrder()
+		.filter(p => p === pos || revealed.has(p))
+		.indexOf(pos);
 	return list.length > 1 && at >= 0 ? { list, at, wrap: true } : null;
 }
 

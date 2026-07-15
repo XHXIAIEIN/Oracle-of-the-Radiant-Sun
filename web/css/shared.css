@@ -181,9 +181,6 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  /* the secondary half yields; the current language stays */
-  .ritual-head__title .t-alt, .ritual-head__title .t-dot { display: none; }
-
   .ghost-btn {
     display: inline-flex;
     align-items: center;
@@ -197,12 +194,10 @@
   .deck-badge, .share-btn { font-size: 12px; padding: 4px 10px; }
 
   .qpick {
-    min-height: 38px;
+    min-height: var(--tap);
     display: inline-flex;
     align-items: center;
     padding: 6px 16px;
     font-size: 13px;
   }
-  /* a chip's English example question yields; the keyword stays */
-  .qpick .qp-en { display: none; }
 }

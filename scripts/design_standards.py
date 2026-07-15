@@ -238,7 +238,7 @@ def engineering_geometry_note(planet: str) -> str:
     band = m["bottom_band"]  # type: ignore[assignment]
     return (
         f"Canonical template source: scripts/card_template.py and "
-        f"web/assets/shapes/{planet.lower()}.svg. ViewBox {VW}x{VH}; "
+        f"artwork/shapes/{planet.lower()}.svg. ViewBox {VW}x{VH}; "
         f"frame x1={frame[0]:.1f} y1={frame[1]:.1f} x2={frame[2]:.1f} y2={frame[3]:.1f}; "
         f"inner x1={inner[0]:.1f} y1={inner[1]:.1f} x2={inner[2]:.1f} y2={inner[3]:.1f}; "
         f"notch x1={notch[0]:.1f} y1={notch[1]:.1f} x2={notch[2]:.1f} y2={notch[3]:.1f}; "

@@ -46,7 +46,7 @@ CONVERTED_UPLOAD_DIR = ROOT / "tmp" / "imagegen_refs" / "uploaded_cards"
 OUT_DIR = ROOT / "data" / "prompts"
 LOCKED_VARIANT = 5
 IMAGEGEN_REF_BASE = "tmp/imagegen_refs/"
-RAW_IMAGE_DIR = "web/assets/generated"
+RAW_IMAGE_DIR = "artwork/generated"
 FINAL_IMAGE_DIR = "web/assets/images"
 
 
@@ -222,7 +222,7 @@ def control_reference_list(card: dict) -> list[str]:
     planet = card["planet"].lower()
     return [
         f"Control-only neutral layout mask: tmp/imagegen_guides/{planet}_underlay_guide.png",
-        f"Exact final overlay SVG, for engineering/control use only: web/assets/shapes/{planet}.svg",
+        f"Exact final overlay SVG, for engineering/control use only: artwork/shapes/{planet}.svg",
     ]
 
 
@@ -292,8 +292,8 @@ def engineering_notes(card: dict, positive: str, max_positive_chars: int) -> str
     return f"""\
 Raw generated underlay target: {RAW_IMAGE_DIR}/{slug}.png
 Final composed card target: {FINAL_IMAGE_DIR}/{slug}.png
-Final overlay source: web/assets/shapes/{planet.lower()}.svg
-Optional control/edge guide source: web/assets/shapes/{planet.lower()}.svg
+Final overlay source: artwork/shapes/{planet.lower()}.svg
+Optional control/edge guide source: artwork/shapes/{planet.lower()}.svg
 Control-only neutral layout mask: tmp/imagegen_guides/{planet.lower()}_underlay_guide.png
 Compositor: scripts/compose_card_image.py {slug} {RAW_IMAGE_DIR}/{slug}.png {FINAL_IMAGE_DIR}/{slug}.png
 {engineering_geometry_note(planet)}

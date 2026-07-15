@@ -23,7 +23,15 @@ $('#btn-home').onclick = showHome;
 
 $('#btn-library').onclick = showLibrary;
 $('#btn-lib-home').onclick = showHome;
-await initGlobalLanguageToggle();
+try {
+	await initGlobalLanguageToggle();
+} catch (err) {
+	/* 语言包是全部文案的来源，取不到便无从渲染——报出唯一一句硬编码的提示 */
+	const toast = $('#toast');
+	toast.textContent = 'Failed to load the language packs — please refresh. 语言包加载失败，请刷新重试。';
+	toast.hidden = false;
+	throw err;
+}
 renderHomeMethods(startMethod);
 initBilingualCopy();
 initScrollMotion();

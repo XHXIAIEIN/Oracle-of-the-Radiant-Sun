@@ -46,7 +46,7 @@ from design_standards import layout_metrics
 
 ROOT = Path(__file__).resolve().parent.parent
 CARD_DIR = ROOT / "data" / "cards"
-SHAPES_DIR = ROOT / "web" / "assets" / "shapes"
+SHAPES_DIR = ROOT / "artwork" / "shapes"
 
 OUT_W, OUT_H = 900, 1338
 SCALE = OUT_W / VW
@@ -78,7 +78,7 @@ def credit_font(size: float) -> ImageFont.FreeTypeFont:
         Path(r"C:\Windows\Fonts\simsun.ttc"),
         Path(r"C:\Windows\Fonts\cambria.ttc"),
         Path(r"C:\Windows\Fonts\GARA.TTF"),
-        ROOT / "web" / "assets" / "fonts" / FONT_NAME_FILE,
+        ROOT / "artwork" / "fonts" / FONT_NAME_FILE,
     ):
         if path.exists():
             return ImageFont.truetype(str(path), int(round(sc(size))))
@@ -96,7 +96,7 @@ def fit_font(path: str, text: str, size: float, max_w: float, max_h: float) -> I
 
 
 def font_asset(filename: str) -> str:
-    return str(ROOT / "web" / "assets" / "fonts" / filename)
+    return str(ROOT / "artwork" / "fonts" / filename)
 
 
 TEXT = font_asset(FONT_NAME_FILE)
@@ -196,7 +196,7 @@ def stroke_opacity(el: ET.Element, fallback: float = 1.0) -> float:
 
 
 def shape_parts(planet: str) -> dict:
-    """Read the actual web/assets/shapes SVG for all fixed geometry."""
+    """Read the actual artwork/shapes SVG for all fixed geometry."""
     shape_path = SHAPES_DIR / f"{planet.lower()}.svg"
     root = ET.fromstring(shape_path.read_text(encoding="utf-8"))
     children = list(root)

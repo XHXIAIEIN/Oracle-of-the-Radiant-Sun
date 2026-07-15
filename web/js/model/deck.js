@@ -1,17 +1,13 @@
 /* 整副 84 张牌，结构来自 data/deck.json，正文来自 data/lang/*.json */
 
-import { language } from '../bilingual.js';
+import { language, loadDict } from '../bilingual.js';
 
 export let DECK = [];
 
 const TEXT_KEYS = ['name', 'sign_keyword', 'image_description', 'personal', 'reading', 'events'];
 const cardKey = c => `${c.planet}_${c.sign}`.toLowerCase();
 
-async function loadCardTextPack(lang) {
-	const res = await fetch(`data/lang/${lang}.json`);
-	if (!res.ok) throw new Error(`Unable to load card text language pack: ${lang}`);
-	return (await res.json()).cards ?? {};
-}
+const loadCardTextPack = lang => loadDict(lang).then(dict => dict.cards ?? {});
 
 function hydrateCard(card, enCards, zhCards) {
 	const key = cardKey(card);

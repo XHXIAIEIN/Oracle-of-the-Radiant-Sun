@@ -1,7 +1,7 @@
 /* 时占起卦前的两步：先默想问题，再择定宫位——一次只做一件事，
    如同占卜本身的进行 */
 
-import { el, D, MOBILE } from '../dom.js';
+import { el, D, esc, MOBILE } from '../dom.js';
 import { setup, wheel, setRite, setActions } from '../stage.js';
 import { S } from '../state.js';
 import { HOUSES } from '../model/solar-ring.js';
@@ -93,7 +93,7 @@ export function horarySetup() {
 		}
 
 		const frag = [stepHead(C.step2.num, C.step2.head, C.step2.sub)];
-		if (S.question) frag.push(el('p', 'setup__echo', `“${S.question}”`));
+		if (S.question) frag.push(el('p', 'setup__echo', `“${esc(S.question)}”`));
 		frag.push(grid);
 		setup.replaceChildren(...frag);
 

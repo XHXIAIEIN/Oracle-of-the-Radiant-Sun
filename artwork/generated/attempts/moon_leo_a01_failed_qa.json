@@ -3,7 +3,7 @@
   "attempts": [
     {
       "attempt": 1,
-      "raw_image": "web/assets/generated/moon_leo.png",
+      "raw_image": "artwork/generated/moon_leo.png",
       "final_image": "web/assets/images/moon_leo.png",
       "started_at": "2026-07-09T06:05:34",
       "reviews": {

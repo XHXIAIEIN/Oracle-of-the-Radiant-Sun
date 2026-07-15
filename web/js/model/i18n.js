@@ -9,7 +9,6 @@ export const pairf = (key, vars) => pair(key).map(text => fill(text, vars));
 export const text = (key, fallback = '') => msg(key, fallback);
 export const textf = (key, vars, fallback = '') => fill(msg(key, fallback), vars);
 export const dualTitle = key => text(key);
-export const dualText = key => text(key);
 
 export const cnNum = n => msgFor('zh', 'common.cnNums', [])[n] ?? String(n);
 export const cnHouse = n => fill(msgFor('zh', 'common.houseLabel'), { n: cnNum(n) });

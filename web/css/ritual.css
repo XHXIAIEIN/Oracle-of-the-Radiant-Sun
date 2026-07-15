@@ -73,14 +73,11 @@
   letter-spacing: 0.06em;
   text-wrap: balance;
 }
-.rite-line small { display: block; margin-top: 0.75em; color: var(--ink-dim); letter-spacing: 0.03em; font-size: 0.82em; }
-
 /* In single-card readings the prompt has a fixed home by the actions;
    setRite() only swaps the phase copy. */
 .stage-wrap.is-single-layout {
   gap: clamp(12px, 1.8vh, 18px);
 }
-.stage-wrap.is-single-layout .rite-line small { margin-top: 0.45em; }
 
 /* ── stage actions (the one primary act of each phase) ────────── */
 
@@ -188,6 +185,6 @@
   }
   .act-btn--quiet { font-size: 13.5px; }
   .panel-rise-btn { min-height: var(--tap); padding-inline: 26px; }
-  .act-link { min-height: 40px; display: inline-grid; align-items: center; }
+  .act-link { min-height: var(--tap); display: inline-grid; align-items: center; }
 
 }

@@ -1,6 +1,6 @@
 /* 仪式舞台的常驻节点，与其上的两类提示：仪轨行与操作按钮 */
 
-import { $, D } from './dom.js';
+import { $, D, replay } from './dom.js';
 import { t } from './bilingual.js';
 
 export const wheel = $('#wheel');
@@ -18,9 +18,7 @@ function riteHTML(zh, en) {
 
 export function setRite(zh, en) {
 	lastRite = [zh, en];
-	riteLine.classList.remove('is-changing');
-	void riteLine.offsetWidth;
-	riteLine.classList.add('is-changing');
+	replay(riteLine, 'is-changing');
 	riteLine.innerHTML = riteHTML(zh, en);
 	gsap.fromTo(riteLine, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: D(0.8), ease: 'power2.out' });
 }
@@ -38,9 +36,7 @@ export function updateBadge(count) {
 	const badge = $('#deck-badge');
 	badge.hidden = false;
 	$('#deck-count').textContent = count;
-	badge.classList.remove('is-updating');
-	void badge.offsetWidth;
-	badge.classList.add('is-updating');
+	replay(badge, 'is-updating');
 }
 
 window.addEventListener('languagechange', refreshRite);

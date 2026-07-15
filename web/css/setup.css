@@ -114,8 +114,7 @@
 }
 
 /* ── the phone setup ────────────────────────────────────────────
-   The example questions shed their English half (shared.css hides
-   .qp-en), so all of them fit on screen as a few wrapped rows of
+   The example questions fit on screen as a few wrapped rows of
    keyword pills, and the step's own act stays pinned in thumb reach. */
 @media (max-width: 700px) {
   .house-chip { padding: 10px 12px; }

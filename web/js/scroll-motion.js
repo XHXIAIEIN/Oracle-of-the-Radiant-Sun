@@ -2,7 +2,7 @@
    The library rebuilds its DOM often, so this watches for new pieces instead of
    relying on one startup pass. */
 
-import { currentScreen, REDUCED, scrollScreenToTop } from './dom.js';
+import { REDUCED } from './dom.js';
 
 const REVEAL_SELECTOR = [
 	'.masthead',
@@ -46,12 +46,6 @@ function scan(root = document) {
 	root.querySelectorAll?.(REVEAL_SELECTOR).forEach(registerReveal);
 }
 
-export function settleToPageTop({ instant = false } = {}) {
-	const screen = currentScreen();
-	if (!screen || screen.scrollTop <= 1) return;
-	scrollScreenToTop(screen, instant || REDUCED ? 'auto' : 'smooth');
-}
-
 export function animateScreenIn(screen) {
 	if (REDUCED || !screen || screenSeen.has(screen)) return;
 	screenSeen.add(screen);
@@ -66,12 +60,28 @@ export function animateScreenIn(screen) {
 	);
 }
 
+/* 入场过渡走完便剥掉整套 reveal 机制——[data-scroll-reveal] 的
+   will-change 会把元素常驻在合成层上，卡片一多便是几十层白占显存 */
+function settleReveal(node) {
+	const done = e => {
+		if (e.target !== node) return; // 子元素的过渡事件会冒泡上来，不作数
+		node.removeEventListener('transitionend', done);
+		node.removeEventListener('transitioncancel', done);
+		node.removeAttribute('data-scroll-reveal');
+		node.classList.remove('is-in-view');
+		node.style.removeProperty('--scroll-reveal-delay');
+	};
+	node.addEventListener('transitionend', done);
+	node.addEventListener('transitioncancel', done);
+}
+
 export function initScrollMotion() {
 	if (!REDUCED && 'IntersectionObserver' in window) {
 		revealObserver = new IntersectionObserver(
 			entries => {
 				for (const entry of entries) {
 					if (!entry.isIntersecting) continue;
+					settleReveal(entry.target);
 					entry.target.classList.add('is-in-view');
 					revealObserver.unobserve(entry.target);
 				}

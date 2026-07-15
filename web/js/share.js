@@ -1,7 +1,7 @@
 /* 分享当局：把这一局抽中的牌编成路由链接复制到剪贴板，
    他人打开链接，同样的牌便落在同样的位置上 */
 
-import { $ } from './dom.js';
+import { $, replay } from './dom.js';
 import { S, mode } from './state.js';
 import { DECK } from './model/deck.js';
 import { text } from './model/i18n.js';
@@ -55,9 +55,7 @@ btn.onclick = async () => {
 	try {
 		await navigator.clipboard.writeText(url);
 		showToast(text('ritual.shareCopied'));
-		btn.classList.remove('is-copied');
-		void btn.offsetWidth;
-		btn.classList.add('is-copied');
+		replay(btn, 'is-copied');
 	} catch {
 		showToast(text('ritual.shareFallback'));
 		prompt(text('ritual.shareFallback'), url); // 剪贴板不可用（非安全上下文）时的退路

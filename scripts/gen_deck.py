@@ -1,7 +1,7 @@
 """Build the draw-card deck: generated card art paths + SVG support assets.
 
   web/assets/images/<planet>_<sign>.webp one finished face-up card
-  web/assets/cards/<planet>_<sign>.svg   fallback/template card, viewBox 0 0 300 446
+  artwork/cards/<planet>_<sign>.svg      fallback/template card, viewBox 0 0 300 446
   web/data/deck.json                     [{number,page,name,planet,sign,suit_name,
                                            sign_keyword,reading,events,img}]
 Run:  python scripts/gen_deck.py
@@ -14,8 +14,8 @@ from card_template import face_svg, shape_svg
 ROOT = Path(__file__).resolve().parent.parent
 WEB = ROOT / "web"
 CARDS_DIR = ROOT / "data" / "cards"
-OUT_SVG = WEB / "assets" / "cards"
-OUT_SHAPES = WEB / "assets" / "shapes"
+OUT_SVG = ROOT / "artwork" / "cards"
+OUT_SHAPES = ROOT / "artwork" / "shapes"
 OUT_SVG.mkdir(parents=True, exist_ok=True)
 OUT_SHAPES.mkdir(parents=True, exist_ok=True)
 

@@ -1,6 +1,6 @@
 /* 翻牌阶段：依各占法的次序（或任意次序）翻开，逐张写入解读面板 */
 
-import { $, el, D, sleep } from '../dom.js';
+import { $, el, D, esc, sleep } from '../dom.js';
 import { wheel, actions, panelList, setRite, setActions } from '../stage.js';
 import { S, mode } from '../state.js';
 import { DECK, cardName, cardText } from '../model/deck.js';
@@ -82,25 +82,18 @@ function markNext() {
 // 刷新解读面板标题与题问。
 function refreshPanelTitle() {
 	if (!S.method) return;
-	$('#panel-title').innerHTML = mode().title + ' · ' + t(STR.panel.reading) + (S.question ? `<small>“${S.question}”</small>` : '');
-}
-
-function sunYearReadingOrder() {
-	const q = Array.from({ length: 12 }, (_, k) => ((S.startPos - 1 + k) % 12) + 1);
-	q.push(13);
-	return q;
+	$('#panel-title').innerHTML = mode().title + ' · ' + t(STR.panel.reading) + (S.question ? `<small>“${esc(S.question)}”</small>` : '');
 }
 
 function dialogNavFor(pos) {
 	if (S.method !== 'sunyear') return null;
 	const revealed = new Set([...wheel.querySelectorAll('.card.is-up[data-pos]')].map(card => Number(card.dataset.pos)));
-	const list = sunYearReadingOrder()
-		.filter(p => p === pos || revealed.has(p))
+	/* 完整的阅读次序（S.revealQueue 已被翻牌消耗，须重新生成） */
+	const order = mode().revealQueue(S).filter(p => p === pos || revealed.has(p));
+	const list = order
 		.map(p => ({ idx: S.placed.get(p), ctx: ctxFor(p) }))
 		.filter(item => item.idx != null);
-	const at = sunYearReadingOrder()
-		.filter(p => p === pos || revealed.has(p))
-		.indexOf(pos);
+	const at = order.indexOf(pos);
 	return list.length > 1 && at >= 0 ? { list, at, wrap: true } : null;
 }
 
@@ -123,6 +116,7 @@ export function onCardClick(pos, node) {
 // 翻开指定位置的牌，并把解读写入面板。
 async function flipAt(pos, node, { speed = 1 } = {}) {
 	if (S.busy || !node) return;
+	const seq = S.seq;
 	S.busy = true;
 	node.disabled = true;
 	S.revealQueue = S.revealQueue.filter(p => p !== pos);
@@ -131,7 +125,9 @@ async function flipAt(pos, node, { speed = 1 } = {}) {
 	const isTheme = S.method === 'sunyear' && pos === 13;
 	try {
 		await preloadImage(DECK[S.placed.get(pos)].img, 'high');
+		if (seq !== S.seq) return; // 这一局已被换掉，别碰新局的桌面
 		await flipCard(node, isTheme ? 1.28 : 1.16, speed);
+		if (seq !== S.seq) return;
 		node.classList.add('is-up');
 		node.disabled = false;
 		if (isTheme) node.classList.add('halo-burst');
@@ -140,8 +136,10 @@ async function flipAt(pos, node, { speed = 1 } = {}) {
 		if (!S.revealQueue.length) allRevealed();
 		else markNext();
 	} finally {
-		S.busy = false;
-		if (!node.classList.contains('is-up')) node.disabled = false;
+		if (seq === S.seq) {
+			S.busy = false;
+			if (!node.classList.contains('is-up')) node.disabled = false;
+		}
 	}
 }
 

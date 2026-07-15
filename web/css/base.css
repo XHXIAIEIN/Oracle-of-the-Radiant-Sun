@@ -29,12 +29,12 @@ html:has(:modal) { overflow: hidden; }
    still discoverable inside panels and dialogs */
 * {
   scrollbar-width: thin;
-  scrollbar-color: oklch(78% 0.12 85 / 0.28) transparent;
+  scrollbar-color: var(--gold-line) transparent;
 }
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background: oklch(78% 0.12 85 / 0.28);
+  background: var(--gold-line);
   border-radius: 999px;
 }
 ::-webkit-scrollbar-thumb:hover { background: oklch(78% 0.12 85 / 0.58); }

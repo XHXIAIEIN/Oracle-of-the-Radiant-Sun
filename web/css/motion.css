@@ -236,7 +236,12 @@
   .zoom-dialog[open]::backdrop,
   .setup:not([hidden]),
   .question-line:not([hidden]),
-  .house-pop[open] {
+  .house-pop[open],
+  /* 循环呼吸类动画：base.css 只把时长压到 0.001s，等于每秒闪千次，必须整个停掉 */
+  .deck::after,
+  .deck-hint,
+  .masthead__sun,
+  .card.is-next .card__inner::after {
     animation: none !important;
   }
 }

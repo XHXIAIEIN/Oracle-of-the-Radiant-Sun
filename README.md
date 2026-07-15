@@ -17,6 +17,7 @@
 
 - `web/` — 网页应用（纯静态，无构建步骤），部署到 GitHub Pages
 - `data/` — 数字化数据：卡牌 JSON（`cards/`）与全书章节文本（`chapters/`）
+- `artwork/` — 卡面生成管线的素材与存档：原始底图（`generated/`）、合成字体（`fonts/`）、模板 SVG（`cards/`、`shapes/`），不随网页部署
 - `scanner/` — 书页扫描上传服务（`server.py`）及扫描图裁切、图形生成等处理脚本（`scripts/`）
 
 ## 本地运行

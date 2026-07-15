@@ -79,7 +79,7 @@ def init_record(args: argparse.Namespace) -> None:
             record["attempts"].append(
                 {
                     "attempt": record["current_attempt"],
-                    "raw_image": args.raw_image or f"web/assets/generated/{args.slug}.png",
+                    "raw_image": args.raw_image or f"artwork/generated/{args.slug}.png",
                     "final_image": args.final_image or f"web/assets/images/{args.slug}.png",
                     "started_at": now(),
                     "reviews": {},

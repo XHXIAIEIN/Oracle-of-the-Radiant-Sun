@@ -74,8 +74,7 @@
 /* leaf through the row this card was drawn with (a week's days …) */
 .card-dialog__nav {
   position: absolute;
-  top: 50%;
-  translate: 0 -50%;
+  top: 50%; /* 垂直居中的位移由 press.css 的 --press-y-base 合成，别在这里写 translate */
   z-index: 2;
   width: 34px;
   height: 34px;
@@ -110,11 +109,9 @@
 }
 .card-dialog__nav--prev {
   left: -10px;
-  translate: 0 -50%;
 }
 .card-dialog__nav--next {
   right: -10px;
-  translate: 0 -50%;
 }
 @media (hover: hover) {
   .card-dialog__nav:hover:not([disabled]) { color: var(--gold); }
@@ -382,9 +379,11 @@
   .card-dialog__head h3 { font-size: 21px; padding-right: 40px; }
   .card-dialog__head .ps { font-size: 13px; }
 
+  .card-dialog__close { width: var(--tap); height: var(--tap); }
+
   /* the leafing arrows step out of the text's way, down to the sheet's
      foot corners; a horizontal swipe on the sheet leafs as well */
-  .card-dialog__nav { width: 40px; height: 40px; top: auto; bottom: 14px; translate: none; }
+  .card-dialog__nav { width: var(--tap); height: var(--tap); top: auto; bottom: 14px; }
   .card-dialog__nav--prev { left: 14px; }
   .card-dialog__nav--next { right: 14px; }
 

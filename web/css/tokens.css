@@ -1,5 +1,7 @@
 /* ═══════════════════════════════════════════════════════════════
    Design tokens — colour, type, and the spacing scale.
+   Night sky, gold hairlines, parchment cards. Less is more:
+   one accent colour, generous space, serif.
 
    Spacing contract: containers own the space between their children
    (padding + gap); children fill their track and never carry

@@ -11,6 +11,16 @@ export const MOBILE = matchMedia('(max-width: 700px)');
 
 export const currentScreen = () => document.querySelector('.screen:not([hidden])');
 
+/* 拼 HTML 字符串时，一切不可信文本（用户输入、URL 参数、数据文案）都过这里 */
+export const esc = text => String(text).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
+
+/* 重放一遍由 cls 触发的 CSS 动画：摘下类名，强制回流，再戴上 */
+export function replay(node, cls) {
+	node.classList.remove(cls);
+	void node.offsetWidth;
+	node.classList.add(cls);
+}
+
 export function scrollScreenToTop(screen = currentScreen(), behavior = REDUCED ? 'auto' : 'smooth') {
 	screen?.scrollTo({ top: 0, left: 0, behavior });
 }

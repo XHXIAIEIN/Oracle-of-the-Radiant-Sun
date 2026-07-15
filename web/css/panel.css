@@ -14,6 +14,7 @@
   padding-left: clamp(14px, 1.8vw, 26px);
   max-height: calc(100dvh - var(--page-pad-block) - 120px);
   overflow-y: auto;
+  overflow-anchor: none;
   scrollbar-gutter: stable; /* entries keep their width when the log grows a scrollbar */
   min-width: 0;
   opacity: 0;

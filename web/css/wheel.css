@@ -7,6 +7,9 @@
   position: relative;
   width: min(100%, max(320px, var(--wheel-room)));
   aspect-ratio: 1;
+  /* labels and hints inside measure themselves against the wheel (cqw),
+     so a height-squeezed wheel shrinks its type along with its geometry */
+  container-type: inline-size;
   margin-inline: auto;
   /* the bottom slot labels hang below the wheel's square — this margin
      is their room, keeping the rite line at arm's length */
@@ -39,8 +42,8 @@
   justify-items: center;
   gap: 1px;
   width: max-content;
-  max-width: min(24ch, 28vw);
-  font-size: clamp(9px, 1.15vw, 12px);
+  max-width: min(24ch, 24cqw, 28vw);
+  font-size: clamp(8px, 1.8cqw, 12px);
   line-height: 1.35;
   letter-spacing: 0.14em;
   color: var(--ink-dim);
@@ -58,6 +61,20 @@
 /* each label carries a long and a short wording (wheel.js); the phone
    keeps only the short one, so the side labels stay on screen */
 .slot-label .lab-short { display: none; }
+
+/* a height-squeezed window shrinks the wheel the same way a phone does —
+   below this size the full wordings collide, so the short ones take over */
+@container (width < 540px) {
+  .slot-label { letter-spacing: 0.08em; }
+  .slot-label .lab-full { display: none; }
+  .slot-label .lab-short { display: block; }
+  .slot-label:not(.slot-label--l):not(.slot-label--r) {
+    grid-auto-flow: column;
+    align-items: center;
+    gap: 4px;
+  }
+}
+
 @media (max-width: 700px) {
   .slot-label { max-width: 13ch; font-size: 10px; letter-spacing: 0.06em; }
   .slot-label--r, .slot-label--l { max-width: 11ch; }
@@ -133,7 +150,7 @@
   translate: -50% 0;
   text-align: center;
   white-space: nowrap;
-  font-size: clamp(11px, 1.35vw, 13.5px);
+  font-size: clamp(10px, 2cqw, 13.5px);
   letter-spacing: 0.3em;
   text-indent: 0.3em;
   color: var(--gold);

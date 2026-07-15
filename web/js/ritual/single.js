@@ -19,9 +19,30 @@ const stageWrap = () => $('#stage-actions').closest('.stage-wrap');
 
 /* 桌面几何（% of wheel）：牌堆与大牌的落点、宽。手机的轮盘即全宽，
    堆与牌都放大到指得住的尺寸 */
-const GEO = () => (MOBILE.matches ? { PILE_X: 26, PILE_W: 16, CARD_X: 64, CARD_W: 30, TOP: 51 } : { PILE_X: 31, PILE_W: 12.8, CARD_X: 63, CARD_W: 24, TOP: 47 });
+const GEO = () => (MOBILE.matches ? { PILE_X: 24, PILE_W: 17, CARD_X: 65, CARD_W: 31, TOP: 50 } : { PILE_X: 29, PILE_W: 13.2, CARD_X: 64, CARD_W: 24.5, TOP: 47 });
 let again = null; // “再抽一张”——翻牌后进入仪轨行下方的操作区
 let live = null; // 桌上已翻开的那张：{ card, link }
+
+function deckTouch(kind = 'draw') {
+	const lift = kind === 'return' ? -2 : 2;
+	return gsap.timeline({ paused: true })
+		.to(deckPile, { scale: kind === 'return' ? 1.045 : 0.975, y: lift, duration: D(0.12), ease: 'sine.out' })
+		.to(deckPile, { scale: 1, y: 0, duration: D(0.28), ease: 'elastic.out(1, 0.65)' });
+}
+
+function resetCardFace(card) {
+	const inner = card.querySelector('.card__inner');
+	return gsap.to(inner, {
+		rotationY: 360,
+		paused: true,
+		duration: D(0.36),
+		ease: 'power2.inOut',
+		onComplete: () => {
+			card.classList.remove('is-up');
+			gsap.set(inner, { rotationY: 0 });
+		},
+	});
+}
 
 export function singleDeal() {
 	openPanel();
@@ -58,21 +79,24 @@ function drawAgain() {
 	const { card, link } = live;
 	live = null;
 	setDrawable(false);
-	// 旧牌像一次读完的提示，安静退回暗处；下一张稍后显现
+	// 旧牌像一次读完的提示，收成一枚小记号后退入阅读栏；下一张从牌堆重新出手。
 	card.disabled = true;
+	card.classList.add('is-archiving');
 	if (link.isConnected) gsap.to(link, { opacity: 0, duration: D(0.25), ease: 'power1.in', onComplete: () => link.remove() });
 	gsap.timeline()
-		.to(card, { scale: 1.012, y: '-=3', duration: D(0.18), ease: 'sine.out' })
+		.to(card, { scale: 1.08, y: '-=7', rotation: '+=1.8', duration: D(0.18), ease: 'power2.out' })
 		.to(card, {
 			opacity: 0,
-			scale: 0.96,
-			y: '+=10',
-			rotation: '+=0.6',
-			duration: D(0.48),
-			ease: 'sine.inOut',
+			scale: 0.78,
+			x: MOBILE.matches ? '-=26' : '+=34',
+			y: '+=22',
+			rotation: '+=5.5',
+			filter: 'brightness(0.7) saturate(0.75)',
+			duration: D(0.5),
+			ease: 'power3.inOut',
 			onComplete: () => card.remove(),
 		});
-	singleDrawNext(D(0.34));
+	singleDrawNext(D(0.42));
 }
 
 function singleDrawNext(delay = 0) {
@@ -102,13 +126,15 @@ function singleDrawNext(delay = 0) {
 	card.style.opacity = '0';
 	card.setAttribute('aria-label', M().nthAria(n));
 	wheel.append(card);
-	// 起飞点是堆顶那张的姿态（缩到堆与牌的宽度比），飞行时压过牌堆
+	// 起飞点是堆顶那张的姿态（缩到堆与牌的宽度比），先从牌堆抽出，再落到阅读位。
 	const pose = topLayerPose(drawCount() + 1);
 	gsap.set(card, { xPercent: -50, yPercent: -50, opacity: 0, x: pose.x, y: pose.y, scale: G.PILE_W / G.CARD_W, rotation: pose.rotation, zIndex: 6 });
 	S.busy = true;
-	gsap.delayedCall(delay + D(0.72), syncDeckThickness); // 避开牌刚显现的一瞬，牌离堆后再收薄
+	gsap.delayedCall(delay + D(0.58), syncDeckThickness); // 避开牌刚显现的一瞬，牌离堆后再收薄
 	const landTop = G.TOP + gsap.utils.random(-0.52, 0.52); // 落点只保留一点手放的活气
 	const landRot = gsap.utils.random(-1.05, 1.05);
+	const midX = G.PILE_X + (G.CARD_X - G.PILE_X) * 0.48;
+	const midTop = G.TOP - (MOBILE.matches ? 9 : 7);
 	card.classList.add('is-dealing');
 	gsap.timeline({
 		delay,
@@ -120,7 +146,18 @@ function singleDrawNext(delay = 0) {
 			card.classList.add('is-next');
 		},
 	})
-		.to(card, { opacity: 1, scale: 0.92, duration: D(0.12), ease: 'sine.out' })
+		.add(deckTouch('draw'), 0)
+		.to(card, { opacity: 1, scale: 0.8, x: pose.x - 4, y: pose.y - 8, rotation: pose.rotation - 4, duration: D(0.16), ease: 'power2.out' }, 0)
+		.to(card, {
+			left: midX + '%',
+			top: midTop + '%',
+			x: 0,
+			y: 0,
+			scale: 1.05,
+			rotation: landRot - 7,
+			duration: D(0.42),
+			ease: 'power3.out',
+		}, '>-0.02')
 		.to(card, {
 			left: G.CARD_X + '%',
 			top: landTop + '%',
@@ -128,10 +165,10 @@ function singleDrawNext(delay = 0) {
 			y: gsap.utils.random(-0.8, 0.8),
 			scale: 1,
 			rotation: landRot,
-			duration: D(0.68),
-			ease: 'expo.out',
-		}, '>-0.03')
-		.to(card, { x: 0, y: 0, duration: D(0.16), ease: 'sine.out' }, `>-=${D(0.16)}`);
+			duration: D(0.44),
+			ease: 'back.out(1.35)',
+		}, '>-0.04')
+		.to(card, { x: 0, y: 0, duration: D(0.14), ease: 'sine.out' }, `>-=${D(0.12)}`);
 	setRite(...M().turnPrompt);
 
 	card.onclick = () => {
@@ -174,20 +211,15 @@ function returnToDeck(card, link, entry, n) {
 	updateBadge(drawCount());
 	gsap.to(entry, { opacity: 0, y: 14, duration: D(0.4), ease: 'power2.in', onComplete: () => entry.remove() });
 	setRite(...M().returned);
-	// 放回也走堆顶：压过牌堆飞回，落在归还后堆顶的位置
+	// 放回也走堆顶：先合回牌背，再沿来路放回，最后洗动未抽出的牌。
 	const back = topLayerPose(drawCount());
 	const seq = S.seq;
+	const G = GEO();
+	const midX = G.PILE_X + (Number.parseFloat(card.style.left) - G.PILE_X) * 0.45;
+	const midTop = G.TOP - (MOBILE.matches ? 8 : 7);
 	gsap.set(card, { zIndex: 6 });
-	gsap.to(card, {
-		opacity: 0,
-		scale: GEO().PILE_W / GEO().CARD_W,
-		left: GEO().PILE_X + '%',
-		top: GEO().TOP + '%',
-		x: back.x,
-		y: back.y,
-		rotation: back.rotation,
-		duration: D(0.56),
-		ease: 'sine.inOut',
+	card.classList.add('is-returning');
+	gsap.timeline({
 		onComplete: async () => {
 			card.remove();
 			if (seq !== S.seq) return;
@@ -201,7 +233,32 @@ function returnToDeck(card, link, entry, n) {
 			S.busy = false;
 			singleDrawNext();
 		},
-	});
+	})
+		.to(card, { scale: 1.08, y: '-=6', filter: 'brightness(1.08) saturate(1.04)', duration: D(0.16), ease: 'power2.out' })
+		.add(resetCardFace(card), '>-0.04')
+		.to(card, {
+			left: midX + '%',
+			top: midTop + '%',
+			x: 0,
+			y: 0,
+			scale: 0.84,
+			rotation: back.rotation + 8,
+			filter: 'brightness(0.96) saturate(0.9)',
+			duration: D(0.36),
+			ease: 'power2.inOut',
+		}, '>-0.03')
+		.to(card, {
+			opacity: 0,
+			scale: G.PILE_W / G.CARD_W,
+			left: G.PILE_X + '%',
+			top: G.TOP + '%',
+			x: back.x,
+			y: back.y,
+			rotation: back.rotation,
+			duration: D(0.34),
+			ease: 'power3.in',
+		})
+		.add(deckTouch('return'), `>-=${D(0.16)}`);
 }
 
 function appendSingleEntry(di, n) {

@@ -1,20 +1,40 @@
-import { $, D } from './dom.js';
+import { $, D, replay } from './dom.js';
 
 const COPY_SELECTOR = '.immersive-copy[data-i18n], .immersive-copy[data-en][data-zh]';
 const STATIC_SELECTOR = '.lang-copy';
 const ARIA_SELECTOR = '[data-i18n-aria]';
 
-let currentLang = 'en';
+const LANG_KEY = 'radiant-sun.lang';
+
+function detectLang() {
+	try {
+		const saved = localStorage.getItem(LANG_KEY);
+		if (saved === 'zh' || saved === 'en') return saved;
+	} catch {} // 隐私模式下 localStorage 不可用
+	return (navigator.language || '').toLowerCase().startsWith('zh') ? 'zh' : 'en';
+}
+
+let currentLang = detectLang();
 const dicts = {};
+const dictLoads = {};
 
 const getPath = (obj, path) => path?.split('.').reduce((v, k) => (v == null ? v : v[k]), obj);
 
-async function loadDict(lang) {
-	if (dicts[lang]) return dicts[lang];
-	const res = await fetch(`data/lang/${lang}.json`);
-	if (!res.ok) throw new Error(`Unable to load language pack: ${lang}`);
-	dicts[lang] = await res.json();
-	return dicts[lang];
+/* 语言包整包只取一次；deck.js 的卡牌正文也从这里拿 */
+export function loadDict(lang) {
+	dictLoads[lang] ??= fetch(`data/lang/${lang}.json`)
+		.then(res => {
+			if (!res.ok) throw new Error(`Unable to load language pack: ${lang}`);
+			return res.json();
+		})
+		.then(
+			dict => (dicts[lang] = dict),
+			err => {
+				delete dictLoads[lang]; // 失败不缓存，下次重试
+				throw err;
+			},
+		);
+	return dictLoads[lang];
 }
 
 function dictText(key, lang = currentLang) {
@@ -102,6 +122,9 @@ function setAriaLanguage(node, lang) {
 
 export async function setLanguage(lang, { animate = false, root = document } = {}) {
 	currentLang = lang === 'zh' ? 'zh' : 'en';
+	try {
+		localStorage.setItem(LANG_KEY, currentLang);
+	} catch {}
 	await loadDict(currentLang);
 	document.documentElement.lang = currentLang === 'zh' ? 'zh-CN' : 'en';
 	root.querySelectorAll(COPY_SELECTOR).forEach(node => setCopyLanguage(node, currentLang, animate));
@@ -110,9 +133,7 @@ export async function setLanguage(lang, { animate = false, root = document } = {
 	const globalBtn = $('#global-lang');
 	if (globalBtn) {
 		updateToggle(globalBtn, currentLang);
-		globalBtn.classList.remove('is-switching');
-		void globalBtn.offsetWidth;
-		globalBtn.classList.add('is-switching');
+		replay(globalBtn, 'is-switching');
 	}
 	updateLanguageMenu(currentLang);
 	window.dispatchEvent(new CustomEvent('languagechange', { detail: { lang: currentLang } }));
@@ -146,47 +167,6 @@ export function t(value) {
 	return value;
 }
 
-export function langAttrs(value, { html = false } = {}) {
-	const zh = Array.isArray(value) ? value[0] : value?.zh;
-	const en = Array.isArray(value) ? value[1] : value?.en;
-	if (zh == null || en == null) return '';
-	const esc = text => String(text).replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;');
-	return html ? ` data-en-html="${esc(en)}" data-zh-html="${esc(zh)}"` : ` data-en="${esc(en)}" data-zh="${esc(zh)}"`;
-}
-
-export function langHTML(value, { html = false } = {}) {
-	const cls = 'lang-copy';
-	const attrs = langAttrs(value, { html });
-	return { cls, attrs, text: t(value) };
-}
-
-function makeToggle(node, textNode) {
-	const insideButton = !!node.closest('button');
-	const btn = document.createElement(insideButton ? 'span' : 'button');
-	btn.className = 'immersive-copy__toggle';
-	if (!insideButton) btn.type = 'button';
-	else {
-		btn.setAttribute('aria-label', '显示中文翻译');
-		btn.role = 'button';
-		btn.tabIndex = 0;
-	}
-	btn.textContent = '中';
-	btn.setAttribute('aria-label', '显示中文翻译');
-	btn.setAttribute('aria-pressed', 'false');
-	const toggle = e => {
-		e.stopPropagation();
-		const nextLang = node.dataset.lang === 'zh' ? 'en' : 'zh';
-		setCopyLanguage(node, nextLang, true);
-	};
-	btn.addEventListener('click', toggle);
-	btn.addEventListener('keydown', e => {
-		if (e.key !== 'Enter' && e.key !== ' ') return;
-		e.preventDefault();
-		toggle(e);
-	});
-	return btn;
-}
-
 export function initBilingualCopy(root = document) {
 	root.querySelectorAll(COPY_SELECTOR).forEach(node => {
 		if (node.dataset.bilingualReady === 'true') return;
@@ -201,8 +181,8 @@ export function initBilingualCopy(root = document) {
 }
 
 export async function initGlobalLanguageToggle() {
-	await loadDict('en');
-	await loadDict('zh');
+	await Promise.all([loadDict('en'), loadDict('zh')]);
+	document.documentElement.lang = currentLang === 'zh' ? 'zh-CN' : 'en';
 	const btn = $('#global-lang');
 	if (!btn) return;
 	const menu = $('#language-menu');

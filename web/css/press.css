@@ -79,9 +79,7 @@ a[href],
   --press-y-base: -50%;
 }
 
-.act-btn--wheel,
-.act-btn--deck,
-.act-link--card {
+.act-btn--wheel {
   --press-x: -50%;
 }
 

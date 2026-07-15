@@ -111,8 +111,7 @@ body:has(#screen-library:not([hidden])) .top-capsules {
   -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
   box-shadow: 0 10px 30px oklch(0% 0 0 / 0.24);
-  transform-origin: top right;
-  animation: language-menu-in 0.18s ease-out;
+  transform-origin: top right; /* 入场动画由 motion.css 统一声明 */
 }
 
 .language-menu[hidden] {
@@ -229,6 +228,7 @@ body:has(#screen-library:not([hidden])) .top-capsules {
   border: 1px solid var(--gold-line);
   border-radius: 999px;
   background: oklch(16% 0.03 275 / 0.42);
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   transition: opacity 0.3s, border-color 0.3s, background 0.3s, translate 0.3s;
 }

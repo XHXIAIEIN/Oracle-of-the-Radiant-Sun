@@ -8,10 +8,23 @@ import { MONTHS } from '../model/solar-ring.js';
 import { STR, bi } from '../model/i18n.js';
 import { MODES } from '../model/modes/index.js';
 import { miniCard, miniFlipCard, revealMini } from '../cards.js';
-import { autoScrollTo } from '../panel.js';
+import { autoScrollTo, scrollPanelTo } from '../panel.js';
 import { drawerLiftForEntry } from '../drawer.js';
 
 const A = () => MODES.sunyear.amplify;
+const entryWhere = node => node.closest('.entry')?.querySelector('.entry__where');
+const steadyScrollTo = (node, alignTop = true) => {
+	if (!node?.isConnected) return;
+	autoScrollTo(node, true, alignTop);
+	requestAnimationFrame(() => {
+		requestAnimationFrame(() => {
+			if (node?.isConnected) scrollPanelTo(node, alignTop);
+		});
+	});
+	setTimeout(() => {
+		if (node?.isConnected) scrollPanelTo(node, alignTop);
+	}, 280);
+};
 
 /* 面板条目下的两枚深察按钮与其容器 */
 export function addAmplify(pos, entry) {
@@ -147,7 +160,7 @@ function hourForm(pos, amp) {
 	block.append(form);
 	amp.append(block);
 	drawerLiftForEntry(amp.closest('.entry'));
-	autoScrollTo(block, true, true);
+	steadyScrollTo(entryWhere(block) ?? block);
 	popIn([form]);
 
 	/* 抽过之后，够不着的钟点格随余牌一同暗下；所选超出余牌便收到最大可及处 */
@@ -180,14 +193,6 @@ function hourForm(pos, amp) {
 		go.disabled = true;
 		cells.forEach(c => (c.disabled = true));
 		const priorHourResults = [...block.children].filter(child => child.classList?.contains('amplify__block')).length;
-		const baseOffset = Math.max(
-			0,
-			block.getBoundingClientRect().height -
-				[...block.children]
-					.filter(child => child.classList?.contains('amplify__block'))
-					.reduce((sum, child) => sum + child.getBoundingClientRect().height, 0)
-		);
-
 		const res = el('div', 'amplify__block');
 		res.dataset.hourResult = String(priorHourResults + 1);
 		res.append(el('p', 'amplify__cap', A().hourCap(n)));
@@ -220,7 +225,7 @@ function hourForm(pos, amp) {
 		const dy = formTop - form.getBoundingClientRect().top;
 		if (dy) gsap.from(form, { y: dy, duration: D(0.55), ease: 'power3.out' });
 		drawerLiftForEntry(block.closest('.entry'));
-		autoScrollTo(res, true, true, baseOffset * priorHourResults);
+		steadyScrollTo(priorHourResults ? res : entryWhere(block) ?? block);
 
 		/* 发牌的次第只是增强层：结果一插入便保持可见，避免浏览器节流、
 		   切页或滚动打断时间线后留下“已扣牌但空白”的状态。 */
@@ -228,9 +233,12 @@ function hourForm(pos, amp) {
 		const finish = () => {
 			if (finished) return;
 			finished = true;
-			gsap.killTweensOf([res, revealed, ...backs, stackTag].filter(Boolean));
+			const revealedInner = revealed.querySelector('.mini__inner');
+			gsap.killTweensOf([res, revealed, revealedInner, ...backs, stackTag].filter(Boolean));
 			gsap.set([res, revealed, ...backs, stackTag].filter(Boolean), { opacity: 1, y: 0, rotation: 0, clearProps: 'opacity,transform,filter' });
+			gsap.set(revealedInner, { rotationY: 180, clearProps: 'filter' });
 			revealed.classList.add('is-up');
+			revealed.classList.remove('is-flipping');
 			revealed.disabled = false;
 			dealing = false;
 			go.disabled = false;

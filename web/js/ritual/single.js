@@ -79,24 +79,23 @@ function drawAgain() {
 	const { card, link } = live;
 	live = null;
 	setDrawable(false);
-	// 旧牌像一次读完的提示，收成一枚小记号后退入阅读栏；下一张从牌堆重新出手。
+	// 旧牌的讯息已录入阅读栏——带一点光轻轻升离即可，不抢下一张的戏；
+	// 升与亮对着「放回」的降温回堆，但只是顺手一送，不作仪式。
 	card.disabled = true;
 	card.classList.add('is-archiving');
 	if (link.isConnected) gsap.to(link, { opacity: 0, duration: D(0.25), ease: 'power1.in', onComplete: () => link.remove() });
-	gsap.timeline()
-		.to(card, { scale: 1.08, y: '-=7', rotation: '+=1.8', duration: D(0.18), ease: 'power2.out' })
-		.to(card, {
-			opacity: 0,
-			scale: 0.78,
-			x: MOBILE.matches ? '-=26' : '+=34',
-			y: '+=22',
-			rotation: '+=5.5',
-			filter: 'brightness(0.7) saturate(0.75)',
-			duration: D(0.5),
-			ease: 'power3.inOut',
-			onComplete: () => card.remove(),
-		});
-	singleDrawNext(D(0.42));
+	// disabled 按钮的 filter/opacity 有全局 CSS transition，会拖住逐帧补间——先掐掉，
+	// filter 也从显式起点出发，免得读到过渡中途的值
+	gsap.fromTo(card, { transition: 'none', filter: 'brightness(1) saturate(1)' }, {
+		top: '-=6%',
+		opacity: 0,
+		scale: 0.95,
+		filter: 'brightness(1.3) saturate(1)',
+		duration: D(0.42),
+		ease: 'power1.in',
+		onComplete: () => card.remove(),
+	});
+	singleDrawNext(D(0.2));
 }
 
 function singleDrawNext(delay = 0) {

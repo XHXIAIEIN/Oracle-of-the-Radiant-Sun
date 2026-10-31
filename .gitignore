@@ -6,6 +6,9 @@ scanner/work/
 # 脚本生成的参考图 / 验证图
 scanner/scripts/out/
 
+# 卡面生成的废弃尝试，只留在本地
+artwork/generated/attempts/
+
 # 临时文件与回收站
 tmp/
 .tmp/

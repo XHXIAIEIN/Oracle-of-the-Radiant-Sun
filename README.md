@@ -19,6 +19,7 @@
 - `data/` — 数字化数据：卡牌 JSON（`cards/`）与全书章节文本（`chapters/`）
 - `artwork/` — 卡面生成管线的素材与存档：原始底图（`generated/`）、合成字体（`fonts/`）、模板 SVG（`cards/`、`shapes/`），不随网页部署
 - `scanner/` — 书页扫描上传服务（`server.py`）及扫描图裁切、图形生成等处理脚本（`scripts/`）
+- `scripts/` — 卡面生成管线脚本，以及命令行盲抽工具 `deal.py`
 
 ## 本地运行
 
@@ -27,6 +28,18 @@ python -m http.server -d web 8000
 ```
 
 然后访问 <http://localhost:8000>。
+
+## 命令行盲抽
+
+`scripts/deal.py` 把发牌和读牌分成两步，发牌的一方不会看到任何牌名，读牌的一方只翻问题需要的宫位：
+
+```sh
+python scripts/deal.py deal                 # 洗牌后扣下 13 张：十二宫加中心牌，写入 tmp/deals/
+python scripts/deal.py deal --count 4       # 扣下 4 张，例如某个月的四周
+python scripts/deal.py reveal FILE 1 7 4    # 翻开第 1、7、4 宫，打印书中释义
+```
+
+洗牌用系统随机源，和网页端一致。
 
 ## 致谢
 

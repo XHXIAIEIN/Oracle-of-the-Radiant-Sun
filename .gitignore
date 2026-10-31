@@ -8,6 +8,7 @@ scanner/scripts/out/
 
 # 临时文件与回收站
 tmp/
+.tmp/
 .trash/
 .remember/
 

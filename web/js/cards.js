@@ -3,10 +3,10 @@
 import { el, D } from './dom.js';
 import { BACK_SVG } from './model/card-back.js';
 import { DECK, cardName } from './model/deck.js';
-import { STR } from './model/i18n.js';
 import { openDialog } from './dialog.js';
 import { cardImgAttrs } from './image-loader.js';
-import { t } from './bilingual.js';
+
+const faceDownAria = pos => ({ key: pos === 13 ? 'reveal.centralFaceDown' : 'reveal.positionFaceDown', vars: { pos }, attr: 'aria-label' });
 
 export const cardShell = deckIdx => {
 	const card = DECK[deckIdx];
@@ -17,11 +17,10 @@ export const cardShell = deckIdx => {
 };
 
 export function makeCard(pos, deckIdx, onClick) {
-	const b = el('button', 'card', cardShell(deckIdx));
+	const b = el('button', 'card', cardShell(deckIdx), faceDownAria(pos));
 	b.type = 'button';
 	b.dataset.pos = pos;
 	b.style.width = '12.8%';
-	b.setAttribute('aria-label', t(STR.reveal.faceDownAria(pos)));
 	b.onclick = () => onClick(pos, b);
 	gsap.set(b, { xPercent: -50, yPercent: -50 });
 	return b;
@@ -121,9 +120,3 @@ export function revealMini(m) {
 		.to(inner, { rotationY: 180, duration: D(0.28), ease: 'power3.out' })
 		.to(m, { scale: 1, y: 0, duration: D(0.24), ease: 'power2.out' }, '<0.04');
 }
-
-window.addEventListener('languagechange', () => {
-	document.querySelectorAll('.card:not(.is-up)[data-pos]').forEach(card => {
-		card.setAttribute('aria-label', t(STR.reveal.faceDownAria(Number(card.dataset.pos))));
-	});
-});

@@ -1,9 +1,5 @@
 import { $, D, replay } from './dom.js';
 
-const COPY_SELECTOR = '.immersive-copy[data-i18n], .immersive-copy[data-en][data-zh]';
-const STATIC_SELECTOR = '.lang-copy';
-const ARIA_SELECTOR = '[data-i18n-aria]';
-
 const LANG_KEY = 'radiant-sun.lang';
 
 function detectLang() {
@@ -37,37 +33,42 @@ export function loadDict(lang) {
 	return dictLoads[lang];
 }
 
-function dictText(key, lang = currentLang) {
-	return getPath(dicts[lang], key);
+const fill = (value, vars) => String(value).replace(/\{(\w+)\}/g, (_, name) => vars[name] ?? '');
+
+/* 一句文案的两个取法：textIn 指定语言，text 取当前语言；vars 填 {name} 占位 */
+export function textIn(lang, key, vars) {
+	const value = getPath(dicts[lang], key);
+	return vars ? fill(value, vars) : value;
+}
+export const text = (key, vars) => textIn(currentLang, key, vars);
+
+function setCopyText(node, value, html) {
+	if (html) node.innerHTML = value;
+	else node.textContent = value;
 }
 
-function setCopyText(textNode, nextText, html = false) {
-	if (html) textNode.innerHTML = nextText;
-	else textNode.textContent = nextText;
-}
-
-function animateText(textNode, nextText, html = false) {
+function animateText(textNode, value, html) {
 	if (window.gsap) {
 		gsap.timeline()
 			.to(textNode, { opacity: 0, y: -3, filter: 'blur(2px)', duration: D(0.16), ease: 'power1.out' })
 			.call(() => {
-				setCopyText(textNode, nextText, html);
+				setCopyText(textNode, value, html);
 			})
 			.fromTo(textNode, { opacity: 0, y: 4, filter: 'blur(2px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: D(0.28), ease: 'power2.out' });
 		return;
 	}
-	setCopyText(textNode, nextText, html);
+	setCopyText(textNode, value, html);
 }
 
+/* 带切换动画的节点把文字放在内层 span 里，动画只动这一层 */
 function ensureTextNode(node) {
-	let textNode = node.querySelector(':scope > .immersive-copy__text');
+	let textNode = node.querySelector(':scope > .i18n-text');
 	if (!textNode) {
 		textNode = document.createElement('span');
-		textNode.textContent = dictText(node.dataset.i18n, 'en') || node.dataset.en || node.textContent.trim();
+		textNode.className = 'i18n-text';
 		node.textContent = '';
 		node.append(textNode);
 	}
-	textNode.className = 'immersive-copy__text';
 	return textNode;
 }
 
@@ -88,36 +89,35 @@ function updateLanguageMenu(lang) {
 	});
 }
 
-function setCopyLanguage(node, lang, animate = false) {
+/* 一个 data-i18n 节点的文案写入：data-i18n-attr 写属性，data-i18n-html 写 innerHTML，
+   data-i18n-vars 是 JSON 的占位值，data-i18n-animate 切换时淡出淡入 */
+function applyI18n(node, lang, animate = false) {
+	const { i18n: key, i18nAttr: attr, i18nVars: vars } = node.dataset;
+	const value = textIn(lang, key, vars && JSON.parse(vars));
+	if (attr) {
+		node.setAttribute(attr, value);
+		return;
+	}
+	const html = node.hasAttribute('data-i18n-html');
+	if (!node.hasAttribute('data-i18n-animate')) {
+		setCopyText(node, value, html);
+		return;
+	}
 	const textNode = ensureTextNode(node);
-	node.dataset.lang = lang;
-	const html = node.dataset[`${lang}Html`];
-	const nextText = html ?? dictText(node.dataset.i18n, lang) ?? node.dataset[lang] ?? node.dataset.en;
-	if (animate) animateText(textNode, nextText, html != null);
-	else setCopyText(textNode, nextText, html != null);
-	const btn = node.querySelector(':scope > .immersive-copy__toggle');
-	if (btn) updateToggle(btn, lang);
+	if (animate) animateText(textNode, value, html);
+	else setCopyText(textNode, value, html);
+	updateToggle(node.querySelector(':scope > .i18n-toggle'), lang);
 }
 
-function setStaticLanguage(node, lang) {
-	const fromDict = dictText(node.dataset.i18n, lang);
-	if (fromDict != null) {
-		if (node.dataset.i18nHtml === 'true') node.innerHTML = fromDict;
-		else node.textContent = fromDict;
-		return;
-	}
-	const html = node.dataset[`${lang}Html`];
-	if (html != null) {
-		node.innerHTML = html;
-		return;
-	}
-	const text = node.dataset[lang];
-	if (text != null) node.textContent = text;
-}
-
-function setAriaLanguage(node, lang) {
-	const label = dictText(node.dataset.i18nAria, lang);
-	if (label != null) node.setAttribute('aria-label', label);
+/* 给节点挂上 data-i18n 并立刻填入当前语言，此后每次切换语言的扫描都会覆盖它 */
+export function localize(node, { key, vars, attr, html }) {
+	node.dataset.i18n = key;
+	if (vars) node.dataset.i18nVars = JSON.stringify(vars);
+	else delete node.dataset.i18nVars;
+	if (attr) node.dataset.i18nAttr = attr;
+	if (html) node.setAttribute('data-i18n-html', '');
+	applyI18n(node, currentLang);
+	return node;
 }
 
 export async function setLanguage(lang, { animate = false, root = document } = {}) {
@@ -127,9 +127,7 @@ export async function setLanguage(lang, { animate = false, root = document } = {
 	} catch {}
 	await loadDict(currentLang);
 	document.documentElement.lang = currentLang === 'zh' ? 'zh-CN' : 'en';
-	root.querySelectorAll(COPY_SELECTOR).forEach(node => setCopyLanguage(node, currentLang, animate));
-	root.querySelectorAll(STATIC_SELECTOR).forEach(node => setStaticLanguage(node, currentLang));
-	root.querySelectorAll(ARIA_SELECTOR).forEach(node => setAriaLanguage(node, currentLang));
+	root.querySelectorAll('[data-i18n]').forEach(node => applyI18n(node, currentLang, animate));
 	const globalBtn = $('#global-lang');
 	if (globalBtn) {
 		updateToggle(globalBtn, currentLang);
@@ -140,8 +138,6 @@ export async function setLanguage(lang, { animate = false, root = document } = {
 }
 
 export const language = () => currentLang;
-export const msg = (key, fallback = '') => dictText(key, currentLang) ?? fallback;
-export const msgFor = (lang, key, fallback = '') => dictText(key, lang === 'zh' ? 'zh' : 'en') ?? fallback;
 
 export function dockTopCapsules(host) {
 	const tools = $('#top-capsules');
@@ -161,23 +157,8 @@ export function dockTopCapsules(host) {
 	tools.classList.remove('top-capsules--docked');
 }
 
-export function t(value) {
-	if (Array.isArray(value)) return currentLang === 'zh' ? value[0] : value[1] ?? value[0];
-	if (value && typeof value === 'object' && ('zh' in value || 'en' in value)) return currentLang === 'zh' ? value.zh ?? value.en : value.en ?? value.zh;
-	return value;
-}
-
 export function initBilingualCopy(root = document) {
-	root.querySelectorAll(COPY_SELECTOR).forEach(node => {
-		if (node.dataset.bilingualReady === 'true') return;
-		const textNode = ensureTextNode(node);
-		node.dataset.lang ||= currentLang;
-		const html = node.dataset[`${node.dataset.lang}Html`];
-		setCopyText(textNode, html ?? dictText(node.dataset.i18n, node.dataset.lang) ?? node.dataset[node.dataset.lang] ?? node.dataset.en, html != null);
-		node.dataset.bilingualReady = 'true';
-	});
-	root.querySelectorAll(STATIC_SELECTOR).forEach(node => setStaticLanguage(node, currentLang));
-	root.querySelectorAll(ARIA_SELECTOR).forEach(node => setAriaLanguage(node, currentLang));
+	root.querySelectorAll('[data-i18n]').forEach(node => applyI18n(node, currentLang));
 }
 
 export async function initGlobalLanguageToggle() {

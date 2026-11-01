@@ -65,10 +65,10 @@ a[href],
   }
 }
 
-.immersive-copy__toggle { --press-y-base: -0.06em; }
+.i18n-toggle { --press-y-base: -0.06em; }
 @media (hover: hover) {
-  .immersive-copy__toggle:hover,
-  .immersive-copy__toggle:focus-visible {
+  .i18n-toggle:hover,
+  .i18n-toggle:focus-visible {
     --press-y-base: -0.12em;
   }
 }

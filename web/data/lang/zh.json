@@ -870,14 +870,14 @@
 			"doneLine": "圆环已满，中央之牌是全年的主题。点击任意一张牌细读，或在解读一栏深入某个月份、某一周、某一天。",
 			"themeWhere": "主题",
 			"themeCtx": "中央 · 全年主题",
-			"monthCtx": "{zh} · 第{house}宫",
-			"revealLineCurrent": "自当前月份（{zh}）开始，逐月翻开，环行一年；最后翻开中央的主题之牌。",
+			"monthCtx": "{month} · 第{house}宫",
+			"revealLineCurrent": "自当前月份（{month}）开始，逐月翻开，环行一年；最后翻开中央的主题之牌。",
 			"amplify": {
 				"weeksBtn": "细察此月 · 发四周之牌",
 				"hoursBtn": "钟点占问 ▾",
-				"weeksCap": "{zh}的四周",
+				"weeksCap": "{month}的四周",
 				"weekTag": "第{n}周",
-				"weekCtx": "{zh} · 第{n}周",
+				"weekCtx": "{month} · 第{n}周",
 				"daysBtn": "观此周七日",
 				"days": [
 					"日",
@@ -890,7 +890,7 @@
 				],
 				"daysCap": "第{n}周 · 七日 · 自太阳之日始",
 				"dayTag": "周{d}",
-				"dayCtx": "{zh} 第{n}周 · 星期{d}",
+				"dayCtx": "{month} 第{n}周 · 星期{d}",
 				"hourLead": "为某时刻之事占问——自堆顶发牌至该钟点之数，面朝下；末张翻开，即是那一刻。",
 				"hourSelAria": "选择钟点",
 				"hourPick": "第 {n} 个钟点 · {hour}:00",
@@ -899,7 +899,7 @@
 				"hourAgain": "再问一个钟点",
 				"hourStackTag": "前 {n} 张 · 面朝下",
 				"hourTag": "第 {n} 张",
-				"hourCtx": "{zh} · {hour}:00 的钟点牌",
+				"hourCtx": "{month} · {hour}:00 的钟点牌",
 				"hourCapFirst": "{hour}:00 · 钟点牌 · 翻开第一张作为此钟点之牌",
 				"hourCapLater": "{hour}:00 · 钟点牌 · 先发 {down} 张暗牌，翻开第 {n} 张作为此钟点之牌"
 			}

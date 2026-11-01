@@ -5,13 +5,15 @@ import { el, popIn, dealIn, D, REDUCED } from '../dom.js';
 import { takeCards, drawCount } from '../state.js';
 import { BACK_SVG } from '../model/card-back.js';
 import { MONTHS } from '../model/solar-ring.js';
-import { STR, bi } from '../model/i18n.js';
+import { text } from '../model/i18n.js';
 import { MODES } from '../model/modes/index.js';
+import { localize } from '../bilingual.js';
 import { miniCard, miniFlipCard, revealMini } from '../cards.js';
 import { autoScrollTo, scrollPanelTo } from '../panel.js';
 import { drawerLiftForEntry } from '../drawer.js';
 
 const A = () => MODES.sunyear.amplify;
+const AK = 'modes.sunyear.amplify'; // 单键文案直接挂 data-i18n
 const entryWhere = node => node.closest('.entry')?.querySelector('.entry__where');
 const steadyScrollTo = (node, alignTop = true) => {
 	if (!node?.isConnected) return;
@@ -30,12 +32,10 @@ const steadyScrollTo = (node, alignTop = true) => {
 export function addAmplify(pos, entry) {
 	const acts = el('div', 'entry__acts');
 	const amp = el('div', 'amplify');
-	const bW = el('button', 'sub-btn', A().weeksBtn);
-	bW.dataset.ui = 'weeks-btn';
+	const bW = el('button', 'sub-btn', null, { key: `${AK}.weeksBtn` });
 	bW.type = 'button';
 	bW.onclick = () => dealWeeks(pos, amp, bW);
-	const bH = el('button', 'sub-btn', A().hoursBtn);
-	bH.dataset.ui = 'hours-btn';
+	const bH = el('button', 'sub-btn', null, { key: `${AK}.hoursBtn` });
 	bH.type = 'button';
 	bH.onclick = () => {
 		hourForm(pos, amp);
@@ -45,16 +45,11 @@ export function addAmplify(pos, entry) {
 	entry.append(acts, amp);
 }
 
-window.addEventListener('languagechange', () => {
-	document.querySelectorAll('[data-ui="weeks-btn"]').forEach(btn => (btn.textContent = A().weeksBtn));
-	document.querySelectorAll('[data-ui="hours-btn"]').forEach(btn => (btn.textContent = A().hoursBtn));
-});
-
 /* “deal from the top of the deck four more cards … the four weeks” */
 function dealWeeks(pos, amp, btn) {
 	const idxs = takeCards(4);
 	if (!idxs) {
-		amp.append(el('p', 'deck-empty-note', bi(STR.deck.empty)));
+		amp.append(el('p', 'deck-empty-note', text('deck.empty')));
 		btn.disabled = true;
 		return;
 	}
@@ -67,7 +62,7 @@ function dealWeeks(pos, amp, btn) {
 	idxs.forEach((di, k) => {
 		const wrap = el('div', 'mini-col');
 		const mini = miniCard(di, A().weekTag(k + 1), navList[k].ctx, { list: navList, at: k });
-		const bd = el('button', 'sub-btn', A().daysBtn);
+		const bd = el('button', 'sub-btn', null, { key: `${AK}.daysBtn` });
 		bd.type = 'button';
 		bd.onclick = () => {
 			dealDays(pos, k + 1, block);
@@ -89,7 +84,7 @@ function dealWeeks(pos, amp, btn) {
 function dealDays(pos, week, parentBlock) {
 	const idxs = takeCards(7);
 	if (!idxs) {
-		parentBlock.append(el('p', 'deck-empty-note', bi(STR.deck.empty)));
+		parentBlock.append(el('p', 'deck-empty-note', text('deck.empty')));
 		return;
 	}
 	const m = MONTHS[pos - 1];
@@ -124,7 +119,7 @@ function hourForm(pos, amp) {
 	const m = MONTHS[pos - 1];
 	const block = el('div', 'amplify__block');
 	const form = el('div', 'hour-form');
-	const lead = el('p', 'hour-lead', A().hourLead);
+	const lead = el('p', 'hour-lead', null, { key: `${AK}.hourLead` });
 	form.append(lead);
 
 	/* 二十四格时盘：0 时即第 24 个钟点 */
@@ -135,7 +130,7 @@ function hourForm(pos, amp) {
 
 	const grid = el('div', 'hour-grid');
 	grid.setAttribute('role', 'radiogroup');
-	grid.setAttribute('aria-label', A().hourSelAria);
+	localize(grid, { key: `${AK}.hourSelAria`, attr: 'aria-label' });
 	const cells = [];
 	for (let h = 1; h <= 24; h++) {
 		const c = el('button', 'hour-cell' + (h === now ? ' hour-cell--now' : ''), String(h));
@@ -152,7 +147,7 @@ function hourForm(pos, amp) {
 	}
 	setNote();
 
-	const go = el('button', 'sub-btn', A().hourGo);
+	const go = el('button', 'sub-btn', null, { key: `${AK}.hourGo` });
 	go.type = 'button';
 	const act = el('div', 'hour-act');
 	act.append(note, go);
@@ -185,7 +180,7 @@ function hourForm(pos, amp) {
 		const n = sel;
 		const idxs = takeCards(n);
 		if (!idxs) {
-			block.insertBefore(el('p', 'deck-empty-note', bi(STR.deck.shortOfHour)), form);
+			block.insertBefore(el('p', 'deck-empty-note', text('deck.shortOfHour')), form);
 			syncAvail();
 			return;
 		}
@@ -243,7 +238,7 @@ function hourForm(pos, amp) {
 			dealing = false;
 			go.disabled = false;
 			syncAvail();
-			if (!go.disabled) go.textContent = A().hourAgain;
+			if (!go.disabled) localize(go, { key: `${AK}.hourAgain` });
 		};
 		gsap.set([res, revealed, ...backs, stackTag].filter(Boolean), { opacity: 1, y: 0, rotation: 0, clearProps: 'opacity,transform,filter' });
 		const tl = gsap.timeline({

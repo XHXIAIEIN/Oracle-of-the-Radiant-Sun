@@ -9,11 +9,11 @@
 import { $ } from './dom.js';
 import { riteLine } from './stage.js';
 import { loadDeck } from './model/deck.js';
-import { STR } from './model/i18n.js';
+import { text } from './model/i18n.js';
 import { showHome, startMethod } from './ritual/start.js';
 import { showLibrary } from './library.js';
 import { applyRoute } from './router.js';
-import { initBilingualCopy, initGlobalLanguageToggle, t } from './bilingual.js';
+import { initBilingualCopy, initGlobalLanguageToggle } from './bilingual.js';
 import { initScrollMotion } from './scroll-motion.js';
 import { renderHomeMethods } from './home-methods.js';
 import './panel.js'; // 排序与跟卷的接线
@@ -37,5 +37,5 @@ initBilingualCopy();
 initScrollMotion();
 
 loadDeck().then(applyRoute, () => {
-	riteLine.textContent = t(STR.loadFail);
+	riteLine.textContent = text('system.loadFail');
 });

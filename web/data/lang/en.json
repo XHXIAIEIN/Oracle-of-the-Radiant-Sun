@@ -870,14 +870,14 @@
 			"doneLine": "The circle is complete, and the centre card is the theme of the year. Tap any card for the full reading, or open a month further in the reading panel.",
 			"themeWhere": "Theme",
 			"themeCtx": "Centre · The Emphasis or Theme",
-			"monthCtx": "{en} · House {house}",
-			"revealLineCurrent": "Begin with the current month ({en}), then turn the cards month by month around the year; reveal the centre theme card last.",
+			"monthCtx": "{month} · House {house}",
+			"revealLineCurrent": "Begin with the current month ({month}), then turn the cards month by month around the year; reveal the centre theme card last.",
 			"amplify": {
 				"weeksBtn": "Open This Month · Deal Four Weeks",
 				"hoursBtn": "Hourly Question ▾",
-				"weeksCap": "The Four Weeks of {en}",
+				"weeksCap": "The Four Weeks of {month}",
 				"weekTag": "Week {n}",
-				"weekCtx": "{en} · Week {n}",
+				"weekCtx": "{month} · Week {n}",
 				"daysBtn": "Open Seven Days",
 				"days": [
 					"Sun",
@@ -890,7 +890,7 @@
 				],
 				"daysCap": "Week {n} · seven days, starting with the Sun's day",
 				"dayTag": "{d}",
-				"dayCtx": "{en} · Week {n} · {d}",
+				"dayCtx": "{month} · Week {n} · {d}",
 				"hourLead": "For a matter at a particular hour, deal from the top of the deck to that hour number, face down; turn over the last card.",
 				"hourSelAria": "Choose an hour",
 				"hourPick": "Hour {n} · {hour}:00",
@@ -899,7 +899,7 @@
 				"hourAgain": "Ask Another Hour",
 				"hourStackTag": "First {n} cards · face down",
 				"hourTag": "Card {n}",
-				"hourCtx": "{en} · {hour}:00 hour card",
+				"hourCtx": "{month} · {hour}:00 hour card",
 				"hourCapFirst": "{hour}:00 · hour card · the first card, turned up, is the hour",
 				"hourCapLater": "{hour}:00 · hour card · deal {down} face down; the {n}th, turned up, is the hour"
 			}

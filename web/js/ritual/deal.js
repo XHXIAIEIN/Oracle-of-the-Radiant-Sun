@@ -48,7 +48,7 @@ export function dealPhase() {
 	const left = drawCount();
 	const deckStart = topLayerPose(left + n);
 
-	setRite(...mode().dealLine);
+	setRite(mode().dealLine);
 
 	const seq = S.seq;
 	const tl = gsap.timeline({

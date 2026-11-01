@@ -95,14 +95,14 @@
 
 /* inline language toggle for explanatory paragraphs. It is appended as the
    final inline item, so the control sits at the end of the paragraph copy. */
-.immersive-copy {
+[data-i18n-animate] {
   --translate-dot: oklch(78% 0.12 85 / 0.46);
 }
-.immersive-copy__text {
+.i18n-text {
   display: inline;
   will-change: opacity, transform, filter;
 }
-.immersive-copy__toggle {
+.i18n-toggle {
   display: inline-grid;
   place-items: center;
   min-width: 2.2em;
@@ -124,7 +124,7 @@
   opacity: 0.72;
   transition: opacity 0.25s, color 0.25s, border-color 0.25s, background 0.25s, box-shadow 0.25s, translate 0.25s;
 }
-.immersive-copy__toggle:focus-visible {
+.i18n-toggle:focus-visible {
   outline: 2px solid oklch(78% 0.12 85 / 0.36);
   outline-offset: 2px;
 }
@@ -134,7 +134,7 @@
 @media (hover: hover) {
   .ghost-btn:hover { color: var(--gold); }
   .qpick:hover { color: var(--gold); border-color: var(--gold); }
-  .immersive-copy__toggle:hover, .immersive-copy__toggle:focus-visible {
+  .i18n-toggle:hover, .i18n-toggle:focus-visible {
     opacity: 1;
     color: var(--gold);
     border-color: var(--gold);
@@ -145,8 +145,8 @@
 }
 .ghost-btn:active { color: var(--gold); }
 .qpick:active { border-color: var(--gold); }
-.immersive-copy__toggle:active,
-.immersive-copy__toggle[aria-pressed="true"] {
+.i18n-toggle:active,
+.i18n-toggle[aria-pressed="true"] {
   opacity: 0.95;
   color: var(--gold);
   border-color: color-mix(in oklab, var(--gold) 75%, transparent);

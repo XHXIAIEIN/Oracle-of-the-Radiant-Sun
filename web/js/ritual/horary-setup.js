@@ -14,7 +14,6 @@ let currentStep = 1;
 let refreshCurrentStep = null;
 
 export function horarySetup() {
-	const C = MODES.horary.setup;
 	const stepHead = (num, zh, sub) => el('header', 'setup__step', `<span class="setup__step-num">${num}</span><h3>${zh}</h3><p>${sub}</p>`);
 
 	const intro = () => gsap.fromTo(setup.children, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: D(0.55), stagger: 0.08, ease: 'power2.out' });
@@ -34,7 +33,8 @@ export function horarySetup() {
 	/* — 壹 · the question — */
 	const step1 = () => {
 		currentStep = 1;
-		setRite(...C.step1.rite);
+		const C = MODES.horary.setup; // 每次重绘都按当前语言取，切换语言时重绘这一步
+		setRite(C.step1.rite);
 
 		const q = el('input', 'setup__q');
 		q.name = 'question';
@@ -72,7 +72,8 @@ export function horarySetup() {
 	/* — 贰 · the houses — */
 	const step2 = () => {
 		currentStep = 2;
-		setRite(...C.step2.rite);
+		const C = MODES.horary.setup;
+		setRite(C.step2.rite);
 
 		const grid = el('div', 'houses-grid');
 		for (const h of HOUSES) {

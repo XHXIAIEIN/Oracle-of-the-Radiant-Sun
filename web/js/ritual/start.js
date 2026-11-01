@@ -1,9 +1,8 @@
 /* 屏幕切换：起始页与仪式页，选定占法后重置状态入座 */
 
-import { $, swapScreen } from '../dom.js';
+import { $, el, swapScreen } from '../dom.js';
 import { wheel, panel, panelList, setup } from '../stage.js';
 import { S, resetState, applyPreset } from '../state.js';
-import { MODES } from '../model/modes/index.js';
 import { resetFollow, resetPanelChrome } from '../panel.js';
 import { resetDrawer } from '../drawer.js';
 import { horarySetup } from './horary-setup.js';
@@ -13,7 +12,7 @@ import { hideShare } from '../share.js';
 import { dockTopCapsules } from '../bilingual.js';
 
 function updateRitualTitle(m) {
-	$('#ritual-title').innerHTML = `<span class="t-main">${MODES[m].title}</span>`;
+	$('#ritual-title').replaceChildren(el('span', 't-main', null, { key: `modes.${m}.title` }));
 }
 
 export function showHome() {
@@ -60,8 +59,3 @@ export function startMethod(m, opts = {}) {
 		else shufflePhase();
 	});
 }
-
-window.addEventListener('languagechange', () => {
-	if (!S.method || $('#screen-ritual').hidden) return;
-	updateRitualTitle(S.method);
-});

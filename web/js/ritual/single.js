@@ -6,7 +6,7 @@ import { wheel, panelList, setRite, setActions, updateBadge } from '../stage.js'
 import { S, takeCards, drawCount } from '../state.js';
 import { DECK, cardName, cardText } from '../model/deck.js';
 import { MODES } from '../model/modes/index.js';
-import { STR, text } from '../model/i18n.js';
+import { text } from '../model/i18n.js';
 import { psSuitLine } from '../model/card-symbols.js';
 import { cardShell, flipCard } from '../cards.js';
 import { openPanel, placeEntry, scrollPanelTo } from '../panel.js';
@@ -56,8 +56,7 @@ export function singleDeal() {
 	gsap.to(deckPile, { left: G.PILE_X + '%', top: G.TOP + '%', duration: D(0.7), ease: 'power2.inOut' });
 
 	// 牌堆自身就是“再抽一张”；按钮是它的同义词
-	again = el('button', 'act-btn act-btn--quiet', M().again);
-	again.dataset.ui = 'single-again';
+	again = el('button', 'act-btn act-btn--quiet', null, { key: 'modes.single.again' });
 	again.type = 'button';
 	again.hidden = true;
 	again.onclick = drawAgain;
@@ -101,7 +100,7 @@ function drawAgain() {
 function singleDrawNext(delay = 0) {
 	const idxs = takeCards(1);
 	if (!idxs) {
-		setRite(...STR.deck.empty);
+		setRite(() => text('deck.empty'));
 		again?.remove();
 		setActions([]);
 		deckPile.disabled = true;
@@ -168,7 +167,7 @@ function singleDrawNext(delay = 0) {
 			ease: 'back.out(1.35)',
 		}, '>-0.04')
 		.to(card, { x: 0, y: 0, duration: D(0.14), ease: 'sine.out' }, `>-=${D(0.12)}`);
-	setRite(...M().turnPrompt);
+	setRite(M().turnPrompt);
 
 	card.onclick = () => {
 		if (card.classList.contains('is-up')) {
@@ -185,10 +184,9 @@ function singleDrawNext(delay = 0) {
 			S.revealed.push(n);
 			card.setAttribute('aria-label', cardName(c));
 			const entry = appendSingleEntry(di, n);
-			setRite(...M().afterFlip);
+			setRite(M().afterFlip);
 
-			const link = el('button', 'act-link', M().putBack);
-			link.dataset.ui = 'single-put-back';
+			const link = el('button', 'act-link', null, { key: 'modes.single.putBack' });
 			link.type = 'button';
 			link.onclick = () => returnToDeck(card, link, entry, n);
 
@@ -211,7 +209,7 @@ function returnToDeck(card, link, entry, n) {
 	S.ptr--;
 	updateBadge(drawCount());
 	gsap.to(entry, { opacity: 0, y: 14, duration: D(0.4), ease: 'power2.in', onComplete: () => entry.remove() });
-	setRite(...M().returned);
+	setRite(M().returned);
 	// 放回也走堆顶：先合回牌背，再沿来路放回，最后洗动未抽出的牌。
 	const back = topLayerPose(drawCount());
 	const seq = S.seq;
@@ -288,8 +286,6 @@ function renderSingleEntry(entry, di, n) {
 function refreshSingleText() {
 	if ($('#screen-ritual').hidden || S.method !== 'single') return;
 	$('#panel-title').innerHTML = M().panelTitle;
-	if (again) again.textContent = M().again;
-	if (live?.link) live.link.textContent = M().putBack;
 	if (live?.card) {
 		const di = Number(live.card.dataset.deckIdx);
 		if (Number.isInteger(di)) live.card.setAttribute('aria-label', cardName(DECK[di]));

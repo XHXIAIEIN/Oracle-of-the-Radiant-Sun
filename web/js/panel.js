@@ -5,6 +5,7 @@ import { actions, panel, panelList } from './stage.js';
 import { drawerLiftForReading, drawerOnOpen, drawerOnEntry } from './drawer.js';
 import { clearTopic, currentTopic, setTopic, topicCount, topicLabel } from './model/journal.js';
 import { text } from './model/i18n.js';
+import { localize } from './bilingual.js';
 
 const analysisPill = $('#analysis-pill');
 let panelAvailable = false;
@@ -15,7 +16,6 @@ function updateAnalysisPill() {
 	analysisPill.hidden = !(panelAvailable && analysisReady);
 	if (!panelAvailable || !analysisReady) return;
 	if (analysisPill.parentNode !== actions) actions.append(analysisPill);
-	analysisPill.textContent = text('ritual.analysisOpen');
 }
 
 /* the reading panel arrives as a grid-track transition (see .ritual-body),
@@ -212,7 +212,7 @@ jumpPill.onclick = () => {
 /* flipping the log's order glides every entry to its mirrored place (FLIP) */
 const sortBtn = $('#panel-sort');
 function refreshSortButton() {
-	sortBtn.textContent = text(panelDesc ? 'panel.sortAsc' : 'panel.sortDesc');
+	localize(sortBtn, { key: panelDesc ? 'panel.sortAsc' : 'panel.sortDesc' });
 }
 sortBtn.onclick = () => {
 	panelDesc = !panelDesc;
@@ -228,7 +228,6 @@ sortBtn.onclick = () => {
 	});
 };
 
-window.addEventListener('languagechange', refreshSortButton);
 
 /* ── Journal topic line ── */
 const topicName = $('#topic-name');
@@ -250,7 +249,6 @@ $('#topic-clear').onclick = () => {
 	refreshTopic();
 };
 window.addEventListener('languagechange', refreshTopic);
-window.addEventListener('languagechange', updateAnalysisPill);
 
 analysisPill?.addEventListener('click', () => {
 	if (!panelAvailable) return;

@@ -5,7 +5,7 @@ import { DECK, cardName, cardSignKeyword, cardText } from './model/deck.js';
 import { planetNameFor, psLine, signNameFor, suitNameFor } from './model/card-symbols.js';
 import { text } from './model/i18n.js';
 import { cardImgAttrs, preloadImage, warmCards } from './image-loader.js';
-import { initBilingualCopy, language } from './bilingual.js';
+import { language } from './bilingual.js';
 
 const dialog = $('#card-dialog');
 const zoom = $('#zoom-dialog');
@@ -77,18 +77,9 @@ function render(deckIdx, ctx) {
 	const c = DECK[deckIdx];
 	const canGoBack = dialogStack.length > 1;
 	const sec = (title, key) => {
-		const text = cardText(c, key);
-		const textEn = c[key];
-		const textZh = c[`${key}_zh`];
-		const textHtml = renderLinkedText(text);
-		const textEnHtml = renderLinkedText(textEn);
-		const textZhHtml = renderLinkedText(textZh);
-		return (
-		text
-			? `
-    <section class="dlg-sec"><h4>${title}</h4><p${textZh ? ` class="immersive-copy" data-en-html="${esc(textEnHtml)}" data-zh-html="${esc(textZhHtml)}"` : ''}><span${textZh ? ' class="immersive-copy__text"' : ''}>${textHtml}</span></p></section>`
-			: ''
-		);
+		const value = cardText(c, key);
+		return value ? `
+    <section class="dlg-sec"><h4>${title}</h4><p>${renderLinkedText(value)}</p></section>` : '';
 	};
 	const suitLine = language() === 'zh' ? `${suitNameFor(c.suit_name)}之组` : `The Suit of ${suitNameFor(c.suit_name)}`;
 	const signLine = language() === 'zh' ? `${signNameFor(c.sign)}：${cardSignKeyword(c)}` : `${signNameFor(c.sign)}: ${cardSignKeyword(c)}`;
@@ -117,7 +108,6 @@ function render(deckIdx, ctx) {
       ${sec(text('dialog.sections.events'), 'events')}
     </div>`;
 	body.querySelector('.card-dialog__body').scrollTop = 0;
-	initBilingualCopy(body);
 	hideRefBubble();
 	warmDialogNeighbours(c);
 	body.querySelector('.card-dialog__art img').onclick = () => {

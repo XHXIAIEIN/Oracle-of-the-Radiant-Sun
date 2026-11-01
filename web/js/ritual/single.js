@@ -56,8 +56,7 @@ export function singleDeal() {
 	gsap.to(deckPile, { left: G.PILE_X + '%', top: G.TOP + '%', duration: D(0.7), ease: 'power2.inOut' });
 
 	// 牌堆自身就是“再抽一张”；按钮是它的同义词
-	again = el('button', 'act-btn act-btn--quiet', M().again);
-	again.dataset.ui = 'single-again';
+	again = el('button', 'act-btn act-btn--quiet', null, { key: 'modes.single.again' });
 	again.type = 'button';
 	again.hidden = true;
 	again.onclick = drawAgain;
@@ -187,8 +186,7 @@ function singleDrawNext(delay = 0) {
 			const entry = appendSingleEntry(di, n);
 			setRite(M().afterFlip);
 
-			const link = el('button', 'act-link', M().putBack);
-			link.dataset.ui = 'single-put-back';
+			const link = el('button', 'act-link', null, { key: 'modes.single.putBack' });
 			link.type = 'button';
 			link.onclick = () => returnToDeck(card, link, entry, n);
 
@@ -288,8 +286,6 @@ function renderSingleEntry(entry, di, n) {
 function refreshSingleText() {
 	if ($('#screen-ritual').hidden || S.method !== 'single') return;
 	$('#panel-title').innerHTML = M().panelTitle;
-	if (again) again.textContent = M().again;
-	if (live?.link) live.link.textContent = M().putBack;
 	if (live?.card) {
 		const di = Number(live.card.dataset.deckIdx);
 		if (Number.isInteger(di)) live.card.setAttribute('aria-label', cardName(DECK[di]));

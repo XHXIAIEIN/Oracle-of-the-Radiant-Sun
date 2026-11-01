@@ -134,7 +134,3 @@ function copyBySelection(value) {
 	area.remove();
 	return ok;
 }
-
-window.addEventListener('languagechange', () => {
-	if (!btn.hidden) btn.textContent = text('ritual.share');
-});

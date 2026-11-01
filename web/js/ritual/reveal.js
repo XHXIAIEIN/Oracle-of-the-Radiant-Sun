@@ -15,7 +15,7 @@ import { MODES } from '../model/modes/index.js';
 import { openDialog } from '../dialog.js';
 import { addAmplify } from './amplify.js';
 import { showShare } from '../share.js';
-import { language } from '../bilingual.js';
+import { language, localize } from '../bilingual.js';
 
 const REVEAL_ALL_DELAY_MS = 650; // 自动翻牌时，两张牌之间的停顿。
 const REVEAL_ALL_FAST_DELAY_MS = 4; // 点“加速”后，两张牌之间的停顿。
@@ -42,8 +42,7 @@ export function revealPhase() {
 
 	markNext();
 
-	const auto = el('button', 'act-btn act-btn--quiet', text('reveal.all'));
-	auto.dataset.ui = 'reveal-all';
+	const auto = el('button', 'act-btn act-btn--quiet', null, { key: 'reveal.all' });
 	auto.dataset.state = 'idle';
 	auto.type = 'button';
 	auto.onclick = async () => {
@@ -53,7 +52,7 @@ export function revealPhase() {
 		}
 		auto.dataset.state = 'running';
 		auto.dataset.fast = 'false';
-		auto.textContent = text('reveal.speedUp');
+		localize(auto, { key: 'reveal.speedUp' });
 		const seq = S.seq;
 		while (seq === S.seq && S.revealQueue.length) {
 			const pos = S.revealQueue[0];
@@ -134,6 +133,8 @@ async function flipAt(pos, node, { speed = 1 } = {}) {
 		S.revealed.push(pos);
 		node.disabled = false;
 		if (isTheme) node.classList.add('halo-burst');
+		delete node.dataset.i18n; // 翻开后 aria 是牌名，不再随语言扫描写回「未翻开」
+		delete node.dataset.i18nVars;
 		node.setAttribute('aria-label', cardName(DECK[S.placed.get(pos)]));
 		record(S.seq, S.method, S.question, pos, DECK[S.placed.get(pos)].page);
 		refreshTopic();
@@ -232,8 +233,6 @@ function refreshRevealedText() {
 		const deckIdx = S.placed.get(Number(card.dataset.pos));
 		if (deckIdx != null) card.setAttribute('aria-label', cardName(DECK[deckIdx]));
 	});
-	const auto = actions.querySelector('[data-ui="reveal-all"]');
-	if (auto) auto.textContent = text(auto.dataset.state === 'running' ? 'reveal.speedUp' : 'reveal.all');
 	panelList.querySelectorAll('.entry[data-pos]').forEach(entry => {
 		const pos = Number(entry.dataset.pos);
 		renderEntry(entry, pos);

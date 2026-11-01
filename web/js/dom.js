@@ -1,5 +1,8 @@
 /* DOM 与动效小工具 */
 
+/* bilingual.js 也引用本文件；两边都只在函数里用对方的导出，循环引用无碍 */
+import { localize } from './bilingual.js';
+
 export const $ = (s, el = document) => el.querySelector(s);
 export const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 export const D = x => (REDUCED ? 0.001 : x); // duration helper
@@ -25,10 +28,12 @@ export function scrollScreenToTop(screen = currentScreen(), behavior = REDUCED ?
 	screen?.scrollTo({ top: 0, left: 0, behavior });
 }
 
-export const el = (tag, cls, html) => {
+/* i18n 给出字典键时，节点挂上 data-i18n 并填入当前语言的文案（见 bilingual.js 的 localize） */
+export const el = (tag, cls, html, i18n) => {
 	const n = document.createElement(tag);
 	if (cls) n.className = cls;
 	if (html != null) n.innerHTML = html;
+	if (i18n) localize(n, i18n);
 	return n;
 };
 

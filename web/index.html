@@ -53,14 +53,14 @@
 			<header class="masthead">
 				<div class="masthead__sun" aria-hidden="true">☉</div>
 				<h1 class="masthead__title">Oracle of the Radiant Sun</h1>
-				<p class="masthead__sub lang-copy" data-i18n="app.subtitle">Astrology Cards to Illuminate Your Life</p>
+				<p class="masthead__sub" data-i18n="app.subtitle">Astrology Cards to Illuminate Your Life</p>
 			</header>
 
-			<p class="home-intro immersive-copy" data-i18n="home.intro"></p>
+			<p class="home-intro" data-i18n="home.intro" data-i18n-animate></p>
 
-			<nav class="methods" id="methods" aria-label="Choose a reading" data-i18n-aria="home.methodsAria"></nav>
+			<nav class="methods" id="methods" aria-label="Choose a reading" data-i18n="home.methodsAria" data-i18n-attr="aria-label"></nav>
 
-			<button class="lib-open lang-copy" id="btn-library" type="button" data-i18n="home.libraryOpen">Open the complete deck · 84 cards</button>
+			<button class="lib-open" id="btn-library" type="button" data-i18n="home.libraryOpen">Open the complete deck · 84 cards</button>
 
 			<footer class="home-foot">Astrology Cards to Illuminate Your Life</footer>
 		</section>
@@ -68,15 +68,15 @@
 		<!-- ══════════════ Screen: ritual ══════════════ -->
 		<section class="screen screen--ritual" id="screen-ritual" hidden>
 			<header class="ritual-head">
-				<button class="ghost-btn lang-copy" id="btn-home" type="button" data-i18n="nav.backHomeHtml" data-i18n-html="true">←<span class="label-long"> Back to Home</span><span class="label-short"> Back</span></button>
+				<button class="ghost-btn" id="btn-home" type="button" data-i18n="nav.backHomeHtml" data-i18n-html>←<span class="label-long"> Back to Home</span><span class="label-short"> Back</span></button>
 				<h2 class="ritual-head__title" id="ritual-title"></h2>
 				<div class="ritual-head__tools" id="ritual-tools"></div>
 				<span class="deck-badge" id="deck-badge" hidden>
-					<span class="lang-copy" data-i18n="ritual.deck">Deck</span>
+					<span data-i18n="ritual.deck">Deck</span>
 					<b id="deck-count">71</b>
 				</span>
-				<button class="share-btn lang-copy" id="btn-share" type="button" hidden data-i18n="ritual.share">Copy Link</button>
-				<button class="share-btn lang-copy" id="btn-copy-reading" type="button" hidden data-i18n="ritual.copyReading">Copy Reading</button>
+				<button class="share-btn" id="btn-share" type="button" hidden data-i18n="ritual.share">Copy Link</button>
+				<button class="share-btn" id="btn-copy-reading" type="button" hidden data-i18n="ritual.copyReading">Copy Reading</button>
 			</header>
 
 			<div class="ritual-body" id="ritual-body">
@@ -89,26 +89,26 @@
 					<!-- one quiet instruction line at a time, beneath the wheel -->
 					<p class="rite-line" id="rite-line" aria-live="polite"></p>
 					<div class="stage-actions" id="stage-actions"></div>
-					<button class="analysis-pill panel-rise-btn act-btn act-btn--quiet lang-copy" id="analysis-pill" type="button" hidden data-i18n="ritual.analysisOpen" aria-controls="panel">Analysis</button>
+					<button class="analysis-pill panel-rise-btn act-btn act-btn--quiet" id="analysis-pill" type="button" hidden data-i18n="ritual.analysisOpen" aria-controls="panel">Analysis</button>
 				</div>
 				<aside class="panel" id="panel" hidden>
 					<!-- the drawer's grip: drag between peek / half / full, tap to toggle -->
 						<button class="panel__grip" id="panel-grip" type="button" aria-label="Drag or tap to collapse or expand the reading"></button>
 					<div class="panel__head">
 						<h3 class="panel__title" id="panel-title"></h3>
-						<button class="panel__sort lang-copy" id="panel-sort" type="button" data-i18n="ritual.panelSortOldest">Oldest First</button>
+						<button class="panel__sort" id="panel-sort" type="button" data-i18n="ritual.panelSortOldest">Oldest First</button>
 					</div>
 					<!-- journal topic line -->
 					<div class="panel__topic" id="panel-topic">
-						<span class="lang-copy" data-i18n="journal.topic">Topic</span>
+						<span data-i18n="journal.topic">Topic</span>
 						<button class="panel__topic-btn" id="topic-name" type="button"></button>
 						<span id="topic-count"></span>
-						<button class="panel__topic-btn lang-copy" id="topic-clear" type="button" data-i18n="journal.clear">Clear Topic History</button>
+						<button class="panel__topic-btn" id="topic-clear" type="button" data-i18n="journal.clear">Clear Topic History</button>
 					</div>
 					<div class="panel__list" id="panel-list"></div>
 					<button class="panel__jump" id="panel-jump" type="button" hidden>
 						<span class="arrow">↓</span>
-						<span class="lang-copy" data-i18n="ritual.jumpLatest">Jump to Latest</span>
+						<span data-i18n="ritual.jumpLatest">Jump to Latest</span>
 					</button>
 				</aside>
 			</div>
@@ -117,12 +117,12 @@
 		<!-- ══════════════ Screen: card library ══════════════ -->
 		<section class="screen screen--library" id="screen-library" hidden>
 			<header class="ritual-head">
-				<button class="ghost-btn lang-copy" id="btn-lib-home" type="button" data-i18n="nav.backHomeHtml" data-i18n-html="true">←<span class="label-long"> Back to Home</span><span class="label-short"> Back</span></button>
-				<h2 class="ritual-head__title lang-copy" data-i18n="library.title">The Complete Deck</h2>
+				<button class="ghost-btn" id="btn-lib-home" type="button" data-i18n="nav.backHomeHtml" data-i18n-html>←<span class="label-long"> Back to Home</span><span class="label-short"> Back</span></button>
+				<h2 class="ritual-head__title" data-i18n="library.title">The Complete Deck</h2>
 				<div class="ritual-head__tools" id="library-tools"></div>
 				<span class="deck-badge" id="lib-count">
 					<b>84</b>
-					<span class="lang-copy" data-i18n="library.countSuffix">/ 84 cards</span>
+					<span data-i18n="library.countSuffix">/ 84 cards</span>
 				</span>
 			</header>
 			<div class="lib-filters" id="lib-filters"></div>
@@ -133,10 +133,10 @@
 		<dialog class="card-dialog" id="card-dialog">
 			<!-- bottom-sheet grabber: drag down to dismiss (phones only) -->
 			<div class="card-dialog__grab" id="dialog-grab" aria-hidden="true"></div>
-			<button class="card-dialog__close" id="dialog-close" type="button" aria-label="Close" data-i18n-aria="dialog.close">✕</button>
+			<button class="card-dialog__close" id="dialog-close" type="button" aria-label="Close" data-i18n="dialog.close" data-i18n-attr="aria-label">✕</button>
 			<!-- leaf through a row of cards (a week's days …) without leaving the dialog -->
-			<button class="card-dialog__nav card-dialog__nav--prev" id="dialog-prev" type="button" aria-label="Previous card" data-i18n-aria="dialog.prev" hidden>‹</button>
-			<button class="card-dialog__nav card-dialog__nav--next" id="dialog-next" type="button" aria-label="Next card" data-i18n-aria="dialog.next" hidden>›</button>
+			<button class="card-dialog__nav card-dialog__nav--prev" id="dialog-prev" type="button" aria-label="Previous card" data-i18n="dialog.prev" data-i18n-attr="aria-label" hidden>‹</button>
+			<button class="card-dialog__nav card-dialog__nav--next" id="dialog-next" type="button" aria-label="Next card" data-i18n="dialog.next" data-i18n-attr="aria-label" hidden>›</button>
 			<div class="card-dialog__grid" id="dialog-body"></div>
 		</dialog>
 

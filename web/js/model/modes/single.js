@@ -17,12 +17,6 @@ export default {
 	shuffleLine: () => text(`${K}.shuffleLine`),
 	turnPrompt: () => text(`${K}.turnPrompt`),
 	afterFlip: () => text(`${K}.afterFlip`),
-	get again() {
-		return text(`${K}.again`);
-	},
-	get putBack() {
-		return text(`${K}.putBack`);
-	},
 	returned: () => text(`${K}.returned`),
 
 	nthAria: n => text(`${K}.nthAria`, { n: roman(n) }),

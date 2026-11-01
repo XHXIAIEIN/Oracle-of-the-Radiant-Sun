@@ -39,8 +39,10 @@ function slotLabelHtml(i, months) {
 }
 
 function refreshSlotLabels() {
+	const labels = wheel.querySelectorAll('.slot-label[data-pos]');
+	if (!labels.length) return; // 起始页与卡片库没有轮盘，也没有当前占法
 	const months = mode().wheelLabels === 'months';
-	wheel.querySelectorAll('.slot-label[data-pos]').forEach(label => {
+	labels.forEach(label => {
 		const pos = Number(label.dataset.pos);
 		if (pos === 13) label.innerHTML = `<span>${text('wheel.theme')}</span>`;
 		else label.innerHTML = slotLabelHtml(pos, months);

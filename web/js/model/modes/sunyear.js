@@ -37,21 +37,14 @@ export default {
 
 	get amplify() {
 		return {
-			weeksBtn: text(`${A}.weeksBtn`),
-			hoursBtn: text(`${A}.hoursBtn`),
 			weeksCap: m => text(`${A}.weeksCap`, { month: monthName(m) }),
 			weekTag: k => text(`${A}.weekTag`, { n: cnNum(k) }),
 			weekCtx: (m, k) => `${text(`${K}.title`)}<br><b>${text(`${A}.weekCtx`, { month: monthName(m), n: language() === 'zh' ? cnNum(k) : k })}</b>`,
-			daysBtn: text(`${A}.daysBtn`),
 			DAYS: text(`${A}.days`),
 			daysCap: k => text(`${A}.daysCap`, { n: cnNum(k) }),
 			dayTag: d => text(`${A}.dayTag`, { d }),
 			dayCtx: (m, k, d) => `${text(`${K}.title`)}<br><b>${text(`${A}.dayCtx`, { month: monthName(m), n: language() === 'zh' ? cnNum(k) : k, d })}</b>`,
-			hourLead: text(`${A}.hourLead`),
-			hourSelAria: text(`${A}.hourSelAria`),
 			hourPick: (n, isNow) => text(`${A}.${isNow ? 'hourPickNow' : 'hourPick'}`, { n, hour: hour(n) }),
-			hourGo: text(`${A}.hourGo`),
-			hourAgain: text(`${A}.hourAgain`),
 			hourStackTag: n => text(`${A}.hourStackTag`, { n: n - 1 }),
 			hourTag: n => text(`${A}.hourTag`, { n }),
 			hourCtx: (m, n) => `${text(`${K}.title`)}<br><b>${text(`${A}.hourCtx`, { month: monthName(m), hour: hour(n) })}</b>`,

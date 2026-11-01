@@ -14,6 +14,7 @@ export const S = {
 	shuffles: 0,
 	placed: new Map(), // wheel position (1..13) -> deck index
 	revealQueue: [], // positions still to be turned, in reading order
+	revealed: [], // positions already turned, in the order they were turned
 	freeOrder: false, // horary/trine/cross may be turned in any order
 	startPos: 1, // sun year: this month's wheel position
 	question: '',
@@ -34,6 +35,7 @@ export function resetState(method) {
 		shuffles: 0,
 		placed: new Map(),
 		revealQueue: [],
+		revealed: [],
 		freeOrder: MODES[method].freeOrder,
 		question: '',
 		chosen: new Set([1]),

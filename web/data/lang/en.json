@@ -52,6 +52,9 @@
 		"share": "Copy Link",
 		"shareCopied": "Copied. Open the link to replay this reading.",
 		"shareFallback": "Copy this link manually.",
+		"copyReading": "Copy Reading",
+		"copyReadingCopied": "Copied. Paste the reading anywhere.",
+		"copyReadingFallback": "Copy this reading manually.",
 		"drawerGrip": "Drag or tap to collapse or expand the reading"
 	},
 	"library": {

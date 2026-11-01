@@ -129,6 +129,7 @@ async function flipAt(pos, node, { speed = 1 } = {}) {
 		await flipCard(node, isTheme ? 1.28 : 1.16, speed);
 		if (seq !== S.seq) return;
 		node.classList.add('is-up');
+		S.revealed.push(pos);
 		node.disabled = false;
 		if (isTheme) node.classList.add('halo-burst');
 		node.setAttribute('aria-label', cardName(DECK[S.placed.get(pos)]));

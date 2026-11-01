@@ -5,7 +5,7 @@ import { el, popIn, dealIn, D, REDUCED } from '../dom.js';
 import { takeCards, drawCount } from '../state.js';
 import { BACK_SVG } from '../model/card-back.js';
 import { MONTHS } from '../model/solar-ring.js';
-import { STR, bi } from '../model/i18n.js';
+import { text } from '../model/i18n.js';
 import { MODES } from '../model/modes/index.js';
 import { miniCard, miniFlipCard, revealMini } from '../cards.js';
 import { autoScrollTo, scrollPanelTo } from '../panel.js';
@@ -54,7 +54,7 @@ window.addEventListener('languagechange', () => {
 function dealWeeks(pos, amp, btn) {
 	const idxs = takeCards(4);
 	if (!idxs) {
-		amp.append(el('p', 'deck-empty-note', bi(STR.deck.empty)));
+		amp.append(el('p', 'deck-empty-note', text('deck.empty')));
 		btn.disabled = true;
 		return;
 	}
@@ -89,7 +89,7 @@ function dealWeeks(pos, amp, btn) {
 function dealDays(pos, week, parentBlock) {
 	const idxs = takeCards(7);
 	if (!idxs) {
-		parentBlock.append(el('p', 'deck-empty-note', bi(STR.deck.empty)));
+		parentBlock.append(el('p', 'deck-empty-note', text('deck.empty')));
 		return;
 	}
 	const m = MONTHS[pos - 1];
@@ -185,7 +185,7 @@ function hourForm(pos, amp) {
 		const n = sel;
 		const idxs = takeCards(n);
 		if (!idxs) {
-			block.insertBefore(el('p', 'deck-empty-note', bi(STR.deck.shortOfHour)), form);
+			block.insertBefore(el('p', 'deck-empty-note', text('deck.shortOfHour')), form);
 			syncAvail();
 			return;
 		}

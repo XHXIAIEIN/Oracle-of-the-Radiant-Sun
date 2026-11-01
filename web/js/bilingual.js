@@ -37,9 +37,15 @@ export function loadDict(lang) {
 	return dictLoads[lang];
 }
 
-function dictText(key, lang = currentLang) {
-	return getPath(dicts[lang], key);
+const fill = (value, vars) => String(value).replace(/\{(\w+)\}/g, (_, name) => vars[name] ?? '');
+
+/* 一句文案的两个取法：textIn 指定语言，text 取当前语言；vars 填 {name} 占位 */
+export function textIn(lang, key, vars) {
+	const value = getPath(dicts[lang], key);
+	return vars ? fill(value, vars) : value;
 }
+export const text = (key, vars) => textIn(currentLang, key, vars);
+const dictText = (key, lang = currentLang) => textIn(lang, key);
 
 function setCopyText(textNode, nextText, html = false) {
 	if (html) textNode.innerHTML = nextText;
@@ -140,8 +146,6 @@ export async function setLanguage(lang, { animate = false, root = document } = {
 }
 
 export const language = () => currentLang;
-export const msg = (key, fallback = '') => dictText(key, currentLang) ?? fallback;
-export const msgFor = (lang, key, fallback = '') => dictText(key, lang === 'zh' ? 'zh' : 'en') ?? fallback;
 
 export function dockTopCapsules(host) {
 	const tools = $('#top-capsules');
@@ -159,12 +163,6 @@ export function dockTopCapsules(host) {
 	}
 	if (marker?.parentNode && tools.previousSibling !== marker) marker.parentNode.insertBefore(tools, marker.nextSibling);
 	tools.classList.remove('top-capsules--docked');
-}
-
-export function t(value) {
-	if (Array.isArray(value)) return currentLang === 'zh' ? value[0] : value[1] ?? value[0];
-	if (value && typeof value === 'object' && ('zh' in value || 'en' in value)) return currentLang === 'zh' ? value.zh ?? value.en : value.en ?? value.zh;
-	return value;
 }
 
 export function initBilingualCopy(root = document) {

@@ -34,7 +34,7 @@ export function horarySetup() {
 	/* — 壹 · the question — */
 	const step1 = () => {
 		currentStep = 1;
-		setRite(...C.step1.rite);
+		setRite(C.step1.rite);
 
 		const q = el('input', 'setup__q');
 		q.name = 'question';
@@ -72,7 +72,7 @@ export function horarySetup() {
 	/* — 贰 · the houses — */
 	const step2 = () => {
 		currentStep = 2;
-		setRite(...C.step2.rite);
+		setRite(C.step2.rite);
 
 		const grid = el('div', 'houses-grid');
 		for (const h of HOUSES) {

@@ -1,11 +1,11 @@
-import { dualTitle, pair, text } from '../i18n.js';
+import { text } from '../i18n.js';
 
 const K = 'modes.trine';
 
 export default {
 	id: 'trine',
 	get title() {
-		return dualTitle(`${K}.title`);
+		return text(`${K}.title`);
 	},
 	dealCount: 12,
 	freeOrder: true,
@@ -15,14 +15,8 @@ export default {
 		return { 1: text(`${K}.roles.1`), 5: text(`${K}.roles.5`), 9: text(`${K}.roles.9`) };
 	},
 
-	get shuffleLine() {
-		return pair(`${K}.shuffleLine`);
-	},
-	get dealLine() {
-		return pair(`${K}.dealLine`);
-	},
+	shuffleLine: () => text(`${K}.shuffleLine`),
+	dealLine: () => text(`${K}.dealLine`),
 	revealQueue: () => [1, 5, 9],
-	get revealLine() {
-		return pair(`${K}.revealLine`);
-	},
+	revealLine: () => text(`${K}.revealLine`),
 };

@@ -1,13 +1,13 @@
 import { MODE_ORDER } from './model/modes/index.js';
 import { $, el } from './dom.js';
 import { initHomeFigs } from './home-figs.js';
-import { msgFor } from './bilingual.js';
+import { textIn } from './bilingual.js';
 
 const methodCopy = id => ({
-	name: msgFor('en', `home.methods.${id}.name`, id),
-	meta: msgFor('en', `home.methods.${id}.meta`, id),
-	use: msgFor('en', `home.methods.${id}.useHtml`, ''),
-	desc: msgFor('en', `home.methods.${id}.desc`, ''),
+	name: textIn('en', `home.methods.${id}.name`),
+	meta: textIn('en', `home.methods.${id}.meta`),
+	use: textIn('en', `home.methods.${id}.useHtml`),
+	desc: textIn('en', `home.methods.${id}.desc`),
 });
 
 function methodButton(id) {

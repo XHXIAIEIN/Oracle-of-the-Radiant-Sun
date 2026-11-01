@@ -1,7 +1,6 @@
 /* 仪式舞台的常驻节点，与其上的两类提示：仪轨行与操作按钮 */
 
 import { $, D, replay } from './dom.js';
-import { t } from './bilingual.js';
 
 export const wheel = $('#wheel');
 export const panel = $('#panel');
@@ -10,21 +9,18 @@ export const riteLine = $('#rite-line');
 export const actions = $('#stage-actions');
 export const setup = $('#setup');
 
-let lastRite = ['', ''];
+let lastRite = () => '';
 
-function riteHTML(zh, en) {
-	return t([zh, en]);
-}
-
-export function setRite(zh, en) {
-	lastRite = [zh, en];
+/* line 是返回当前语言文案的函数，切换语言时再调一次即可重绘 */
+export function setRite(line) {
+	lastRite = line;
 	replay(riteLine, 'is-changing');
-	riteLine.innerHTML = riteHTML(zh, en);
+	riteLine.innerHTML = line();
 	gsap.fromTo(riteLine, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: D(0.8), ease: 'power2.out' });
 }
 
 export function refreshRite() {
-	riteLine.innerHTML = riteHTML(...lastRite);
+	riteLine.innerHTML = lastRite();
 }
 
 export function setActions(btns) {

@@ -1,4 +1,4 @@
-import { dualTitle, pair, text } from '../i18n.js';
+import { text } from '../i18n.js';
 
 const K = 'modes.horary';
 const QUICK_HOUSES = [
@@ -38,22 +38,16 @@ const quickpick = i => ({
 export default {
 	id: 'horary',
 	get title() {
-		return dualTitle(`${K}.title`);
+		return text(`${K}.title`);
 	},
 	dealCount: 12,
 	freeOrder: true,
 	wheelLabels: 'houses',
 
-	get shuffleLine() {
-		return pair(`${K}.shuffleLine`);
-	},
-	get dealLine() {
-		return pair(`${K}.dealLine`);
-	},
+	shuffleLine: () => text(`${K}.shuffleLine`),
+	dealLine: () => text(`${K}.dealLine`),
 	revealQueue: S => [...S.chosen].sort((a, b) => a - b),
-	get revealLine() {
-		return pair(`${K}.revealLine`);
-	},
+	revealLine: () => text(`${K}.revealLine`),
 
 	get quickpicks() {
 		return QUICK_HOUSES.map((_, i) => quickpick(i));
@@ -62,7 +56,7 @@ export default {
 	get setup() {
 		return {
 			step1: {
-				rite: pair(`${K}.setup.step1.rite`),
+				rite: () => text(`${K}.setup.step1.rite`),
 				num: text(`${K}.setup.step1.num`),
 				head: text(`${K}.setup.step1.head`),
 				sub: text(`${K}.setup.step1.sub`),
@@ -71,7 +65,7 @@ export default {
 				next: text(`${K}.setup.step1.next`),
 			},
 			step2: {
-				rite: pair(`${K}.setup.step2.rite`),
+				rite: () => text(`${K}.setup.step2.rite`),
 				num: text(`${K}.setup.step2.num`),
 				head: text(`${K}.setup.step2.head`),
 				sub: text(`${K}.setup.step2.sub`),

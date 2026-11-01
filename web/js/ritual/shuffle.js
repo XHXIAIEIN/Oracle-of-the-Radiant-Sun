@@ -4,9 +4,8 @@ import { $, el, D, cryptoShuffle, MOBILE } from '../dom.js';
 import { wheel, setRite, setActions } from '../stage.js';
 import { S, mode, applyPreset } from '../state.js';
 import { drawRing } from '../wheel.js';
-import { STR, bi } from '../model/i18n.js';
+import { text } from '../model/i18n.js';
 import { createDeckPile, animateShuffle } from './deck-pile.js';
-import { t } from '../bilingual.js';
 import { dealPhase } from './deal.js';
 
 export function shufflePhase() {
@@ -38,16 +37,16 @@ export function shufflePhase() {
 		return;
 	}
 
-	setRite(...mode().shuffleLine);
+	setRite(mode().shuffleLine);
 
-	const hint = el('p', 'deck-hint', bi(STR.deck.hint));
+	const hint = el('p', 'deck-hint', text('deck.hint'));
 	hint.dataset.ui = 'deck-hint';
 	wheel.append(hint);
 	gsap.fromTo(hint, { opacity: 0 }, { opacity: 1, duration: D(0.9), delay: D(0.4) });
 
 	/* 桌面端这一钮悬在轮盘下部；手机上那里既挤着提示行，又离拇指远，
 	   便让它列在仪轨行下的操作区 */
-	const bDeal = el('button', 'act-btn' + (MOBILE.matches ? '' : ' act-btn--wheel'), t(S.method === 'single' ? STR.deck.drawOne : STR.deck.deal));
+	const bDeal = el('button', 'act-btn' + (MOBILE.matches ? '' : ' act-btn--wheel'), text(S.method === 'single' ? 'deck.drawOne' : 'deck.deal'));
 	bDeal.dataset.ui = 'deal';
 	bDeal.type = 'button';
 	bDeal.hidden = true;
@@ -62,7 +61,7 @@ export function shufflePhase() {
 		await animateShuffle();
 		S.busy = false;
 		if (S.shuffles === 1) {
-			hint.innerHTML = bi(STR.deck.hintAgain);
+			hint.innerHTML = text('deck.hintAgain');
 			hint.dataset.shuffled = 'true';
 			bDeal.hidden = false;
 			if (MOBILE.matches) setActions([bDeal]);
@@ -92,7 +91,7 @@ export function shufflePhase() {
 window.addEventListener('languagechange', () => {
 	if ($('#screen-ritual').hidden) return;
 	const hint = wheel.querySelector('[data-ui="deck-hint"]');
-	if (hint) hint.innerHTML = bi(hint.dataset.shuffled === 'true' ? STR.deck.hintAgain : STR.deck.hint);
+	if (hint) hint.innerHTML = text(hint.dataset.shuffled === 'true' ? 'deck.hintAgain' : 'deck.hint');
 	const deal = document.querySelector('[data-ui="deal"]');
-	if (deal) deal.textContent = t(S.method === 'single' ? STR.deck.drawOne : STR.deck.deal);
+	if (deal) deal.textContent = text(S.method === 'single' ? 'deck.drawOne' : 'deck.deal');
 });

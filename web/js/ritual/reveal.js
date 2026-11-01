@@ -5,7 +5,7 @@ import { wheel, actions, panelList, setRite, setActions } from '../stage.js';
 import { S, mode } from '../state.js';
 import { DECK, cardName, cardText } from '../model/deck.js';
 import { psSuitLine } from '../model/card-symbols.js';
-import { STR, cnHouse, houseLabel, text, textf } from '../model/i18n.js';
+import { cnHouse, houseLabel, text } from '../model/i18n.js';
 import { HOUSES, MONTHS } from '../model/solar-ring.js';
 import { flipCard } from '../cards.js';
 import { preloadImage, warmCards } from '../image-loader.js';
@@ -15,7 +15,7 @@ import { MODES } from '../model/modes/index.js';
 import { openDialog } from '../dialog.js';
 import { addAmplify } from './amplify.js';
 import { showShare } from '../share.js';
-import { language, t } from '../bilingual.js';
+import { language } from '../bilingual.js';
 
 const REVEAL_ALL_DELAY_MS = 650; // 自动翻牌时，两张牌之间的停顿。
 const REVEAL_ALL_FAST_DELAY_MS = 4; // 点“加速”后，两张牌之间的停顿。
@@ -27,7 +27,7 @@ export function revealPhase() {
 	const m = mode();
 	setAnalysisReady(false);
 	S.revealQueue = m.revealQueue(S);
-	setRite(...(typeof m.revealLine === 'function' ? m.revealLine(S) : m.revealLine));
+	setRite(() => m.revealLine(S));
 
 	// fade back the houses that stay face down in this reading
 	wheel.querySelectorAll('.card').forEach(c => {
@@ -42,7 +42,7 @@ export function revealPhase() {
 
 	markNext();
 
-	const auto = el('button', 'act-btn act-btn--quiet', t(STR.reveal.all));
+	const auto = el('button', 'act-btn act-btn--quiet', text('reveal.all'));
 	auto.dataset.ui = 'reveal-all';
 	auto.dataset.state = 'idle';
 	auto.type = 'button';
@@ -53,7 +53,7 @@ export function revealPhase() {
 		}
 		auto.dataset.state = 'running';
 		auto.dataset.fast = 'false';
-		auto.textContent = t(STR.reveal.speedUp);
+		auto.textContent = text('reveal.speedUp');
 		const seq = S.seq;
 		while (seq === S.seq && S.revealQueue.length) {
 			const pos = S.revealQueue[0];
@@ -84,7 +84,7 @@ function markNext() {
 // 刷新解读面板标题与题问。
 function refreshPanelTitle() {
 	if (!S.method) return;
-	$('#panel-title').innerHTML = mode().title + ' · ' + t(STR.panel.reading) + (S.question ? `<small>“${esc(S.question)}”</small>` : '');
+	$('#panel-title').innerHTML = mode().title + ' · ' + text('panel.reading') + (S.question ? `<small>“${esc(S.question)}”</small>` : '');
 }
 
 function dialogNavFor(pos) {
@@ -151,8 +151,7 @@ async function flipAt(pos, node, { speed = 1 } = {}) {
 // 收束翻牌阶段，显示完成提示。
 function allRevealed() {
 	actions.replaceChildren();
-	const done = mode().doneLine ?? STR.reveal.done;
-	Array.isArray(done) ? setRite(...done) : setRite(done);
+	setRite(mode().doneLine ?? (() => text('reveal.done')));
 	setAnalysisReady(true);
 }
 
@@ -205,7 +204,7 @@ function seenBadge(c) {
 	const prior = priorSightings(c.page);
 	if (!prior.length) return '';
 	const title = prior.map(sightingLabel).join('\n');
-	return `<p class="entry__seen" title="${esc(title)}">${textf('journal.seen', { n: prior.length + 1 })}</p>`;
+	return `<p class="entry__seen" title="${esc(title)}">${text('journal.seen', { n: prior.length + 1 })}</p>`;
 }
 
 // 渲染或重绘单条解读正文。
@@ -234,7 +233,7 @@ function refreshRevealedText() {
 		if (deckIdx != null) card.setAttribute('aria-label', cardName(DECK[deckIdx]));
 	});
 	const auto = actions.querySelector('[data-ui="reveal-all"]');
-	if (auto) auto.textContent = t(auto.dataset.state === 'running' ? STR.reveal.speedUp : STR.reveal.all);
+	if (auto) auto.textContent = text(auto.dataset.state === 'running' ? 'reveal.speedUp' : 'reveal.all');
 	panelList.querySelectorAll('.entry[data-pos]').forEach(entry => {
 		const pos = Number(entry.dataset.pos);
 		renderEntry(entry, pos);

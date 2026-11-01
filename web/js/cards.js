@@ -3,10 +3,11 @@
 import { el, D } from './dom.js';
 import { BACK_SVG } from './model/card-back.js';
 import { DECK, cardName } from './model/deck.js';
-import { STR } from './model/i18n.js';
+import { text } from './model/i18n.js';
 import { openDialog } from './dialog.js';
 import { cardImgAttrs } from './image-loader.js';
-import { t } from './bilingual.js';
+
+export const faceDownAria = pos => (pos === 13 ? text('reveal.centralFaceDown') : text('reveal.positionFaceDown', { pos }));
 
 export const cardShell = deckIdx => {
 	const card = DECK[deckIdx];
@@ -21,7 +22,7 @@ export function makeCard(pos, deckIdx, onClick) {
 	b.type = 'button';
 	b.dataset.pos = pos;
 	b.style.width = '12.8%';
-	b.setAttribute('aria-label', t(STR.reveal.faceDownAria(pos)));
+	b.setAttribute('aria-label', faceDownAria(pos));
 	b.onclick = () => onClick(pos, b);
 	gsap.set(b, { xPercent: -50, yPercent: -50 });
 	return b;
@@ -124,6 +125,6 @@ export function revealMini(m) {
 
 window.addEventListener('languagechange', () => {
 	document.querySelectorAll('.card:not(.is-up)[data-pos]').forEach(card => {
-		card.setAttribute('aria-label', t(STR.reveal.faceDownAria(Number(card.dataset.pos))));
+		card.setAttribute('aria-label', faceDownAria(Number(card.dataset.pos)));
 	});
 });

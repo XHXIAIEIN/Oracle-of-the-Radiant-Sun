@@ -8,7 +8,7 @@ import { MONTHS } from './model/solar-ring.js';
 import { openDialog } from './dialog.js';
 import { cardImgAttrs, warmCards } from './image-loader.js';
 import { syncRoute } from './router.js';
-import { dockTopCapsules, language, msg } from './bilingual.js';
+import { dockTopCapsules, language, text } from './bilingual.js';
 import { resetPanelChrome } from './panel.js';
 
 let libBuilt = false;
@@ -26,7 +26,7 @@ const libFilter = { group: 'suit', suit: 'all', signs: new Set() }; // empty set
 const libSignMatch = sign => !libFilter.signs.size || libFilter.signs.has(sign);
 const cardWill = c => (libFilter.suit === 'all' || c.dataset.planet === libFilter.suit) && libSignMatch(c.dataset.sign);
 const isZh = () => language() === 'zh';
-const libMsg = (key, fallback) => msg(`library.${key}`, fallback);
+const libMsg = key => text(`library.${key}`);
 const fmtHours = hs => hs.map(h => `${String(h).padStart(2, '0')}:00`).join(' / ');
 const theP = p => (p === 'Sun' || p === 'Moon' ? `the ${p}` : p);
 const planetLabel = planet => planetNameFor(planet);

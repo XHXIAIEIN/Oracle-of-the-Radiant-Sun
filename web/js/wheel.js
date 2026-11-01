@@ -5,7 +5,7 @@ import { wheel } from './stage.js';
 import { mode } from './state.js';
 import { SIGN } from './model/card-symbols.js';
 import { HOUSES, MONTHS } from './model/solar-ring.js';
-import { STR, bi } from './model/i18n.js';
+import { text } from './model/i18n.js';
 import { language } from './bilingual.js';
 
 /* geometry: house i sits at 165° − 30°(i−1), screen angle */
@@ -42,7 +42,7 @@ function refreshSlotLabels() {
 	const months = mode().wheelLabels === 'months';
 	wheel.querySelectorAll('.slot-label[data-pos]').forEach(label => {
 		const pos = Number(label.dataset.pos);
-		if (pos === 13) label.innerHTML = `<span>${bi(STR.wheel.theme)}</span>`;
+		if (pos === 13) label.innerHTML = `<span>${text('wheel.theme')}</span>`;
 		else label.innerHTML = slotLabelHtml(pos, months);
 	});
 }
@@ -73,7 +73,7 @@ export function drawRing() {
 		wheel.append(n);
 	}
 	if (mode().centerTheme) {
-		const c = el('div', 'slot-label', `<span>${bi(STR.wheel.theme)}</span>`);
+		const c = el('div', 'slot-label', `<span>${text('wheel.theme')}</span>`);
 		c.style.left = '50%';
 		c.style.top = '62%';
 		c.dataset.pos = 13;

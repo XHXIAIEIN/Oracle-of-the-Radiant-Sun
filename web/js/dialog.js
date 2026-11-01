@@ -3,7 +3,7 @@
 import { $, D, esc } from './dom.js';
 import { DECK, cardName, cardSignKeyword, cardText } from './model/deck.js';
 import { planetNameFor, psLine, signNameFor, suitNameFor } from './model/card-symbols.js';
-import { STR, text, textf } from './model/i18n.js';
+import { text } from './model/i18n.js';
 import { cardImgAttrs, preloadImage, warmCards } from './image-loader.js';
 import { initBilingualCopy, language } from './bilingual.js';
 
@@ -76,14 +76,13 @@ function warmDialogNeighbours(card) {
 function render(deckIdx, ctx) {
 	const c = DECK[deckIdx];
 	const canGoBack = dialogStack.length > 1;
-	const sec = ([zh, en], key) => {
+	const sec = (title, key) => {
 		const text = cardText(c, key);
 		const textEn = c[key];
 		const textZh = c[`${key}_zh`];
 		const textHtml = renderLinkedText(text);
 		const textEnHtml = renderLinkedText(textEn);
 		const textZhHtml = renderLinkedText(textZh);
-		const title = language() === 'zh' ? zh : en;
 		return (
 		text
 			? `
@@ -96,7 +95,7 @@ function render(deckIdx, ctx) {
 	const metaHtml = canGoBack || ctx
 		? `
     <div class="card-dialog__meta">
-      ${canGoBack ? `<button class="card-dialog__back" id="dialog-back" type="button">${esc(text('dialog.back', 'Back'))}</button>` : ''}
+      ${canGoBack ? `<button class="card-dialog__back" id="dialog-back" type="button">${esc(text('dialog.back'))}</button>` : ''}
       ${ctx ? `<p class="card-dialog__ctx">${renderContext(ctx)}</p>` : ''}
     </div>`
 		: '';
@@ -112,10 +111,10 @@ function render(deckIdx, ctx) {
       <p class="suit">${signLine}</p>
     </header>
     <div class="card-dialog__body">
-      ${sec(STR.dialog.image, 'image_description')}
-      ${sec(STR.dialog.personality, 'personal')}
-      ${sec(STR.dialog.reading, 'reading')}
-      ${sec(STR.dialog.events, 'events')}
+      ${sec(text('dialog.sections.image'), 'image_description')}
+      ${sec(text('dialog.sections.personality'), 'personal')}
+      ${sec(text('dialog.sections.reading'), 'reading')}
+      ${sec(text('dialog.sections.events'), 'events')}
     </div>`;
 	body.querySelector('.card-dialog__body').scrollTop = 0;
 	initBilingualCopy(body);
@@ -150,7 +149,7 @@ export function openDialog(deckIdx, ctx, navOpt = null) {
 }
 
 function queueRelatedOpen(deckIdx) {
-	openQueue.push({ deckIdx, ctx: textf('dialog.relatedCtx', { card: cardName(DECK[currentDeckIdx]) }, `Related to ${cardName(DECK[currentDeckIdx])}`) });
+	openQueue.push({ deckIdx, ctx: text('dialog.relatedCtx', { card: cardName(DECK[currentDeckIdx]) }) });
 	processOpenQueue();
 }
 
@@ -219,7 +218,7 @@ function showRefBubble(anchor, deckIdx) {
 	hideRefBubble();
 	const card = DECK[deckIdx];
 	if (!card) return;
-	const label = textf('dialog.relatedPage', { page: card.page }, `Page ${card.page}`);
+	const label = text('dialog.relatedPage', { page: card.page });
 	refBubble = document.createElement('button');
 	refBubble.type = 'button';
 	refBubble.className = 'card-ref-popover';

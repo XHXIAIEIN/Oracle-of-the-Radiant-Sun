@@ -9,7 +9,8 @@
 
 - **太阳年（Sun Year）** — 十二宫逐月描绘来年十二个月
 - **时占（Horary）** — 回应一个可用"是 / 否"作答的具体问题
-- **大三合（Grand Trine）** — 三张牌的简短综合占问 
+- **大三合（Grand Trine）** — 三张牌的简短综合占问：第一、五、九宫
+- **本位十字（Cardinal Cross）** — 四张牌的综合占问：第一、四、七、十宫
 - **单张指引** — 洗牌后取顶牌一张，作当下处境或一日一牌
 - **卡片库** — 浏览全副七个星曜套牌共 84 张
 
@@ -31,15 +32,18 @@ python -m http.server -d web 8000
 
 ## 命令行盲抽
 
-`scripts/deal.py` 把发牌和读牌分成两步，发牌的一方不会看到任何牌名，读牌的一方只翻问题需要的宫位：
+`scripts/deal.py` 把发牌和读牌分成两步，发牌的一方看不到牌名。`deal` 按占法洗牌并扣牌，打印牌数和文件路径；每次 `deal` 生成的文件是一局。`reveal` 翻开指定位置，打印该位置的名称和牌的释义，加 `--desc` 时再打印宫位说明（仅时占、大三合、本位十字）。`--session` 把同一话题下的几局放进一个文件夹，`summary` 统计其中翻开的牌，重复出现的排在前面。
 
 ```sh
-python scripts/deal.py deal                 # 洗牌后扣下 13 张：十二宫加中心牌，写入 tmp/deals/
-python scripts/deal.py deal --count 4       # 扣下 4 张，例如某个月的四周
-python scripts/deal.py reveal FILE 1 7 4    # 翻开第 1、7、4 宫，打印书中释义
+python scripts/deal.py deal --mode horary --session love   # 扣下十二宫，写入 tmp/deals/love/
+python scripts/deal.py reveal "<牌文件>" 1 7 4 --desc        # 翻开第 1、7、4 宫，附宫位说明
+python scripts/deal.py deal --mode trine --session love    # 大三合，同样扣下十二宫
+python scripts/deal.py reveal "<牌文件>"                    # 不给位置，翻开 1、5、9 宫
+python scripts/deal.py --lang en reveal "<牌文件>" 1        # 英文释义；--lang 放在子命令前
+python scripts/deal.py summary love                        # 这一话题下各局翻过的牌与次数
 ```
 
-洗牌用系统随机源，和网页端一致。
+牌文件的路径取自 `deal` 的输出，含空格时加引号。`--mode` 可选 horary（时占，默认）、trine（大三合）、cross（本位十字）、sunyear（太阳年，十二个月加一张主题牌）、weeks（一个月的四周）、days（一周的七日）、single（单张）。时占必须在 `reveal` 里写出位置，其余模式不写位置时翻开该占法的全部位置。洗牌用系统随机源，和网页端一致。
 
 ## 致谢
 

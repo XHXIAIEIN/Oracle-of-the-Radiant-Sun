@@ -967,6 +967,36 @@
 					"label": "心愿",
 					"example": "Will my wish come true?",
 					"q": "我的心愿会实现吗？"
+				},
+				{
+					"label": "伴侣",
+					"example": "Is this person already attached?",
+					"q": "对方有伴侣吗？"
+				},
+				{
+					"label": "心意",
+					"example": "Does this person want more with me?",
+					"q": "对方想和我更进一步吗？"
+				},
+				{
+					"label": "表白",
+					"example": "Should I tell them how I feel?",
+					"q": "我该表明心意吗？"
+				},
+				{
+					"label": "去留",
+					"example": "Will this person leave their present relationship?",
+					"q": "对方会离开现在的关系吗？"
+				},
+				{
+					"label": "修复",
+					"example": "Can this friendship be mended?",
+					"q": "这段友情还能修复吗？"
+				},
+				{
+					"label": "商量",
+					"example": "Who should I turn to for advice?",
+					"q": "我该找谁商量？"
 				}
 			],
 			"setup": {

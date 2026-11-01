@@ -967,6 +967,36 @@
 					"label": "Wish",
 					"example": "Will my wish come true?",
 					"q": "Will my wish come true?"
+				},
+				{
+					"label": "Attachment",
+					"example": "Is this person already attached?",
+					"q": "Is this person already attached?"
+				},
+				{
+					"label": "Interest",
+					"example": "Does this person want more with me?",
+					"q": "Does this person want more with me?"
+				},
+				{
+					"label": "Confession",
+					"example": "Should I tell them how I feel?",
+					"q": "Should I tell them how I feel?"
+				},
+				{
+					"label": "Breakup",
+					"example": "Will this person leave their present relationship?",
+					"q": "Will this person leave their present relationship?"
+				},
+				{
+					"label": "Friendship",
+					"example": "Can this friendship be mended?",
+					"q": "Can this friendship be mended?"
+				},
+				{
+					"label": "Advice",
+					"example": "Who should I turn to for advice?",
+					"q": "Who should I turn to for advice?"
 				}
 			],
 			"setup": {

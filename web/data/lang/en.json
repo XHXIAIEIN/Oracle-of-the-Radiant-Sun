@@ -836,6 +836,16 @@
 	"wheel": {
 		"theme": "THEME"
 	},
+	"journal": {
+		"topic": "Topic",
+		"defaultTopic": "Default",
+		"renameTitle": "Switch topic. Each topic counts on its own",
+		"renamePrompt": "Topic name (leave empty for the default topic)",
+		"clear": "Clear Topic History",
+		"clearConfirm": "Delete every reading recorded under “{topic}”?",
+		"readings": "Readings: {n}",
+		"seen": "Seen {n}× in this topic"
+	},
 	"modes": {
 		"single": {
 			"title": "The Single Card",

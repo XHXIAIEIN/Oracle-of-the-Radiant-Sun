@@ -5,11 +5,13 @@ import { wheel, actions, panelList, setRite, setActions } from '../stage.js';
 import { S, mode } from '../state.js';
 import { DECK, cardName, cardText } from '../model/deck.js';
 import { psSuitLine } from '../model/card-symbols.js';
-import { STR, cnHouse, houseLabel, text } from '../model/i18n.js';
+import { STR, cnHouse, houseLabel, text, textf } from '../model/i18n.js';
 import { HOUSES, MONTHS } from '../model/solar-ring.js';
 import { flipCard } from '../cards.js';
 import { preloadImage, warmCards } from '../image-loader.js';
-import { openPanel, placeEntry, scrollPanelTo, setAnalysisReady } from '../panel.js';
+import { openPanel, placeEntry, refreshTopic, scrollPanelTo, setAnalysisReady } from '../panel.js';
+import { priorSightings, record } from '../model/journal.js';
+import { MODES } from '../model/modes/index.js';
 import { openDialog } from '../dialog.js';
 import { addAmplify } from './amplify.js';
 import { showShare } from '../share.js';
@@ -133,6 +135,8 @@ async function flipAt(pos, node, { speed = 1 } = {}) {
 		node.disabled = false;
 		if (isTheme) node.classList.add('halo-burst');
 		node.setAttribute('aria-label', cardName(DECK[S.placed.get(pos)]));
+		record(S.seq, S.method, S.question, pos, DECK[S.placed.get(pos)].page);
+		refreshTopic();
 		appendEntry(pos);
 		if (!S.revealQueue.length) allRevealed();
 		else markNext();
@@ -189,6 +193,21 @@ function appendEntry(pos) {
 	placeEntry(entry);
 }
 
+// 此牌一次此前出现的位置
+function sightingLabel(s) {
+	const title = MODES[s.method]?.title ?? s.method;
+	if (s.method === 'sunyear') return `${title} · ${s.pos === 13 ? MODES.sunyear.themeWhere : language() === 'zh' ? MONTHS[s.pos - 1].zh : MONTHS[s.pos - 1].en}`;
+	return `${title} · ${language() === 'zh' ? cnHouse(s.pos) : houseLabel(s.pos)}`;
+}
+
+// 本话题内重复出现的徽记
+function seenBadge(c) {
+	const prior = priorSightings(c.page);
+	if (!prior.length) return '';
+	const title = prior.map(sightingLabel).join('\n');
+	return `<p class="entry__seen" title="${esc(title)}">${textf('journal.seen', { n: prior.length + 1 })}</p>`;
+}
+
 // 渲染或重绘单条解读正文。
 function renderEntry(entry, pos) {
 	const c = DECK[S.placed.get(pos)];
@@ -200,7 +219,7 @@ function renderEntry(entry, pos) {
 	body.innerHTML = `
     <p class="entry__where">${whereLine(pos)}</p>
     <h4 class="entry__name">${cardName(c)}</h4>
-    <p class="entry__ps">${psSuitLine(c)}</p>
+    <p class="entry__ps">${psSuitLine(c)}</p>${seenBadge(c)}
     <p class="entry__reading">${cardText(c, 'reading')}</p>
     <p class="entry__events">${text('dialog.sections.events')} — ${cardText(c, 'events')}</p>`;
 	entry.replaceChildren(...body.content.children, ...[acts, amplify].filter(Boolean));

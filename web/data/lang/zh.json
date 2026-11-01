@@ -836,6 +836,16 @@
 	"wheel": {
 		"theme": "主题"
 	},
+	"journal": {
+		"topic": "话题",
+		"defaultTopic": "默认",
+		"renameTitle": "切换话题，各话题分开计数",
+		"renamePrompt": "话题名（留空用默认话题）",
+		"clear": "清空本话题记录",
+		"clearConfirm": "删除「{topic}」下记录的全部各局？",
+		"readings": "{n} 局",
+		"seen": "本话题第 {n} 次出现"
+	},
 	"modes": {
 		"single": {
 			"title": "单张",

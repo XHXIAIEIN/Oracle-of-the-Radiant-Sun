@@ -7,7 +7,7 @@ import { BACK_SVG } from '../model/card-back.js';
 import { MONTHS } from '../model/solar-ring.js';
 import { text } from '../model/i18n.js';
 import { MODES } from '../model/modes/index.js';
-import { localize } from '../bilingual.js';
+import { localize, localizeWith } from '../bilingual.js';
 import { miniCard, miniFlipCard, revealMini } from '../cards.js';
 import { autoScrollTo, scrollPanelTo } from '../panel.js';
 import { drawerLiftForEntry } from '../drawer.js';
@@ -56,12 +56,12 @@ function dealWeeks(pos, amp, btn) {
 	btn.disabled = true;
 	const m = MONTHS[pos - 1];
 	const block = el('div', 'amplify__block');
-	block.append(el('p', 'amplify__cap', A().weeksCap(m)));
+	block.append(localizeWith(el('p', 'amplify__cap'), () => A().weeksCap(m)));
 	const row = el('div', 'minirow');
 	const navList = idxs.map((di, k) => ({ idx: di, ctx: A().weekCtx(m, k + 1) }));
 	idxs.forEach((di, k) => {
 		const wrap = el('div', 'mini-col');
-		const mini = miniCard(di, A().weekTag(k + 1), navList[k].ctx, { list: navList, at: k });
+		const mini = miniCard(di, () => A().weekTag(k + 1), navList[k].ctx, { list: navList, at: k });
 		const bd = el('button', 'sub-btn', null, { key: `${AK}.daysBtn` });
 		bd.type = 'button';
 		bd.onclick = () => {
@@ -90,11 +90,11 @@ function dealDays(pos, week, parentBlock) {
 	const m = MONTHS[pos - 1];
 	const block = el('div', 'amplify__block');
 	block.dataset.week = week;
-	block.append(el('p', 'amplify__cap', A().daysCap(week)));
+	block.append(localizeWith(el('p', 'amplify__cap'), () => A().daysCap(week)));
 	const row = el('div', 'minirow');
 	const navList = idxs.map((di, k) => ({ idx: di, ctx: A().dayCtx(m, week, A().DAYS[k]) }));
 	idxs.forEach((di, k) => {
-		row.append(miniCard(di, A().dayTag(A().DAYS[k]), navList[k].ctx, { list: navList, at: k }));
+		row.append(miniCard(di, () => A().dayTag(A().DAYS[k]), navList[k].ctx, { list: navList, at: k }));
 	});
 	block.append(row);
 
@@ -126,7 +126,7 @@ function hourForm(pos, amp) {
 	const now = new Date().getHours() || 24;
 	let sel = now;
 	const note = el('p', 'hour-note');
-	const setNote = () => (note.textContent = A().hourPick(sel, sel === now));
+	const setNote = () => localizeWith(note, () => A().hourPick(sel, sel === now));
 
 	const grid = el('div', 'hour-grid');
 	grid.setAttribute('role', 'radiogroup');
@@ -190,7 +190,7 @@ function hourForm(pos, amp) {
 		const priorHourResults = [...block.children].filter(child => child.classList?.contains('amplify__block')).length;
 		const res = el('div', 'amplify__block');
 		res.dataset.hourResult = String(priorHourResults + 1);
-		res.append(el('p', 'amplify__cap', A().hourCap(n)));
+		res.append(localizeWith(el('p', 'amplify__cap'), () => A().hourCap(n)));
 		const row = el('div', 'minirow minirow--hour');
 		let backs = [];
 		let stackTag;
@@ -203,12 +203,12 @@ function hourForm(pos, amp) {
 			const SPAN = 150,
 				W = 34;
 			if (n > 2) stack.style.setProperty('--hour-overlap', Math.min(W - 8, (SPAN - W) / (n - 2)) - W + 'px');
-			stackTag = el('span', 'mini__tag mini__tag--dim', A().hourStackTag(n));
+			stackTag = localizeWith(el('span', 'mini__tag mini__tag--dim'), () => A().hourStackTag(n));
 			const col = el('div', 'mini-col mini-col--stack');
 			col.append(stack, stackTag);
 			row.append(col);
 		}
-		const revealed = miniFlipCard(idxs[n - 1], A().hourTag(n), A().hourCtx(m, n));
+		const revealed = miniFlipCard(idxs[n - 1], () => A().hourTag(n), A().hourCtx(m, n));
 		row.append(revealed);
 		res.append(row);
 

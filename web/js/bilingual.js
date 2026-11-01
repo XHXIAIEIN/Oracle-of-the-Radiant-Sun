@@ -109,6 +109,22 @@ function applyI18n(node, lang, animate = false) {
 	updateToggle(node.querySelector(':scope > .i18n-toggle'), lang);
 }
 
+/* 文案由函数算出时（月份名、中文数字这类随语言变的占位值装不进 data-i18n-vars），
+   登记函数并立刻写入；切换语言时重算，已离开文档的节点顺手清掉 */
+const rendered = new Map(); // node -> () => string
+export function localizeWith(node, render) {
+	rendered.set(node, render);
+	node.textContent = render();
+	return node;
+}
+
+function rerunRendered() {
+	for (const [node, render] of rendered) {
+		if (!node.isConnected) rendered.delete(node);
+		else node.textContent = render();
+	}
+}
+
 /* 给节点挂上 data-i18n 并立刻填入当前语言，此后每次切换语言的扫描都会覆盖它 */
 export function localize(node, { key, vars, attr, html }) {
 	node.dataset.i18n = key;
@@ -128,6 +144,7 @@ export async function setLanguage(lang, { animate = false, root = document } = {
 	await loadDict(currentLang);
 	document.documentElement.lang = currentLang === 'zh' ? 'zh-CN' : 'en';
 	root.querySelectorAll('[data-i18n]').forEach(node => applyI18n(node, currentLang, animate));
+	rerunRendered();
 	const globalBtn = $('#global-lang');
 	if (globalBtn) {
 		updateToggle(globalBtn, currentLang);

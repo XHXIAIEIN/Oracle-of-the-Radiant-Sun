@@ -5,6 +5,7 @@ import { BACK_SVG } from './model/card-back.js';
 import { DECK, cardName } from './model/deck.js';
 import { openDialog } from './dialog.js';
 import { cardImgAttrs } from './image-loader.js';
+import { localizeWith } from './bilingual.js';
 
 const faceDownAria = pos => ({ key: pos === 13 ? 'reveal.centralFaceDown' : 'reveal.positionFaceDown', vars: { pos }, attr: 'aria-label' });
 
@@ -71,12 +72,19 @@ export function flipCard(node, peak = 1.16, speed = 1) {
 	});
 }
 
+/* 小牌的标签与牌名随语言重算：tag 是一个返回文案的函数 */
+function miniLabels(m, c, tag) {
+	localizeWith(m.querySelector('.mini__tag'), tag);
+	localizeWith(m.querySelector('.mini__name'), () => cardName(c));
+}
+
 /* mini face-up card in the panel; nav = { list, at } lets the dialog leaf
    through the row's neighbours (a fresh copy per opening, so the position
    never goes stale) */
 export function miniCard(deckIdx, tag, ctx, nav) {
 	const c = DECK[deckIdx];
-	const m = el('button', 'mini', `<img ${cardImgAttrs(c)}><span class="mini__tag">${tag}</span><span class="mini__name">${cardName(c)}</span>`);
+	const m = el('button', 'mini', `<img ${cardImgAttrs(c)}><span class="mini__tag"></span><span class="mini__name"></span>`);
+	miniLabels(m, c, tag);
 	m.type = 'button';
 	m.onclick = () => openDialog(deckIdx, ctx, nav && { list: nav.list, at: nav.at });
 	return m;
@@ -93,8 +101,9 @@ export function miniFlipCard(deckIdx, tag, ctx, nav) {
        <span class="mini__face mini__back">${BACK_SVG}</span>
        <span class="mini__face mini__front"><img ${cardImgAttrs(c)}></span>
      </span>
-     <span class="mini__tag">${tag}</span><span class="mini__name">${cardName(c)}</span>`
+     <span class="mini__tag"></span><span class="mini__name"></span>`
 	);
+	miniLabels(m, c, tag);
 	m.type = 'button';
 	m.disabled = true; // 未翻开的牌先不应答
 	m.onclick = () => openDialog(deckIdx, ctx, nav && { list: nav.list, at: nav.at });

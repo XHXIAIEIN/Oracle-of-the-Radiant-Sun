@@ -6,6 +6,7 @@ const K = 'modes.sunyear';
 const A = `${K}.amplify`;
 const hour = n => String(n % 24).padStart(2, '0');
 const monthName = m => (language() === 'zh' ? m.zh : m.en);
+const weekNum = k => (language() === 'zh' ? cnNum(k) : k); // 周序号随语言取数字
 
 export default {
 	id: 'sunyear',
@@ -38,12 +39,12 @@ export default {
 	get amplify() {
 		return {
 			weeksCap: m => text(`${A}.weeksCap`, { month: monthName(m) }),
-			weekTag: k => text(`${A}.weekTag`, { n: cnNum(k) }),
-			weekCtx: (m, k) => `${text(`${K}.title`)}<br><b>${text(`${A}.weekCtx`, { month: monthName(m), n: language() === 'zh' ? cnNum(k) : k })}</b>`,
+			weekTag: k => text(`${A}.weekTag`, { n: weekNum(k) }),
+			weekCtx: (m, k) => `${text(`${K}.title`)}<br><b>${text(`${A}.weekCtx`, { month: monthName(m), n: weekNum(k) })}</b>`,
 			DAYS: text(`${A}.days`),
-			daysCap: k => text(`${A}.daysCap`, { n: cnNum(k) }),
+			daysCap: k => text(`${A}.daysCap`, { n: weekNum(k) }),
 			dayTag: d => text(`${A}.dayTag`, { d }),
-			dayCtx: (m, k, d) => `${text(`${K}.title`)}<br><b>${text(`${A}.dayCtx`, { month: monthName(m), n: language() === 'zh' ? cnNum(k) : k, d })}</b>`,
+			dayCtx: (m, k, d) => `${text(`${K}.title`)}<br><b>${text(`${A}.dayCtx`, { month: monthName(m), n: weekNum(k), d })}</b>`,
 			hourPick: (n, isNow) => text(`${A}.${isNow ? 'hourPickNow' : 'hourPick'}`, { n, hour: hour(n) }),
 			hourStackTag: n => text(`${A}.hourStackTag`, { n: n - 1 }),
 			hourTag: n => text(`${A}.hourTag`, { n }),

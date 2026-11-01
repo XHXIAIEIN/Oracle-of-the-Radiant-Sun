@@ -76,6 +76,7 @@
 					<b id="deck-count">71</b>
 				</span>
 				<button class="share-btn lang-copy" id="btn-share" type="button" hidden data-i18n="ritual.share">Copy Link</button>
+				<button class="share-btn lang-copy" id="btn-copy-reading" type="button" hidden data-i18n="ritual.copyReading">Copy Reading</button>
 			</header>
 
 			<div class="ritual-body" id="ritual-body">
@@ -96,6 +97,13 @@
 					<div class="panel__head">
 						<h3 class="panel__title" id="panel-title"></h3>
 						<button class="panel__sort lang-copy" id="panel-sort" type="button" data-i18n="ritual.panelSortOldest">Oldest First</button>
+					</div>
+					<!-- journal topic line -->
+					<div class="panel__topic" id="panel-topic">
+						<span class="lang-copy" data-i18n="journal.topic">Topic</span>
+						<button class="panel__topic-btn" id="topic-name" type="button"></button>
+						<span id="topic-count"></span>
+						<button class="panel__topic-btn lang-copy" id="topic-clear" type="button" data-i18n="journal.clear">Clear Topic History</button>
 					</div>
 					<div class="panel__list" id="panel-list"></div>
 					<button class="panel__jump" id="panel-jump" type="button" hidden>

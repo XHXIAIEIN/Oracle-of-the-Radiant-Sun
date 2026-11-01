@@ -371,3 +371,40 @@
   .hour-cell { min-height: var(--tap); font-size: 14px; }
   .panel__jump { min-height: var(--tap); bottom: 4px; }
 }
+
+/* ── Journal topic line and repeat badge ── */
+.panel__topic {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  margin-top: -6px;
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  color: var(--ink-dim);
+}
+.panel__topic-btn {
+  color: var(--gold-dim);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: oklch(78% 0.12 85 / 0.16);
+  transition: color 0.35s, text-decoration-color 0.35s;
+}
+@media (hover: hover) {
+  .panel__topic-btn:hover, .panel__topic-btn:focus-visible { color: var(--gold); text-decoration-color: currentcolor; }
+}
+.panel__topic-btn:active { color: var(--gold); }
+.entry__seen {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+  border: 1px solid var(--gold-line);
+  border-radius: 999px;
+  padding: 1px 9px;
+  cursor: help; /* tooltip lists earlier places */
+}
+@media (max-width: 700px) {
+  .panel__topic-btn { min-height: var(--tap); display: inline-grid; align-items: center; }
+}

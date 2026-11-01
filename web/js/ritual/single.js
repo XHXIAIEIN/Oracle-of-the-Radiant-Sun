@@ -182,6 +182,7 @@ function singleDrawNext(delay = 0) {
 			if (seq !== S.seq) return;
 			S.busy = false;
 			card.classList.add('is-up');
+			S.revealed.push(n);
 			card.setAttribute('aria-label', cardName(c));
 			const entry = appendSingleEntry(di, n);
 			setRite(...M().afterFlip);
@@ -205,6 +206,7 @@ function returnToDeck(card, link, entry, n) {
 	if (link.isConnected) gsap.to(link, { opacity: 0, duration: D(0.25), ease: 'power1.in', onComplete: () => link.remove() });
 	/* the returned card no longer counts as drawn */
 	S.placed.delete(n);
+	S.revealed = S.revealed.filter(p => p !== n);
 	S.drawn--;
 	S.ptr--;
 	updateBadge(drawCount());

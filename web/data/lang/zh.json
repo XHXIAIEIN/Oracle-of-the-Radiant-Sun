@@ -52,6 +52,9 @@
 		"share": "复制链接",
 		"shareCopied": "已复制 ✓ 打开链接即重现此局",
 		"shareFallback": "请手动复制这段链接。",
+		"copyReading": "复制牌单",
+		"copyReadingCopied": "已复制 ✓ 牌单可直接粘贴",
+		"copyReadingFallback": "请手动复制这份牌单。",
 		"drawerGrip": "拖动或点按，收起 / 展开解读"
 	},
 	"library": {
@@ -833,6 +836,16 @@
 	"wheel": {
 		"theme": "主题"
 	},
+	"journal": {
+		"topic": "话题",
+		"defaultTopic": "默认",
+		"renameTitle": "切换话题，各话题分开计数",
+		"renamePrompt": "话题名（留空用默认话题）",
+		"clear": "清空本话题记录",
+		"clearConfirm": "删除「{topic}」下记录的全部各局？",
+		"readings": "{n} 局",
+		"seen": "本话题第 {n} 次出现"
+	},
 	"modes": {
 		"single": {
 			"title": "单张",
@@ -967,6 +980,36 @@
 					"label": "心愿",
 					"example": "Will my wish come true?",
 					"q": "我的心愿会实现吗？"
+				},
+				{
+					"label": "伴侣",
+					"example": "Is this person already attached?",
+					"q": "对方有伴侣吗？"
+				},
+				{
+					"label": "心意",
+					"example": "Does this person want more with me?",
+					"q": "对方想和我更进一步吗？"
+				},
+				{
+					"label": "表白",
+					"example": "Should I tell them how I feel?",
+					"q": "我该表明心意吗？"
+				},
+				{
+					"label": "去留",
+					"example": "Will this person leave their present relationship?",
+					"q": "对方会离开现在的关系吗？"
+				},
+				{
+					"label": "修复",
+					"example": "Can this friendship be mended?",
+					"q": "这段友情还能修复吗？"
+				},
+				{
+					"label": "商量",
+					"example": "Who should I turn to for advice?",
+					"q": "我该找谁商量？"
 				}
 			],
 			"setup": {

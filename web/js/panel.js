@@ -5,6 +5,8 @@ import { actions, panel, panelList } from './stage.js';
 import { STR } from './model/i18n.js';
 import { msg, t } from './bilingual.js';
 import { drawerLiftForReading, drawerOnOpen, drawerOnEntry } from './drawer.js';
+import { clearTopic, currentTopic, setTopic, topicCount, topicLabel } from './model/journal.js';
+import { text, textf } from './model/i18n.js';
 
 const analysisPill = $('#analysis-pill');
 let panelAvailable = false;
@@ -23,6 +25,7 @@ function updateAnalysisPill() {
    on a phone it rises instead as the bottom drawer (js/drawer.js) */
 export function openPanel() {
 	panelAvailable = true;
+	refreshTopic();
 	if (!panel.hidden) {
 		updateAnalysisPill();
 		return;
@@ -228,6 +231,27 @@ sortBtn.onclick = () => {
 };
 
 window.addEventListener('languagechange', refreshSortButton);
+
+/* ── Journal topic line ── */
+const topicName = $('#topic-name');
+const topicCountNode = $('#topic-count');
+export function refreshTopic() {
+	topicName.textContent = topicLabel(currentTopic());
+	topicName.title = text('journal.renameTitle');
+	topicCountNode.textContent = textf('journal.readings', { n: topicCount() });
+}
+topicName.onclick = () => {
+	const name = prompt(text('journal.renamePrompt'), currentTopic());
+	if (name == null) return;
+	setTopic(name);
+	refreshTopic();
+};
+$('#topic-clear').onclick = () => {
+	if (!topicCount() || !confirm(textf('journal.clearConfirm', { topic: topicLabel(currentTopic()) }))) return;
+	clearTopic();
+	refreshTopic();
+};
+window.addEventListener('languagechange', refreshTopic);
 window.addEventListener('languagechange', updateAnalysisPill);
 
 analysisPill?.addEventListener('click', () => {

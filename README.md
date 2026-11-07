@@ -41,7 +41,10 @@ python scripts/deal.py deal --mode trine --session love    # 大三合，同样�
 python scripts/deal.py reveal "<牌文件>"                    # 不给位置，翻开 1、5、9 宫
 python scripts/deal.py --lang en reveal "<牌文件>" 1        # 英文释义；--lang 放在子命令前
 python scripts/deal.py summary love                        # 这一话题下各局翻过的牌与次数
+python scripts/deal.py show "<牌文件>"                      # 已翻开的牌的卡面 HTML，每行最多 4 张
 ```
+
+`show` 输出一段 HTML 片段，每张牌上方是位置，下方是牌名和星曜，供对话内可视化直接渲染。牌文件带 `position_meanings` 时，位置取其冒号前的部分。对话内可视化只能从少数 CDN 加载图片，所以卡面经 jsdelivr 取自 main 分支的 `web/assets/images/`，尚未推送到 main 的卡面不会显示。
 
 牌文件的路径取自 `deal` 的输出，含空格时加引号。`--mode` 可选 horary（时占，默认）、trine（大三合）、cross（本位十字）、sunyear（太阳年，十二个月加一张主题牌）、weeks（一个月的四周）、days（一周的七日）、single（单张）。时占必须在 `reveal` 里写出位置，其余模式不写位置时翻开该占法的全部位置。洗牌用系统随机源，和网页端一致。
 

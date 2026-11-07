@@ -13,6 +13,7 @@ a card that keeps returning stands out.
     python scripts/deal.py deal --mode trine --session love
     python scripts/deal.py reveal <deal file>                  # no positions: the mode's own (1 5 9)
     python scripts/deal.py summary love                        # cards turned in the session, repeats first
+    python scripts/deal.py show <deal file>                    # HTML of the turned cards' images
     python scripts/deal.py --lang en reveal <deal file> 1 --desc
 
 `deal --help` lists the modes. Card text comes from web/data/lang/<lang>.json;
@@ -34,6 +35,8 @@ DECK_FILE = os.path.join(ROOT, "web", "data", "deck.json")
 CATALOG_FILE = os.path.join(ROOT, "web", "data", "catalog.json")
 LANG_DIR = os.path.join(ROOT, "web", "data", "lang")
 DEALS_DIR = os.path.join(ROOT, "tmp", "deals")
+# the chat's inline visuals load images only from a few CDNs, so `show` points at main through jsdelivr
+IMAGE_BASE = "https://cdn.jsdelivr.net/gh/XHXIAIEIN/Oracle-of-the-Radiant-Sun@main/web/assets/images"
 
 MODE_COUNT = {"single": 1, "trine": 12, "cross": 12, "horary": 12, "sunyear": 13, "weeks": 4, "days": 7}
 # positions `reveal` turns when none are given; horary needs the question's houses
@@ -246,6 +249,41 @@ def summary(args):
             print(f"    {filename} · {where}")
 
 
+CARD_FIGURE = (
+    '<figure style="margin:0;text-align:center;line-height:1.4">'
+    '<div style="font-size:14px;color:var(--text-muted);margin-bottom:8px">{where}</div>'
+    '<img src="{src}" alt="{name}" style="width:100%;border-radius:8px;display:block">'
+    '<figcaption style="margin-top:10px">'
+    '<div style="font-size:16px;font-weight:500;color:var(--text-primary)">{name}</div>'
+    '<div style="font-size:13px;color:var(--text-secondary);margin-top:2px">{sub}</div>'
+    "</figcaption></figure>"
+)
+
+
+def show(args):
+    """Print an HTML fragment with the cards of chosen positions, for the chat's inline visual."""
+    lang = load_lang(args.lang)
+    cards = load_cards(lang)
+    labels = Labels(lang, args.lang)
+    record = load_json(args.file)
+    mode = record.get("mode", "horary")
+    meanings = record.get("position_meanings", {})
+    positions = args.positions or record.get("revealed") or sys.exit("no position turned yet: name the positions to show")
+    planets, signs = lang["catalog"]["planets"], lang["catalog"]["signs"]
+    figures = []
+    for pos in positions:
+        card = cards[record["positions"][pos]]
+        # a custom position's label is the part of its meaning before the colon
+        where = meanings[pos].split("：")[0].split(":")[0] if pos in meanings else labels.position(mode, int(pos))
+        star = f"{planets[card['planet']]}{signs[card['sign']]}"
+        sub = f"{card['name_en']} · {star}" if card["name"] != card["name_en"] else star
+        figures.append(CARD_FIGURE.format(where=where, src=f"{IMAGE_BASE}/{record['positions'][pos]}.webp", name=card["name"], sub=sub))
+    columns = min(len(figures), args.columns)
+    print(f'<h2 class="sr-only">{"、".join(cards[record["positions"][p]]["name"] for p in positions)}</h2>'
+          f'<div style="display:grid;grid-template-columns:repeat({columns},minmax(0,1fr));gap:16px;padding:0.5rem 0">'
+          + "".join(figures) + "</div>")
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--lang", choices=("zh", "en"), default="zh", help="language of the printed text (default zh); place it before the command: deal.py --lang en reveal ...")
@@ -266,6 +304,12 @@ def main():
     p_summary = sub.add_parser("summary", help="count the cards turned across the deals of a session")
     p_summary.add_argument("session", help="session name given to `deal --session`")
     p_summary.set_defaults(func=summary)
+
+    p_show = sub.add_parser("show", help="print an HTML fragment showing the card images of a deal")
+    p_show.add_argument("file", help="deal JSON written by `deal`")
+    p_show.add_argument("positions", nargs="*", help="positions to show; omit them to show every turned position")
+    p_show.add_argument("--columns", type=int, default=4, help="cards per row at most (default 4)")
+    p_show.set_defaults(func=show)
 
     args = parser.parse_args()
     args.func(args)

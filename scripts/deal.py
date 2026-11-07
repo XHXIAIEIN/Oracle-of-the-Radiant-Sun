@@ -258,7 +258,7 @@ CARD_GRID_STYLE = (
     ".deal .where{{align-self:end;font-size:14px;color:var(--text-muted);text-wrap:balance}}"
     ".deal img{{display:block;width:100%;aspect-ratio:820/1226;object-fit:cover;border-radius:8px}}"
     ".deal .name{{font-size:14px;font-weight:500;color:var(--text-primary)}}"
-    ".deal .sub{{font-size:10px;color:var(--text-secondary);margin-top:2px}}"
+    ".deal .sub{{font-size:10px;color:var(--text-muted);margin-top:2px}}"
     "</style>"
 )
 CARD_FIGURE = (

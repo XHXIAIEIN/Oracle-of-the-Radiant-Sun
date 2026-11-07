@@ -249,14 +249,21 @@ def summary(args):
             print(f"    {filename} · {where}")
 
 
+# each figure spans three rows of the outer grid through subgrid, so labels, images and captions
+# line up across a row even when one position label wraps to two lines
+CARD_GRID_STYLE = (
+    "<style>"
+    ".deal{{display:grid;grid-template-columns:repeat({columns},minmax(0,1fr));column-gap:16px;row-gap:8px;padding:0.5rem 0;text-align:center;line-height:1.4}}"
+    ".deal figure{{display:grid;grid-row:span 3;grid-template-rows:subgrid;margin:0 0 16px}}"
+    ".deal .where{{align-self:end;font-size:14px;color:var(--text-muted);text-wrap:balance}}"
+    ".deal img{{display:block;width:100%;aspect-ratio:820/1226;object-fit:cover;border-radius:8px}}"
+    ".deal .name{{font-size:16px;font-weight:500;color:var(--text-primary)}}"
+    ".deal .sub{{font-size:13px;color:var(--text-secondary);margin-top:2px}}"
+    "</style>"
+)
 CARD_FIGURE = (
-    '<figure style="margin:0;text-align:center;line-height:1.4">'
-    '<div style="font-size:14px;color:var(--text-muted);margin-bottom:8px">{where}</div>'
-    '<img src="{src}" alt="{name}" style="width:100%;border-radius:8px;display:block">'
-    '<figcaption style="margin-top:10px">'
-    '<div style="font-size:16px;font-weight:500;color:var(--text-primary)">{name}</div>'
-    '<div style="font-size:13px;color:var(--text-secondary);margin-top:2px">{sub}</div>'
-    "</figcaption></figure>"
+    '<figure><div class="where">{where}</div><img src="{src}" alt="{name}">'
+    '<figcaption><div class="name">{name}</div><div class="sub">{sub}</div></figcaption></figure>'
 )
 
 
@@ -279,9 +286,9 @@ def show(args):
         sub = f"{card['name_en']} · {star}" if card["name"] != card["name_en"] else star
         figures.append(CARD_FIGURE.format(where=where, src=f"{IMAGE_BASE}/{record['positions'][pos]}.webp", name=card["name"], sub=sub))
     columns = min(len(figures), args.columns)
-    print(f'<h2 class="sr-only">{"、".join(cards[record["positions"][p]]["name"] for p in positions)}</h2>'
-          f'<div style="display:grid;grid-template-columns:repeat({columns},minmax(0,1fr));gap:16px;padding:0.5rem 0">'
-          + "".join(figures) + "</div>")
+    print(CARD_GRID_STYLE.format(columns=columns)
+          + f'<h2 class="sr-only">{"、".join(cards[record["positions"][p]]["name"] for p in positions)}</h2>'
+          + '<div class="deal">' + "".join(figures) + "</div>")
 
 
 def main():

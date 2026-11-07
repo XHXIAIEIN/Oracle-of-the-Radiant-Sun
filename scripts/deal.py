@@ -255,7 +255,7 @@ CARD_GRID_STYLE = (
     "<style>"
     ".deal{{display:grid;grid-template-columns:repeat({columns},minmax(0,1fr));column-gap:16px;row-gap:8px;padding:0.5rem 0;text-align:center;line-height:1.4}}"
     ".deal figure{{display:grid;grid-row:span 3;grid-template-rows:subgrid;margin:0 0 16px}}"
-    ".deal .where{{align-self:end;font-size:14px;color:var(--text-muted);text-wrap:balance}}"
+    ".deal .where{{align-self:end;font-size:12px;color:var(--text-muted);text-wrap:balance}}"
     ".deal img{{display:block;width:100%;aspect-ratio:820/1226;object-fit:cover;border-radius:8px}}"
     ".deal .name{{font-size:14px;font-weight:500;color:var(--text-primary)}}"
     ".deal .sub{{font-size:10px;color:var(--text-muted);margin-top:2px}}"

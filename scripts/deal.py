@@ -257,8 +257,8 @@ CARD_GRID_STYLE = (
     ".deal figure{{display:grid;grid-row:span 3;grid-template-rows:subgrid;margin:0 0 16px}}"
     ".deal .where{{align-self:end;font-size:14px;color:var(--text-muted);text-wrap:balance}}"
     ".deal img{{display:block;width:100%;aspect-ratio:820/1226;object-fit:cover;border-radius:8px}}"
-    ".deal .name{{font-size:16px;font-weight:500;color:var(--text-primary)}}"
-    ".deal .sub{{font-size:13px;color:var(--text-secondary);margin-top:2px}}"
+    ".deal .name{{font-size:14px;font-weight:500;color:var(--text-primary)}}"
+    ".deal .sub{{font-size:12px;color:var(--text-secondary);margin-top:2px}}"
     "</style>"
 )
 CARD_FIGURE = (
@@ -283,7 +283,7 @@ def show(args):
         # a custom position's label is the part of its meaning before the colon
         where = meanings[pos].split("：")[0].split(":")[0] if pos in meanings else labels.position(mode, int(pos))
         star = f"{planets[card['planet']]}{signs[card['sign']]}"
-        sub = f"{card['name_en']} · {star}" if card["name"] != card["name_en"] else star
+        sub = f"{card['name_en']}<br>{star}" if card["name"] != card["name_en"] else star
         figures.append(CARD_FIGURE.format(where=where, src=f"{IMAGE_BASE}/{record['positions'][pos]}.webp", name=card["name"], sub=sub))
     columns = min(len(figures), args.columns)
     print(CARD_GRID_STYLE.format(columns=columns)
